@@ -145,7 +145,7 @@ input:focus{outline:none;}
             <span style="width:30px;height:30px;border-radius:50%;border:2px solid #FFF6D2;background:#372F01;margin-right:-9px;"></span>
             <span style="width:30px;height:30px;border-radius:50%;border:2px solid #FFF6D2;background:#3C61DD;"></span>
           </div>
-          <span style="font-size:14px;font-weight:600;color:#5B5430;"><b style="color:#372F01;">2,000+</b> freelancers already waiting</span>
+          <span style="font-size:14px;font-weight:600;color:#5B5430;"><b id="hero-count" style="color:#372F01;">50+</b> freelancers already waiting</span>
         </div>
       </div>
     </div>
@@ -603,7 +603,7 @@ input:focus{outline:none;}
     <div style="background:#FEEA27;padding:38px 38px 32px;border-bottom:2px solid #372F01;">
       <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(55,47,1,0.08);border:1px solid rgba(55,47,1,0.18);color:#5B5430;font-weight:600;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:6px 13px;border-radius:999px;margin-bottom:18px;">
         <span style="width:6px;height:6px;border-radius:50%;background:#0EA868;display:inline-block;"></span>
-        2,000+ already waiting
+        <span id="wl-count-badge">50+</span> already waiting
       </span>
       <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:38px;line-height:1.04;letter-spacing:-1px;margin:0 0 12px;color:#372F01;">Be first through<br>the door.</h2>
       <p style="font-size:16px;line-height:1.5;color:#5B5430;font-weight:500;margin:0;">Join the waitlist and get priority access when Veritas lands on iOS &amp; Android.</p>
@@ -638,7 +638,7 @@ input:focus{outline:none;}
           <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#372F01;margin-right:-7px;box-shadow:0 0 0 1px rgba(55,47,1,0.3);"></span>
           <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#3C61DD;box-shadow:0 0 0 1px rgba(55,47,1,0.3);"></span>
         </div>
-        <span style="font-size:13px;font-weight:600;color:#5B5430;"><b style="color:#372F01;">2,000+</b> freelancers waiting · No spam, ever.</span>
+        <span style="font-size:13px;font-weight:600;color:#5B5430;"><b id="wl-count-social" style="color:#372F01;">50+</b> freelancers waiting · No spam, ever.</span>
       </div>
     </div>
   </div>
@@ -684,9 +684,28 @@ input:focus{outline:none;}
 
 <script>
 (function() {
-  const WAITLIST_COUNT = 2000;
+  const BASE_COUNT = 50;
+  let waitlistCount = BASE_COUNT;
   let joined = false;
   let joinedEmail = '';
+
+  // Load persisted count
+  try {
+    const stored = parseInt(localStorage.getItem('veritas_waitlist_count'), 10);
+    if (!isNaN(stored) && stored >= BASE_COUNT) waitlistCount = stored;
+  } catch(e) {}
+
+  function updateCountDisplays() {
+    const label = waitlistCount + '+';
+    const heroEl = document.getElementById('hero-count');
+    const badgeEl = document.getElementById('wl-count-badge');
+    const socialEl = document.getElementById('wl-count-social');
+    if (heroEl) heroEl.textContent = label;
+    if (badgeEl) badgeEl.textContent = label;
+    if (socialEl) socialEl.textContent = label;
+  }
+
+  updateCountDisplays();
 
   // Glassmorphism header on scroll
   const siteHeader = document.getElementById('site-header');
@@ -765,6 +784,11 @@ input:focus{outline:none;}
     errorEl.style.display = 'none';
     try { localStorage.setItem('veritas_waitlist_email', email); } catch(e) {}
 
+    // Increment count and persist
+    waitlistCount += 1;
+    try { localStorage.setItem('veritas_waitlist_count', waitlistCount); } catch(e) {}
+    updateCountDisplays();
+
     joined = true;
     joinedEmail = email;
     showJoinedState(email);
@@ -775,7 +799,7 @@ input:focus{outline:none;}
   window.openModal = function(email) {
     const modal = document.getElementById('modal');
     document.getElementById('modal-email').textContent = email;
-    document.getElementById('modal-position').textContent = '#' + (WAITLIST_COUNT + 1).toLocaleString();
+    document.getElementById('modal-position').textContent = '#' + waitlistCount.toLocaleString();
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   };
