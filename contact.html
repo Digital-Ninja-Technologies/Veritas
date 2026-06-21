@@ -29,8 +29,20 @@ html,body{margin:0;padding:0;background:#fff;}
 input::placeholder,textarea::placeholder{color:#A7A8A0;}
 input:focus,textarea:focus{outline:none;border-color:#372F01 !important;}
 @keyframes vpop{0%{opacity:0;transform:translateY(10px) scale(.97);}100%{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes vmodal{0%{opacity:0;transform:translateY(24px) scale(.92);}100%{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes vcheckpop{0%{transform:scale(0);}55%{transform:scale(1.18);}100%{transform:scale(1);}}
+@keyframes vdraw{from{stroke-dashoffset:34;}to{stroke-dashoffset:0;}}
+@keyframes vconfetti{0%{transform:translateY(-20px) rotate(0);opacity:1;}100%{transform:translateY(360px) rotate(620deg);opacity:0;}}
 .v-pop{animation:vpop .45s ease both;}
 .nav-cta:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 #372F01 !important;}
+.wl-modal-card{animation:vmodal .42s cubic-bezier(.2,.9,.3,1.1) both;}
+.wl-close:hover{background:#FFF6D2 !important;border-color:#372F01 !important;}
+.wl-submit:hover{background:#372F01 !important;color:#FEEA27 !important;}
+.v-check{animation:vcheckpop .5s cubic-bezier(.2,.9,.3,1.1) .15s both;}
+.check-path{stroke-dasharray:34;stroke-dashoffset:34;animation:vdraw .4s ease .55s forwards;}
+.v-confetti span{position:absolute;top:0;width:10px;height:10px;border-radius:2px;animation:vconfetti 1.4s ease-out both;}
+.btn-modal-close:hover{background:#FFF6D2 !important;border-color:#372F01 !important;}
+.btn-modal-back:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 #372F01 !important;}
 .contact-card:hover{transform:translate(1px,1px);box-shadow:4px 4px 0 #372F01 !important;}
 .btn-send:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 #372F01 !important;}
 .btn-another:hover{background:#FFF6D2 !important;}
@@ -52,7 +64,7 @@ input:focus,textarea:focus{outline:none;border-color:#372F01 !important;}
     <a href="index.html#how" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">How it works</a>
     <a href="index.html#features" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Why Veritas</a>
     <a href="contact.html" style="text-decoration:none;color:#372F01;font-weight:700;font-size:16px;">Contact</a>
-    <a href="index.html#join" class="nav-cta" style="text-decoration:none;display:inline-flex;align-items:center;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:999px;padding:11px 22px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 #372F01;transition:transform .15s,box-shadow .15s;">Join waitlist</a>
+    <button onclick="openWaitlistModal()" class="nav-cta" style="display:inline-flex;align-items:center;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:999px;padding:11px 22px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 #372F01;transition:transform .15s,box-shadow .15s;cursor:pointer;font-family:'Satoshi',sans-serif;">Join waitlist</button>
   </nav>
 </header>
 
@@ -176,6 +188,159 @@ window.resetContact = function() {
   document.getElementById('contact-sent').style.display = 'none';
   document.getElementById('contact-form').style.display = 'block';
 };
+</script>
+
+<!-- WAITLIST POPUP MODAL -->
+<div id="waitlist-modal" style="display:none;position:fixed;inset:0;z-index:800;background:rgba(55,47,1,0.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px;" onclick="closeWaitlistModal()">
+  <div class="wl-modal-card" onclick="event.stopPropagation()" style="position:relative;width:100%;max-width:520px;background:#fff;border:2px solid #372F01;border-radius:28px;box-shadow:8px 8px 0 #372F01;overflow:hidden;">
+    <button onclick="closeWaitlistModal()" class="wl-close" aria-label="Close" style="position:absolute;top:16px;right:16px;z-index:10;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(55,47,1,0.2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#5B5430;transition:background .15s,border-color .15s;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+    <div style="background:#FEEA27;padding:38px 38px 32px;border-bottom:2px solid #372F01;">
+      <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(55,47,1,0.08);border:1px solid rgba(55,47,1,0.18);color:#5B5430;font-weight:600;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:6px 13px;border-radius:999px;margin-bottom:18px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:#0EA868;display:inline-block;"></span>
+        <span id="wl-count-badge">50+</span> already waiting
+      </span>
+      <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:38px;line-height:1.04;letter-spacing:-1px;margin:0 0 12px;color:#372F01;">Be first through<br>the door.</h2>
+      <p style="font-size:16px;line-height:1.5;color:#5B5430;font-weight:500;margin:0;">Join the waitlist and get priority access when Veritas lands on iOS &amp; Android.</p>
+    </div>
+    <div style="padding:26px 38px 34px;">
+      <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:24px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:none;width:28px;height:28px;border-radius:8px;background:#FEEA27;border:1.5px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:15px;font-weight:600;color:#372F01;">Escrow protection from the very first contract</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:none;width:28px;height:28px;border-radius:8px;background:#FEEA27;border:1.5px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:15px;font-weight:600;color:#372F01;">Withdraw in NGN, GHS, KES, ZAR, USD &amp; more</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:none;width:28px;height:28px;border-radius:8px;background:#FEEA27;border:1.5px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:15px;font-weight:600;color:#372F01;">Priority beta access before public launch</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:9px;background:#fff;border:2px solid #372F01;border-radius:14px;padding:6px;">
+        <input id="wl-email" type="email" placeholder="you@work.com" style="flex:1;border:none;background:transparent;font-family:'Satoshi',sans-serif;font-size:16px;font-weight:500;color:#372F01;padding:12px 13px;">
+        <button onclick="submitWaitlist()" class="wl-submit" style="flex:none;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:10px;padding:12px 22px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:15px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;">Join waitlist →</button>
+      </div>
+      <p id="wl-error" style="margin:9px 3px 0;color:#D2492E;font-size:14px;font-weight:600;display:none;"></p>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:16px;">
+        <div style="display:flex;">
+          <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#FEEA27;margin-right:-7px;box-shadow:0 0 0 1px #372F01;"></span>
+          <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#0EA868;margin-right:-7px;box-shadow:0 0 0 1px rgba(55,47,1,0.3);"></span>
+          <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#372F01;margin-right:-7px;box-shadow:0 0 0 1px rgba(55,47,1,0.3);"></span>
+          <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#3C61DD;box-shadow:0 0 0 1px rgba(55,47,1,0.3);"></span>
+        </div>
+        <span style="font-size:13px;font-weight:600;color:#5B5430;"><b id="wl-count-social" style="color:#372F01;">50+</b> freelancers waiting · No spam, ever.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div id="wl-success-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(55,47,1,0.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:24px;" onclick="closeSuccessModal()">
+  <div onclick="event.stopPropagation()" style="position:relative;width:100%;max-width:440px;background:#fff;border:2px solid #372F01;border-radius:28px;box-shadow:8px 8px 0 #372F01;padding:46px 38px 38px;text-align:center;overflow:hidden;">
+    <div class="v-confetti" style="position:absolute;top:0;left:0;right:0;height:0;pointer-events:none;">
+      <span style="left:8%;background:#FEEA27;animation-delay:0s;"></span>
+      <span style="left:16%;background:#0EA868;animation-delay:.15s;"></span>
+      <span style="left:24%;background:#3C61DD;animation-delay:.4s;"></span>
+      <span style="left:33%;background:#372F01;animation-delay:.05s;"></span>
+      <span style="left:42%;background:#D2492E;animation-delay:.3s;"></span>
+      <span style="left:50%;background:#FEEA27;animation-delay:.55s;"></span>
+      <span style="left:58%;background:#0EA868;animation-delay:.2s;"></span>
+      <span style="left:67%;background:#3C61DD;animation-delay:.45s;"></span>
+      <span style="left:76%;background:#FEEA27;animation-delay:.1s;"></span>
+      <span style="left:84%;background:#372F01;animation-delay:.35s;"></span>
+      <span style="left:92%;background:#D2492E;animation-delay:.6s;"></span>
+    </div>
+    <button onclick="closeSuccessModal()" class="btn-modal-close" aria-label="Close" style="position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(55,47,1,0.2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#5B5430;transition:background .15s,border-color .15s;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+    <div style="position:relative;width:84px;height:84px;margin:6px auto 0;">
+      <div class="v-check" style="width:84px;height:84px;border-radius:50%;background:#0EA868;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(14,168,104,0.4);">
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none"><path class="check-path" d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.6px;margin:22px 0 0;color:#372F01;">You're on the list! 🎉</h3>
+    <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:12px 0 0;">We saved your spot. We'll email <b id="wl-success-email" style="color:#372F01;"></b> the moment Veritas launches on iOS &amp; Android.</p>
+    <div style="display:inline-flex;align-items:center;gap:10px;margin:22px 0 0;background:#FFF6D2;border:2px solid #372F01;border-radius:14px;padding:11px 18px;">
+      <span style="font-size:13px;font-weight:600;color:#5B5430;text-transform:uppercase;letter-spacing:0.06em;">Your spot</span>
+      <span id="wl-success-position" style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:20px;color:#372F01;">#51</span>
+    </div>
+    <button onclick="closeSuccessModal()" class="btn-modal-back" style="display:block;width:100%;margin-top:26px;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:13px;padding:15px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:16px;cursor:pointer;box-shadow:4px 4px 0 #372F01;transition:transform .15s,box-shadow .15s;">Can't wait — back to site</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const BASE_COUNT = 50;
+  let waitlistCount = BASE_COUNT;
+  try {
+    const stored = parseInt(localStorage.getItem('veritas_waitlist_count'), 10);
+    if (!isNaN(stored) && stored >= BASE_COUNT) waitlistCount = stored;
+  } catch(e) {}
+
+  function updateCountDisplays() {
+    const label = waitlistCount + '+';
+    ['wl-count-badge','wl-count-social'].forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = label;
+    });
+  }
+  updateCountDisplays();
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeWaitlistModal(); closeSuccessModal(); }
+  });
+  document.getElementById('wl-email').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') submitWaitlist();
+  });
+
+  window.submitWaitlist = function() {
+    const inputEl = document.getElementById('wl-email');
+    const errorEl = document.getElementById('wl-error');
+    const email = (inputEl.value || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.textContent = 'Please enter a valid email address.';
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
+    fetch('https://formspree.io/f/xaqgwbra', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({email: email})
+    }).catch(function() {});
+    waitlistCount += 1;
+    try { localStorage.setItem('veritas_waitlist_count', waitlistCount); } catch(e) {}
+    updateCountDisplays();
+    closeWaitlistModal();
+    document.getElementById('wl-success-email').textContent = email;
+    document.getElementById('wl-success-position').textContent = '#' + waitlistCount.toLocaleString();
+    const m = document.getElementById('wl-success-modal');
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.openWaitlistModal = function() {
+    document.getElementById('waitlist-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      const inp = document.getElementById('wl-email');
+      if (inp) inp.focus();
+    }, 440);
+  };
+
+  window.closeWaitlistModal = function() {
+    const m = document.getElementById('waitlist-modal');
+    if (m) { m.style.display = 'none'; document.body.style.overflow = ''; }
+  };
+
+  window.closeSuccessModal = function() {
+    const m = document.getElementById('wl-success-modal');
+    if (m) { m.style.display = 'none'; document.body.style.overflow = ''; }
+  };
+})();
 </script>
 </body>
 </html>
