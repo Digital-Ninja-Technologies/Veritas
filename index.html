@@ -54,12 +54,38 @@ input:focus{outline:none;}
 .btn-modal-close:hover{background:#FFF6D2;border-color:#372F01 !important;}
 .btn-modal-back:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 #372F01 !important;}
 .social-icon:hover{background:#FFF6D2;border-color:#372F01 !important;}
+
+/* Fixed glassmorphism nav */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:500;transition:background .35s,border-color .35s,box-shadow .35s;}
+.site-header-inner{max-width:1200px;margin:0 auto;padding:22px 40px;display:flex;align-items:center;justify-content:space-between;}
+.site-header.scrolled{background:rgba(255,251,224,0.88);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom:1px solid rgba(55,47,1,0.13);box-shadow:0 2px 28px rgba(55,47,1,0.08);}
+
+/* Hero load animations */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.hero-load{opacity:0;animation:fadeInUp .72s cubic-bezier(.2,.8,.2,1) forwards;}
+.hero-ld1{animation-delay:.06s;}
+.hero-ld2{animation-delay:.2s;}
+.hero-ld3{animation-delay:.34s;}
+.hero-ld4{animation-delay:.5s;}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .72s cubic-bezier(.2,.8,.2,1),transform .72s cubic-bezier(.2,.8,.2,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:.08s;}
+.reveal-d2{transition-delay:.2s;}
+.reveal-d3{transition-delay:.32s;}
+
+/* Waitlist modal */
+.wl-modal-card{animation:vmodal .42s cubic-bezier(.2,.9,.3,1.1) both;}
+.wl-close:hover{background:#FFF6D2 !important;border-color:#372F01 !important;}
+.wl-submit:hover{background:#372F01 !important;color:#FEEA27 !important;}
 </style>
 </head>
 <body style="font-family:'Satoshi',-apple-system,BlinkMacSystemFont,sans-serif;color:#372F01;background:#fff;overflow-x:hidden;">
 
 <!-- NAV -->
-<header style="max-width:1200px;margin:0 auto;padding:26px 40px;display:flex;align-items:center;justify-content:space-between;">
+<header id="site-header" class="site-header">
+<div class="site-header-inner">
   <span style="display:inline-flex;align-items:center;gap:11px;">
     <svg width="46" height="30" viewBox="0 0 64 40" fill="none" aria-hidden="true">
       <circle cx="22" cy="20" r="16.5" stroke="#372F01" stroke-width="5"/>
@@ -72,29 +98,30 @@ input:focus{outline:none;}
     <a href="#how" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">How it works</a>
     <a href="#features" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Why Veritas</a>
     <a href="contact.html" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Contact</a>
-    <a href="#join" class="nav-cta" style="text-decoration:none;display:inline-flex;align-items:center;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:999px;padding:11px 22px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 #372F01;transition:transform .15s,box-shadow .15s;">Join waitlist</a>
+    <button onclick="openWaitlistModal()" class="nav-cta" style="display:inline-flex;align-items:center;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:999px;padding:11px 22px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 #372F01;transition:transform .15s,box-shadow .15s;cursor:pointer;font-family:'Satoshi',sans-serif;">Join waitlist</button>
   </nav>
+</div>
 </header>
 
 <!-- HERO -->
 <section id="join" style="position:relative;background:radial-gradient(120% 90% at 78% 18%, #FFFBE0 0%, #FFF6D2 46%, #FCEFB3 100%);overflow:hidden;">
-  <div style="max-width:1200px;margin:0 auto;padding:64px 40px 88px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;">
+  <div style="max-width:1200px;margin:0 auto;padding:148px 40px 88px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;">
 
     <!-- left -->
     <div style="position:relative;z-index:2;">
-      <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(55,47,1,0.06);border:1px solid rgba(55,47,1,0.16);color:#5B5430;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;">
+      <span class="hero-load hero-ld1" style="display:inline-flex;align-items:center;gap:8px;background:rgba(55,47,1,0.06);border:1px solid rgba(55,47,1,0.16);color:#5B5430;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;">
         <span style="width:7px;height:7px;border-radius:50%;background:#0EA868;display:inline-block;"></span>
         Coming soon · iOS &amp; Android
       </span>
-      <h1 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:62px;line-height:1.02;letter-spacing:-1.4px;margin:22px 0 0;color:#372F01;text-wrap:balance;">
+      <h1 class="hero-load hero-ld2" style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:62px;line-height:1.02;letter-spacing:-1.4px;margin:22px 0 0;color:#372F01;text-wrap:balance;">
         Get paid.<br>Every time.<br><span style="position:relative;display:inline-block;">No worries.<span style="position:absolute;left:0;right:0;bottom:6px;height:14px;background:#FEEA27;z-index:-1;border-radius:3px;"></span></span>
       </h1>
-      <p style="font-size:19px;line-height:1.55;color:#5B5430;max-width:480px;margin:24px 0 0;font-weight:500;">
+      <p class="hero-load hero-ld3" style="font-size:19px;line-height:1.55;color:#5B5430;max-width:480px;margin:24px 0 0;font-weight:500;">
         Veritas holds every payment safely in escrow and settles in your local currency. Built for freelancers and clients doing borderless, modern work.
       </p>
 
       <!-- form -->
-      <div style="margin-top:32px;max-width:480px;">
+      <div class="hero-load hero-ld4" style="margin-top:32px;max-width:480px;">
         <div id="hero-form">
           <div style="display:flex;gap:10px;background:#fff;border:2px solid #372F01;border-radius:16px;padding:7px;box-shadow:5px 5px 0 rgba(55,47,1,0.9);">
             <input id="hero-email" type="email" placeholder="you@work.com" style="flex:1;border:none;background:transparent;font-family:'Satoshi',sans-serif;font-size:16px;font-weight:500;color:#372F01;padding:13px 14px;">
@@ -344,26 +371,26 @@ input:focus{outline:none;}
 
 <!-- FEATURES -->
 <section id="features" style="max-width:1200px;margin:0 auto;padding:96px 40px 40px;">
-  <div style="text-align:center;max-width:640px;margin:0 auto 56px;">
+  <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto 56px;">
     <span style="font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#B49A11;">Why Veritas</span>
     <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-1px;margin:14px 0 0;color:#372F01;text-wrap:balance;">Peace of mind for both sides of the deal.</h2>
   </div>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;">
-    <div style="background:#FFF6D2;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.9);display:flex;flex-direction:column;">
+    <div class="reveal reveal-d1" style="background:#FFF6D2;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.9);display:flex;flex-direction:column;">
       <div style="height:170px;display:flex;align-items:center;justify-content:center;margin:-6px 0 8px;">
         <img src="project/assets/vault.png" alt="Escrow vault" class="v-float" style="height:170px;width:auto;filter:drop-shadow(0 16px 18px rgba(55,47,1,0.2));animation-delay:-0.5s;">
       </div>
       <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.4px;margin:0 0 10px;color:#372F01;">Escrow that protects everyone</h3>
       <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">Funds are locked the moment a project starts and released only when work is delivered. No chasing, no ghosting.</p>
     </div>
-    <div style="background:#372F01;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.5);display:flex;flex-direction:column;">
+    <div class="reveal reveal-d2" style="background:#372F01;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.5);display:flex;flex-direction:column;">
       <div style="height:170px;display:flex;align-items:center;justify-content:center;margin:-6px 0 8px;">
         <img src="project/assets/onboard2.png" alt="Local currency wallet" class="v-float-s" style="height:180px;width:auto;filter:drop-shadow(0 16px 18px rgba(0,0,0,0.35));animation-delay:-2.4s;">
       </div>
       <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.4px;margin:0 0 10px;color:#FEEA27;">Receive locally, instantly</h3>
       <p style="font-size:16px;line-height:1.55;color:#D9D3B4;font-weight:500;margin:0;">Clients pay in USDT or USDC — you cash out in your own currency. Settle in minutes, not weeks.</p>
     </div>
-    <div style="background:#FFF6D2;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.9);display:flex;flex-direction:column;">
+    <div class="reveal reveal-d3" style="background:#FFF6D2;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.9);display:flex;flex-direction:column;">
       <div style="height:170px;display:flex;align-items:center;justify-content:center;margin:-6px 0 8px;">
         <img src="project/assets/onboard3.png" alt="Global payments" class="v-float" style="height:170px;width:auto;filter:drop-shadow(0 16px 18px rgba(55,47,1,0.2));animation-delay:-4.2s;">
       </div>
@@ -377,7 +404,7 @@ input:focus{outline:none;}
 <section style="margin-top:96px;background:#26230F;overflow:hidden;">
   <div style="max-width:1200px;margin:0 auto;padding:84px 40px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;">
     <div>
-      <span style="font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#FEEA27;">Inside the app</span>
+      <span class="reveal" style="display:block;font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#FEEA27;">Inside the app</span>
       <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:44px;line-height:1.05;letter-spacing:-1.1px;margin:14px 0 0;color:#fff;text-wrap:balance;">Your whole escrow, in your pocket.</h2>
       <p style="font-size:18px;line-height:1.6;color:#C9C6A6;font-weight:500;margin:18px 0 0;max-width:460px;">From the moment a client funds a project to the second you cash out — every milestone, balance and payout lives on one calm home screen.</p>
       <div style="display:flex;flex-direction:column;gap:18px;margin:34px 0 0;">
@@ -394,9 +421,9 @@ input:focus{outline:none;}
           <span style="font-size:16px;font-weight:600;color:#E9E7CF;">Withdraw to your local currency in minutes</span>
         </div>
       </div>
-      <a href="#join" class="btn-access" style="text-decoration:none;display:inline-flex;align-items:center;gap:9px;margin-top:36px;background:#FEEA27;color:#372F01;border-radius:13px;padding:15px 26px;font-weight:700;font-size:16px;box-shadow:4px 4px 0 rgba(254,234,39,0.25);transition:transform .15s,box-shadow .15s;">Get early access
+      <button onclick="openWaitlistModal()" class="btn-access" style="display:inline-flex;align-items:center;gap:9px;margin-top:36px;background:#FEEA27;color:#372F01;border-radius:13px;padding:15px 26px;font-weight:700;font-size:16px;box-shadow:4px 4px 0 rgba(254,234,39,0.25);transition:transform .15s,box-shadow .15s;border:none;cursor:pointer;font-family:'Satoshi',sans-serif;">Get early access
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#372F01" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      </button>
     </div>
 
     <!-- phone -->
@@ -496,22 +523,22 @@ input:focus{outline:none;}
 
 <!-- HOW IT WORKS -->
 <section id="how" style="max-width:1200px;margin:0 auto;padding:80px 40px 40px;">
-  <div style="text-align:center;max-width:640px;margin:0 auto 56px;">
+  <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto 56px;">
     <span style="font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#B49A11;">How it works</span>
     <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-1px;margin:14px 0 0;color:#372F01;">Three steps. Zero stress.</h2>
   </div>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;">
-    <div style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
+    <div class="reveal reveal-d1" style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
       <div style="position:absolute;top:-20px;left:28px;width:46px;height:46px;border-radius:13px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;font-family:'Istok Web',sans-serif;font-weight:700;font-size:22px;color:#372F01;box-shadow:3px 3px 0 #372F01;">1</div>
       <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:21px;margin:22px 0 8px;color:#372F01;">Agree the terms</h3>
       <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">The client funds the project up front. The money sits safely in Veritas escrow — visible to everyone.</p>
     </div>
-    <div style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
+    <div class="reveal reveal-d2" style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
       <div style="position:absolute;top:-20px;left:28px;width:46px;height:46px;border-radius:13px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;font-family:'Istok Web',sans-serif;font-weight:700;font-size:22px;color:#372F01;box-shadow:3px 3px 0 #372F01;">2</div>
       <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:21px;margin:22px 0 8px;color:#372F01;">Do the work</h3>
       <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">Deliver with total confidence, knowing your payment is already secured and waiting for you.</p>
     </div>
-    <div style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
+    <div class="reveal reveal-d3" style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
       <div style="position:absolute;top:-20px;left:28px;width:46px;height:46px;border-radius:13px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;font-family:'Istok Web',sans-serif;font-weight:700;font-size:22px;color:#372F01;box-shadow:3px 3px 0 #372F01;">3</div>
       <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:21px;margin:22px 0 8px;color:#372F01;">Get paid</h3>
       <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">Funds release to your local wallet the moment the work is approved. Instant, borderless, done.</p>
@@ -524,7 +551,7 @@ input:focus{outline:none;}
   <div style="position:relative;overflow:hidden;background:#FEEA27;border:2px solid #372F01;border-radius:32px;padding:64px 48px;box-shadow:8px 8px 0 #372F01;text-align:center;">
     <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.35);top:-120px;left:-80px;"></div>
     <div style="position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(55,47,1,0.06);bottom:-110px;right:-60px;"></div>
-    <div style="position:relative;z-index:1;max-width:560px;margin:0 auto;">
+    <div class="reveal" style="position:relative;z-index:1;max-width:560px;margin:0 auto;">
       <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:46px;line-height:1.04;letter-spacing:-1.2px;margin:0;color:#372F01;text-wrap:balance;">Be first through the door.</h2>
       <p style="font-size:18px;line-height:1.5;color:#6B5F1E;font-weight:600;margin:16px 0 0;">Join the waitlist and we'll let you know the moment Veritas lands on iOS &amp; Android. No spam, ever.</p>
       <div style="margin-top:28px;max-width:460px;margin-left:auto;margin-right:auto;">
@@ -565,6 +592,57 @@ input:focus{outline:none;}
   </div>
 </footer>
 <div style="text-align:center;padding:0 40px 36px;font-size:13px;color:#B6B299;">© 2026 Veritas. All rights reserved.</div>
+
+<!-- WAITLIST POPUP MODAL -->
+<div id="waitlist-modal" style="display:none;position:fixed;inset:0;z-index:800;background:rgba(55,47,1,0.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px;" onclick="closeWaitlistModal()">
+  <div class="wl-modal-card" onclick="event.stopPropagation()" style="position:relative;width:100%;max-width:520px;background:#fff;border:2px solid #372F01;border-radius:28px;box-shadow:8px 8px 0 #372F01;overflow:hidden;">
+    <button onclick="closeWaitlistModal()" class="wl-close" aria-label="Close" style="position:absolute;top:16px;right:16px;z-index:10;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(55,47,1,0.2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#5B5430;transition:background .15s,border-color .15s;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+    <!-- yellow header -->
+    <div style="background:#FEEA27;padding:38px 38px 32px;border-bottom:2px solid #372F01;">
+      <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(55,47,1,0.08);border:1px solid rgba(55,47,1,0.18);color:#5B5430;font-weight:600;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:6px 13px;border-radius:999px;margin-bottom:18px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:#0EA868;display:inline-block;"></span>
+        2,000+ already waiting
+      </span>
+      <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:38px;line-height:1.04;letter-spacing:-1px;margin:0 0 12px;color:#372F01;">Be first through<br>the door.</h2>
+      <p style="font-size:16px;line-height:1.5;color:#5B5430;font-weight:500;margin:0;">Join the waitlist and get priority access when Veritas lands on iOS &amp; Android.</p>
+    </div>
+    <!-- white body -->
+    <div style="padding:26px 38px 34px;">
+      <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:24px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:none;width:28px;height:28px;border-radius:8px;background:#FEEA27;border:1.5px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:15px;font-weight:600;color:#372F01;">Escrow protection from the very first contract</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:none;width:28px;height:28px;border-radius:8px;background:#FEEA27;border:1.5px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:15px;font-weight:600;color:#372F01;">Withdraw in NGN, GHS, KES, ZAR, USD &amp; more</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:none;width:28px;height:28px;border-radius:8px;background:#FEEA27;border:1.5px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:15px;font-weight:600;color:#372F01;">Priority beta access before public launch</span>
+        </div>
+      </div>
+      <!-- form -->
+      <div style="display:flex;gap:9px;background:#fff;border:2px solid #372F01;border-radius:14px;padding:6px;">
+        <input id="wl-email" type="email" placeholder="you@work.com" style="flex:1;border:none;background:transparent;font-family:'Satoshi',sans-serif;font-size:16px;font-weight:500;color:#372F01;padding:12px 13px;">
+        <button onclick="submitWaitlist('wl')" class="wl-submit" style="flex:none;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:10px;padding:12px 22px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:15px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;">Join waitlist →</button>
+      </div>
+      <p id="wl-error" style="margin:9px 3px 0;color:#D2492E;font-size:14px;font-weight:600;display:none;"></p>
+      <!-- social proof -->
+      <div style="display:flex;align-items:center;gap:10px;margin-top:16px;">
+        <div style="display:flex;">
+          <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#FEEA27;margin-right:-7px;box-shadow:0 0 0 1px #372F01;"></span>
+          <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#0EA868;margin-right:-7px;box-shadow:0 0 0 1px rgba(55,47,1,0.3);"></span>
+          <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#372F01;margin-right:-7px;box-shadow:0 0 0 1px rgba(55,47,1,0.3);"></span>
+          <span style="width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:#3C61DD;box-shadow:0 0 0 1px rgba(55,47,1,0.3);"></span>
+        </div>
+        <span style="font-size:13px;font-weight:600;color:#5B5430;"><b style="color:#372F01;">2,000+</b> freelancers waiting · No spam, ever.</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- SUCCESS MODAL -->
 <div id="modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(55,47,1,0.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:24px;" onclick="closeModal()">
@@ -610,49 +688,63 @@ input:focus{outline:none;}
   let joined = false;
   let joinedEmail = '';
 
+  // Glassmorphism header on scroll
+  const siteHeader = document.getElementById('site-header');
+  window.addEventListener('scroll', function() {
+    siteHeader.classList.toggle('scrolled', window.scrollY > 20);
+  }, {passive: true});
+
+  // Scroll reveal via IntersectionObserver
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && revealEls.length) {
+    const obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
+    revealEls.forEach(function(el) { obs.observe(el); });
+  } else {
+    revealEls.forEach(function(el) { el.classList.add('visible'); });
+  }
+
   // Check localStorage on load
   try {
     const saved = localStorage.getItem('veritas_waitlist_email');
-    if (saved) {
-      joined = true;
-      joinedEmail = saved;
-      showJoinedState(saved);
-    }
+    if (saved) { joined = true; joinedEmail = saved; showJoinedState(saved); }
   } catch(e) {}
 
   // Hero carousel
   const screens = document.querySelectorAll('.hero-scr');
   let currentScreen = 0;
-
   function advance() {
     screens[currentScreen].classList.remove('on');
     currentScreen = (currentScreen + 1) % screens.length;
     screens[currentScreen].classList.add('on');
   }
-
   setInterval(advance, 2600);
 
-  // Keyboard ESC to close modal
+  // ESC closes all modals
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') { closeModal(); closeWaitlistModal(); }
   });
 
-  // Enter key for forms
+  // Enter key for all forms
   document.getElementById('hero-email').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') submitWaitlist('hero');
   });
   document.getElementById('cta-email').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') submitWaitlist('cta');
   });
+  document.getElementById('wl-email').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') submitWaitlist('wl');
+  });
 
   function showJoinedState(email) {
-    // Hero form
     document.getElementById('hero-form').style.display = 'none';
     const heroJoined = document.getElementById('hero-joined');
     heroJoined.style.display = 'flex';
     document.getElementById('hero-joined-email').textContent = email;
 
-    // CTA form
     document.getElementById('cta-form').style.display = 'none';
     const ctaJoined = document.getElementById('cta-joined');
     ctaJoined.style.display = 'flex';
@@ -671,12 +763,12 @@ input:focus{outline:none;}
     }
 
     errorEl.style.display = 'none';
-
     try { localStorage.setItem('veritas_waitlist_email', email); } catch(e) {}
 
     joined = true;
     joinedEmail = email;
     showJoinedState(email);
+    if (source === 'wl') closeWaitlistModal();
     openModal(email);
   };
 
@@ -693,6 +785,21 @@ input:focus{outline:none;}
     modal.style.display = 'none';
     modal.classList.remove('v-overlay');
     document.body.style.overflow = '';
+  };
+
+  window.openWaitlistModal = function() {
+    const wlModal = document.getElementById('waitlist-modal');
+    wlModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      const inp = document.getElementById('wl-email');
+      if (inp) inp.focus();
+    }, 440);
+  };
+
+  window.closeWaitlistModal = function() {
+    const wlModal = document.getElementById('waitlist-modal');
+    if (wlModal) { wlModal.style.display = 'none'; document.body.style.overflow = ''; }
   };
 })();
 </script>
