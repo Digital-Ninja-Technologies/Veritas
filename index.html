@@ -726,11 +726,7 @@ input:focus{outline:none;}
     revealEls.forEach(function(el) { el.classList.add('visible'); });
   }
 
-  // Check localStorage on load
-  try {
-    const saved = localStorage.getItem('veritas_waitlist_email');
-    if (saved) { joined = true; joinedEmail = saved; showJoinedState(saved); }
-  } catch(e) {}
+  // Form always starts fresh on page load — no joined-state restore
 
   // Hero carousel
   const screens = document.querySelectorAll('.hero-scr');
