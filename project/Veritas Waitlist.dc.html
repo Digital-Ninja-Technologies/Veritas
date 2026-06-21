@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#ffffff;}
+  ::selection{background:#FEEA27;color:#372F01;}
+  input::placeholder{color:#A7A8A0;}
+  input:focus{outline:none;}
+  @keyframes vfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+  @keyframes vfloatSlow{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(-2deg);}}
+  @keyframes vpop{0%{opacity:0;transform:translateY(10px) scale(.96);}100%{opacity:1;transform:translateY(0) scale(1);}}
+  @keyframes vglow{0%,100%{transform:scale(1);opacity:.9;}50%{transform:scale(1.12);opacity:1;}}
+  .v-glow{animation:vglow 5s ease-in-out infinite;}
+  [data-motion="off"] .v-glow{animation:none;}
+  .hero-scr{position:absolute;inset:0;opacity:0;transform:translateX(26px) scale(.985);transition:opacity .6s ease,transform .6s ease;pointer-events:none;}
+  .hero-scr.on{opacity:1;transform:translateX(0) scale(1);}
+  .hero-scr .anim-up{opacity:0;transform:translateY(18px);transition:opacity .55s cubic-bezier(.2,.7,.3,1),transform .55s cubic-bezier(.2,.7,.3,1);}
+  .hero-scr.on .anim-up{opacity:1;transform:translateY(0);}
+  .hero-scr .d1{transition-delay:.05s;}
+  .hero-scr .d2{transition-delay:.18s;}
+  .hero-scr .d3{transition-delay:.30s;}
+  [data-motion="off"] .hero-scr .anim-up{opacity:1;transform:none;transition:none;}
+  @keyframes voverlay{from{opacity:0;}to{opacity:1;}}
+  @keyframes vmodal{0%{opacity:0;transform:translateY(24px) scale(.92);}100%{opacity:1;transform:translateY(0) scale(1);}}
+  @keyframes vcheckpop{0%{transform:scale(0);}55%{transform:scale(1.18);}100%{transform:scale(1);}}
+  @keyframes vdraw{from{stroke-dashoffset:34;}to{stroke-dashoffset:0;}}
+  @keyframes vconfetti{0%{transform:translateY(-20px) rotate(0);opacity:1;}100%{transform:translateY(360px) rotate(620deg);opacity:0;}}
+  .v-overlay{animation:voverlay .22s ease both;}
+  .v-modal{animation:vmodal .42s cubic-bezier(.2,.9,.3,1.2) both;}
+  .v-check{animation:vcheckpop .5s cubic-bezier(.2,.9,.3,1.4) .12s both;}
+  .v-check path{stroke-dasharray:34;stroke-dashoffset:34;animation:vdraw .4s ease .42s forwards;}
+  .v-confetti span{position:absolute;top:-16px;width:9px;height:15px;border-radius:2px;animation:vconfetti 2.6s ease-in forwards;}
+  [data-motion="off"] .v-confetti{display:none;}
+  .v-float{animation:vfloat 6s ease-in-out infinite;}
+  .v-float-s{animation:vfloatSlow 7s ease-in-out infinite;}
+  [data-motion="off"] .v-float,[data-motion="off"] .v-float-s{animation:none;}
+  .v-card-pop{animation:vpop .5s ease both;}
+  .v-marquee{display:flex;gap:14px;width:max-content;animation:vmarq 26s linear infinite;}
+  @keyframes vmarq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  [data-motion="off"] .v-marquee{animation:none;}
+</style>
+</helmet>
+<div data-motion="{{ motionAttr }}" style="font-family:'Satoshi',-apple-system,BlinkMacSystemFont,sans-serif;color:#372F01;background:#ffffff;width:100%;overflow-x:hidden;">
+
+  <!-- NAV -->
+  <header style="max-width:1200px;margin:0 auto;padding:26px 40px;display:flex;align-items:center;justify-content:space-between;">
+    <span style="display:inline-flex;align-items:center;gap:11px;">
+      <svg width="46" height="30" viewBox="0 0 64 40" fill="none" aria-hidden="true">
+        <circle cx="22" cy="20" r="16.5" stroke="#372F01" stroke-width="5"></circle>
+        <circle cx="42" cy="20" r="16.5" stroke="#372F01" stroke-width="5"></circle>
+        <ellipse cx="32" cy="20" rx="7.5" ry="12.5" fill="#372F01"></ellipse>
+      </svg>
+      <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:27px;color:#372F01;letter-spacing:-0.5px;">Veritas</span>
+    </span>
+    <nav style="display:flex;align-items:center;gap:30px;">
+      <a href="#how" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">How it works</a>
+      <a href="#features" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Why Veritas</a>
+      <a href="Contact.dc.html" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Contact</a>
+      <a href="#join" style="text-decoration:none;display:inline-flex;align-items:center;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:999px;padding:11px 22px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 #372F01;" style-hover="transform:translate(1px,1px);box-shadow:2px 2px 0 #372F01;">Join waitlist</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="join" style="position:relative;background:radial-gradient(120% 90% at 78% 18%, #FFFBE0 0%, #FFF6D2 46%, #FCEFB3 100%);overflow:hidden;">
+    <div style="max-width:1200px;margin:0 auto;padding:64px 40px 88px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;">
+
+      <!-- left -->
+      <div style="position:relative;z-index:2;">
+        <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(55,47,1,0.06);border:1px solid rgba(55,47,1,0.16);color:#5B5430;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#0EA868;display:inline-block;"></span>
+          Coming soon · iOS &amp; Android
+        </span>
+        <h1 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:62px;line-height:1.02;letter-spacing:-1.4px;margin:22px 0 0;color:#372F01;text-wrap:balance;">
+          Get paid.<br>Every time.<br><span style="position:relative;display:inline-block;">No worries.<span style="position:absolute;left:0;right:0;bottom:6px;height:14px;background:#FEEA27;z-index:-1;border-radius:3px;"></span></span>
+        </h1>
+        <p style="font-size:19px;line-height:1.55;color:#5B5430;max-width:480px;margin:24px 0 0;font-weight:500;">
+          Veritas holds every payment safely in escrow and settles in your local currency. Built for freelancers and clients doing borderless, modern work.
+        </p>
+
+        <!-- form -->
+        <div style="margin-top:32px;max-width:480px;">
+          <sc-if value="{{ notJoined }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:10px;background:#fff;border:2px solid #372F01;border-radius:16px;padding:7px;box-shadow:5px 5px 0 rgba(55,47,1,0.9);">
+              <input value="{{ email }}" onChange="{{ onEmailChange }}" onKeyDown="{{ onKeyDown }}" type="email" placeholder="you@work.com" style="flex:1;border:none;background:transparent;font-family:'Satoshi',sans-serif;font-size:16px;font-weight:500;color:#372F01;padding:13px 14px;">
+              <button onClick="{{ onSubmit }}" style="flex:none;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:11px;padding:13px 22px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:16px;cursor:pointer;white-space:nowrap;" style-hover="background:#372F01;color:#FEEA27;">Join the waitlist</button>
+            </div>
+            <sc-if value="{{ errorMsg }}" hint-placeholder-val="">
+              <p style="margin:10px 4px 0;color:#D2492E;font-size:14px;font-weight:600;">{{ errorMsg }}</p>
+            </sc-if>
+          </sc-if>
+          <sc-if value="{{ joined }}" hint-placeholder-val="{{ false }}">
+            <div class="v-card-pop" style="display:flex;align-items:center;gap:14px;background:#fff;border:2px solid #372F01;border-radius:16px;padding:18px 20px;box-shadow:5px 5px 0 rgba(55,47,1,0.9);">
+              <span style="flex:none;width:42px;height:42px;border-radius:50%;background:#0EA868;display:flex;align-items:center;justify-content:center;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </span>
+              <div>
+                <div style="font-weight:700;font-size:16px;color:#372F01;">You're on the list!</div>
+                <div style="font-size:14px;color:#5B5430;font-weight:500;">We'll email <b>{{ joinedEmail }}</b> the moment we launch.</div>
+              </div>
+            </div>
+          </sc-if>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:18px;">
+            <div style="display:flex;">
+              <span style="width:30px;height:30px;border-radius:50%;border:2px solid #FFF6D2;background:#FEEA27;margin-right:-9px;"></span>
+              <span style="width:30px;height:30px;border-radius:50%;border:2px solid #FFF6D2;background:#0EA868;margin-right:-9px;"></span>
+              <span style="width:30px;height:30px;border-radius:50%;border:2px solid #FFF6D2;background:#372F01;margin-right:-9px;"></span>
+              <span style="width:30px;height:30px;border-radius:50%;border:2px solid #FFF6D2;background:#3C61DD;"></span>
+            </div>
+            <span style="font-size:14px;font-weight:600;color:#5B5430;"><b style="color:#372F01;">{{ count }}+</b> freelancers already waiting</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- right visual: animated onboarding carousel -->
+      <div style="position:relative;z-index:1;display:flex;justify-content:center;align-items:center;min-height:640px;">
+        <div class="v-glow" style="position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle, rgba(254,234,39,0.5) 0%, rgba(254,234,39,0) 66%);"></div>
+
+        <!-- phone frame -->
+        <div class="v-float" style="position:relative;z-index:2;width:300px;flex:none;border-radius:46px;background:#0E0D08;padding:10px;box-shadow:0 44px 80px -28px rgba(55,47,1,0.45), 0 0 0 1px rgba(0,0,0,.4) inset;">
+          <div style="position:relative;width:100%;height:600px;border-radius:37px;overflow:hidden;background:#FCFFC1;">
+
+            <!-- shared status bar -->
+            <div style="position:absolute;top:0;left:0;right:0;height:42px;z-index:60;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;pointer-events:none;">
+              <span style="font-size:13px;font-weight:700;color:#372F01;">9:41</span>
+              <div style="position:absolute;top:9px;left:50%;transform:translateX(-50%);width:96px;height:25px;background:#0E0D08;border-radius:16px;"></div>
+              <div style="display:flex;align-items:center;gap:5px;">
+                <svg width="16" height="11" viewBox="0 0 19 13" fill="#372F01"><rect x="0" y="8" width="3" height="5" rx="1"></rect><rect x="5" y="5" width="3" height="8" rx="1"></rect><rect x="10" y="2.5" width="3" height="10.5" rx="1"></rect><rect x="15" y="0" width="3" height="13" rx="1"></rect></svg>
+                <div style="display:flex;align-items:center;gap:2px;"><div style="width:21px;height:11px;border:1.5px solid #372F01;border-radius:3px;padding:1.3px;"><div style="width:70%;height:100%;background:#372F01;border-radius:1px;"></div></div><div style="width:1.5px;height:4px;background:#372F01;border-radius:1px;opacity:.6;"></div></div>
+              </div>
+            </div>
+
+            <!-- 0 · SPLASH -->
+            <div class="hero-scr {{ hs0 }}" style="background:#FEEA27;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;">
+              <div style="position:relative;width:116px;height:56px;">
+                <div style="position:absolute;left:0;top:0;width:56px;height:56px;border-radius:50%;border:4px solid #372F01;"></div>
+                <div style="position:absolute;left:30px;top:0;width:56px;height:56px;border-radius:50%;border:4px solid #372F01;"></div>
+                <div style="position:absolute;left:60px;top:0;width:56px;height:56px;border-radius:50%;border:4px solid #372F01;"></div>
+              </div>
+              <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:30px;color:#372F01;letter-spacing:-.5px;" class="anim-up d1">Veritas</span>
+            </div>
+
+            <!-- 1 · ONBOARDING 1 -->
+            <div class="hero-scr {{ hs1 }}" style="background:#FCFFC1;display:flex;flex-direction:column;padding:54px 18px 20px;">
+              <div style="display:flex;gap:7px;align-items:center;">
+                <div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div>
+              </div>
+              <div style="margin-top:30px;"><h3 style="margin:0;font-style:italic;font-weight:400;font-size:25px;line-height:1.08;color:#372F01;letter-spacing:-.4px;" class="anim-up d1">We give freelancers &amp; clients peace of mind.</h3><p style="margin:12px 0 0;font-style:italic;font-weight:500;font-size:13px;line-height:1.5;color:#5C5320;" class="anim-up d2">Focus on getting clients&rsquo; work done, while we keep your payment secured and waiting.</p></div>
+              <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative;"><div style="position:absolute;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle, rgba(254,234,39,.5) 0%, rgba(254,234,39,0) 68%);"></div><img src="assets/vault.png" alt="" style="position:relative;width:170px;height:auto;"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><span style="font-size:13px;font-weight:600;color:#9C9A7C;">Skip</span><div style="flex:1;max-width:200px;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEEA27;border-radius:13px;padding:15px;font-size:15px;font-weight:700;color:#372F01;">Next<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></div></div>
+            </div>
+
+            <!-- 2 · ONBOARDING 2 -->
+            <div class="hero-scr {{ hs2 }}" style="background:#FCFFC1;display:flex;flex-direction:column;padding:54px 18px 20px;">
+              <div style="display:flex;gap:7px;align-items:center;">
+                <div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div>
+              </div>
+              <div style="margin-top:30px;"><h3 style="margin:0;font-style:italic;font-weight:400;font-size:25px;line-height:1.08;color:#372F01;letter-spacing:-.4px;" class="anim-up d1">Receive payments locally with ease.</h3><p style="margin:12px 0 0;font-style:italic;font-weight:500;font-size:13px;line-height:1.5;color:#5C5320;" class="anim-up d2">Clients pay in USDT or USDC &mdash; you receive in NGN, GHS, KES, ZAR, USD and more. Settle in minutes.</p></div>
+              <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative;"><div style="position:absolute;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle, rgba(254,234,39,.5) 0%, rgba(254,234,39,0) 68%);"></div><img src="assets/onboard2.png" alt="" style="position:relative;width:175px;height:auto;"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><span style="font-size:13px;font-weight:600;color:#9C9A7C;">Skip</span><div style="flex:1;max-width:200px;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEEA27;border-radius:13px;padding:15px;font-size:15px;font-weight:700;color:#372F01;">Next<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></div></div>
+            </div>
+
+            <!-- 3 · ONBOARDING 3 -->
+            <div class="hero-scr {{ hs3 }}" style="background:#FCFFC1;display:flex;flex-direction:column;padding:54px 18px 20px;">
+              <div style="display:flex;gap:7px;align-items:center;">
+                <div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div>
+              </div>
+              <div style="margin-top:30px;"><h3 style="margin:0;font-style:italic;font-weight:400;font-size:25px;line-height:1.08;color:#372F01;letter-spacing:-.4px;" class="anim-up d1">Swift escrow and global payment.</h3><p style="margin:12px 0 0;font-style:italic;font-weight:500;font-size:13px;line-height:1.5;color:#5C5320;" class="anim-up d2">Seamless escrow protection for clients and freelancers &mdash; borderless payments built for modern remote work.</p></div>
+              <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative;"><div style="position:absolute;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle, rgba(254,234,39,.5) 0%, rgba(254,234,39,0) 68%);"></div><img src="assets/onboard3.png" alt="" style="position:relative;width:185px;height:auto;"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><span style="font-size:13px;font-weight:600;color:#9C9A7C;">Skip</span><div style="flex:1;max-width:200px;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEEA27;border-radius:13px;padding:15px;font-size:15px;font-weight:700;color:#372F01;">Get Started<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></div></div>
+            </div>
+
+            <!-- 4 · SIGN UP / AUTH -->
+            <div class="hero-scr {{ hs4 }}" style="background:#FCFFC1;display:flex;flex-direction:column;padding:54px 18px 22px;">
+              <div style="display:flex;gap:7px;align-items:center;">
+                <div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div>
+              </div>
+              <div style="margin-top:22px;"><span style="font-size:13px;color:#372F01;" class="anim-up d1">You are welcome to <b style="font-weight:700;">Veritas.</b></span><h3 style="margin:10px 0 0;font-weight:800;font-size:25px;line-height:1.08;color:#372F01;letter-spacing:-.7px;" class="anim-up d2">Redefining How <i style="font-weight:500;">Clients</i> Make <i style="font-weight:500;">Payments.</i></h3><p style="margin:10px 0 0;font-size:12.5px;line-height:1.5;color:#5C5320;" class="anim-up d3">Bridging the security gap between clients making payments and freelancers accepting them across the globe using <i>Escrow</i>.</p></div>
+              <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:30px;"><div style="position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle, rgba(254,234,39,.5) 0%, rgba(254,234,39,0) 68%);"></div><img src="assets/signup.png" alt="" style="position:relative;width:150px;height:auto;"></div>
+              <div style="display:flex;gap:11px;"><div style="flex:1;text-align:center;background:#FEEA27;border-radius:11px;padding:14px;font-size:14.5px;font-weight:700;color:#372F01;">Log In</div><div style="flex:1;text-align:center;background:#FEEA27;border-radius:11px;padding:14px;font-size:14.5px;font-weight:700;color:#372F01;">Register</div></div>
+              <div style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:9px;background:#000;border-radius:11px;padding:13px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.1-2.01-3.77-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.82 3.16-.47 7.84 1.31 10.41.87 1.26 1.9 2.67 3.26 2.62 1.31-.05 1.8-.85 3.39-.85 1.58 0 2.03.85 3.41.82 1.41-.02 2.3-1.28 3.16-2.55 1-1.46 1.41-2.88 1.43-2.95-.03-.01-2.74-1.05-2.77-4.17zM14.46 4.66c.72-.87 1.21-2.08 1.07-3.29-1.04.04-2.3.69-3.05 1.56-.67.77-1.26 2-1.1 3.18 1.16.09 2.35-.59 3.08-1.45z"></path></svg><span style="font-size:14px;font-weight:600;color:#fff;">Sign In With Apple</span></div>
+            </div>
+
+            <!-- 5 · HOME -->
+            <div class="hero-scr {{ hs5 }}" style="background:#FCFFC1;">
+              <div style="position:absolute;inset:0;padding:48px 16px 70px;overflow:hidden;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+                  <div style="display:flex;align-items:center;gap:8px;"><div style="position:relative;width:28px;height:16px;"><div style="position:absolute;left:0;top:0;width:16px;height:16px;border:2.2px solid #372F01;border-radius:50%;"></div><div style="position:absolute;left:10px;top:0;width:16px;height:16px;border:2.2px solid #372F01;border-radius:50%;"></div></div><span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:19px;color:#372F01;letter-spacing:-.3px;">Veritas</span></div>
+                  <div style="position:relative;width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid #ECEAD2;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg><div style="position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:#E54D2E;border:1.5px solid #fff;"></div></div>
+                </div>
+                <div style="position:relative;display:flex;background:#fff;border:1px solid #ECEAD2;border-radius:12px;padding:3px;margin-bottom:13px;"><div style="position:absolute;top:3px;bottom:3px;width:calc(50% - 3px);border-radius:9px;background:#26230F;left:3px;"></div><div style="position:relative;z-index:1;flex:1;text-align:center;padding:8px;font-size:12.5px;font-weight:700;color:#fff;">Freelancer</div><div style="position:relative;z-index:1;flex:1;text-align:center;padding:8px;font-size:12.5px;font-weight:700;color:#79775F;">Client</div></div>
+                <p style="margin:0 0 11px;font-size:13px;color:#79775F;">Good afternoon, <span style="color:#372F01;font-weight:700;">Adunni</span></p>
+                <div style="position:relative;background:#26230F;border-radius:20px;padding:17px 18px;overflow:hidden;"><div style="position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;border:16px solid rgba(254,234,39,.10);"></div><div style="position:relative;"><div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:12px;font-weight:500;color:#C9C6A6;">Available balance</span><div style="display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border-radius:20px;padding:3px 9px;"><span style="width:6px;height:6px;border-radius:50%;background:#3FCF6E;"></span><span style="font-size:10px;font-weight:600;color:#E9E7CF;">Active</span></div></div><div style="display:flex;align-items:flex-end;gap:7px;margin:8px 0 3px;"><span style="font-size:31px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:.95;">$3,240.00</span><span style="font-size:12px;font-weight:600;color:#9C9A7C;margin-bottom:4px;">USD</span></div><div style="display:inline-flex;align-items:center;gap:7px;"><span style="font-size:13px;font-weight:600;color:#FEEA27;">&asymp; &#8358;4,790,000</span><span style="background:rgba(254,234,39,.14);border-radius:20px;padding:3px 8px;font-size:10px;font-weight:600;color:#FEEA27;">$1 = &#8358;1,478</span></div><div style="display:flex;gap:10px;margin-top:15px;"><div style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#FEEA27;border-radius:12px;padding:11px;font-size:13px;font-weight:700;color:#372F01;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7 7 7-7"></path></svg>Withdraw</div><div style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:11px;font-size:13px;font-weight:700;color:#fff;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"></path></svg>Send</div></div></div></div>
+                <div style="display:flex;gap:10px;margin-top:11px;"><div style="flex:1;background:#fff;border:1px solid #ECEAD2;border-radius:15px;padding:12px;"><div style="display:flex;align-items:center;gap:6px;margin-bottom:7px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A800" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span style="font-size:11px;font-weight:600;color:#79775F;">In escrow</span></div><div style="font-size:17px;font-weight:800;color:#372F01;letter-spacing:-.4px;">$2,400</div><div style="font-size:10px;color:#9C9A7C;margin-top:1px;">2 active contracts</div></div><div style="flex:1;background:#fff;border:1px solid #ECEAD2;border-radius:15px;padding:12px;"><div style="display:flex;align-items:center;gap:6px;margin-bottom:7px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#008751" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span style="font-size:11px;font-weight:600;color:#79775F;">Earned&middot;30d</span></div><div style="font-size:17px;font-weight:800;color:#372F01;letter-spacing:-.4px;">$6,120</div><div style="font-size:10px;color:#9C9A7C;margin-top:1px;">+18% vs last</div></div></div>
+                <div style="display:flex;align-items:center;gap:12px;background:linear-gradient(100deg,#FEEA27,#FFF49B);border-radius:16px;padding:13px 15px;margin-top:11px;"><div style="flex:1;"><div style="font-size:13px;font-weight:800;color:#372F01;">Hold money in 6 currencies</div><div style="font-size:11px;color:#5C5320;margin-top:2px;">NGN &middot; KES &middot; GHS &middot; XOF &middot; USD &middot; EUR</div></div><span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#26230F;color:#FEEA27;font-weight:800;font-size:14px;border:2px solid #FEEA27;">&#8358;</span></div>
+              </div>
+              <div style="position:absolute;bottom:0;left:0;right:0;height:64px;background:rgba(255,255,255,0.95);border-top:1px solid #ECEAD2;display:flex;align-items:flex-start;justify-content:space-around;padding:9px 12px 0;">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><span style="width:38px;height:26px;border-radius:9px;background:#FEEA27;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg></span><span style="font-size:9.5px;font-weight:700;color:#372F01;">Home</span></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg><span style="font-size:9.5px;font-weight:600;color:#9C9A7C;">Contracts</span></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg><span style="font-size:9.5px;font-weight:600;color:#9C9A7C;">Activity</span></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg><span style="font-size:9.5px;font-weight:600;color:#9C9A7C;">Profile</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- currency marquee -->
+    <sc-if value="{{ showCurrency }}" hint-placeholder-val="{{ true }}">
+      <div style="border-top:1px solid rgba(55,47,1,0.12);background:rgba(255,255,255,0.35);overflow:hidden;padding:16px 0;">
+        <div class="v-marquee">
+          <span style="display:flex;gap:14px;">
+            <span style="font-weight:700;color:#5B5430;font-size:15px;padding:0 4px;">Settle in</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;background:#FEEA27;border:1px solid #372F01;border-radius:999px;padding:5px 16px;">🇳🇬 NGN</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇬🇭 GHS</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇰🇪 KES</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇿🇦 ZAR</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇺🇸 USD</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇪🇺 EUR</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇬🇧 GBP</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">USDT</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">USDC</span>
+          </span>
+          <span style="display:flex;gap:14px;" aria-hidden="true">
+            <span style="font-weight:700;color:#5B5430;font-size:15px;padding:0 4px;">Settle in</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;background:#FEEA27;border:1px solid #372F01;border-radius:999px;padding:5px 16px;">🇳🇬 NGN</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇬🇭 GHS</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇰🇪 KES</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇿🇦 ZAR</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇺🇸 USD</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇪🇺 EUR</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">🇬🇧 GBP</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">USDT</span>
+            <span style="font-weight:700;font-size:15px;color:#372F01;border:1px solid rgba(55,47,1,0.25);border-radius:999px;padding:5px 16px;">USDC</span>
+          </span>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" style="max-width:1200px;margin:0 auto;padding:96px 40px 40px;">
+    <div style="text-align:center;max-width:640px;margin:0 auto 56px;">
+      <span style="font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#B49A11;">Why Veritas</span>
+      <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-1px;margin:14px 0 0;color:#372F01;text-wrap:balance;">Peace of mind for both sides of the deal.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;">
+
+      <div style="background:#FFF6D2;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.9);display:flex;flex-direction:column;">
+        <div style="height:170px;display:flex;align-items:center;justify-content:center;margin:-6px 0 8px;">
+          <img src="assets/vault.png" alt="Escrow vault" class="v-float" style="height:170px;width:auto;filter:drop-shadow(0 16px 18px rgba(55,47,1,0.2));animation-delay:-0.5s;">
+        </div>
+        <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.4px;margin:0 0 10px;color:#372F01;">Escrow that protects everyone</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">Funds are locked the moment a project starts and released only when work is delivered. No chasing, no ghosting.</p>
+      </div>
+
+      <div style="background:#372F01;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.5);display:flex;flex-direction:column;">
+        <div style="height:170px;display:flex;align-items:center;justify-content:center;margin:-6px 0 8px;">
+          <img src="assets/onboard2.png" alt="Local currency wallet" class="v-float-s" style="height:180px;width:auto;filter:drop-shadow(0 16px 18px rgba(0,0,0,0.35));animation-delay:-2.4s;">
+        </div>
+        <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.4px;margin:0 0 10px;color:#FEEA27;">Receive locally, instantly</h3>
+        <p style="font-size:16px;line-height:1.55;color:#D9D3B4;font-weight:500;margin:0;">Clients pay in USDT or USDC — you cash out in your own currency. Settle in minutes, not weeks.</p>
+      </div>
+
+      <div style="background:#FFF6D2;border:2px solid #372F01;border-radius:24px;padding:30px 28px;box-shadow:6px 6px 0 rgba(55,47,1,0.9);display:flex;flex-direction:column;">
+        <div style="height:170px;display:flex;align-items:center;justify-content:center;margin:-6px 0 8px;">
+          <img src="assets/onboard3.png" alt="Global payments" class="v-float" style="height:170px;width:auto;filter:drop-shadow(0 16px 18px rgba(55,47,1,0.2));animation-delay:-4.2s;">
+        </div>
+        <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.4px;margin:0 0 10px;color:#372F01;">Borderless by design</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">Swift escrow and global payments built for modern remote work — across any border, in any timezone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP PREVIEW -->
+  <section style="margin-top:96px;background:#26230F;overflow:hidden;">
+    <div style="max-width:1200px;margin:0 auto;padding:84px 40px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;">
+
+      <!-- copy -->
+      <div>
+        <span style="font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#FEEA27;">Inside the app</span>
+        <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:44px;line-height:1.05;letter-spacing:-1.1px;margin:14px 0 0;color:#fff;text-wrap:balance;">Your whole escrow, in your pocket.</h2>
+        <p style="font-size:18px;line-height:1.6;color:#C9C6A6;font-weight:500;margin:18px 0 0;max-width:460px;">From the moment a client funds a project to the second you cash out — every milestone, balance and payout lives on one calm home screen.</p>
+        <div style="display:flex;flex-direction:column;gap:18px;margin:34px 0 0;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(254,234,39,0.16);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#FEEA27" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span style="font-size:16px;font-weight:600;color:#E9E7CF;">Track every contract and milestone in real time</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(254,234,39,0.16);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#FEEA27" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span style="font-size:16px;font-weight:600;color:#E9E7CF;">See funds secured in escrow before you start</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(254,234,39,0.16);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#FEEA27" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span style="font-size:16px;font-weight:600;color:#E9E7CF;">Withdraw to your local currency in minutes</span>
+          </div>
+        </div>
+        <a href="#join" style="text-decoration:none;display:inline-flex;align-items:center;gap:9px;margin-top:36px;background:#FEEA27;color:#372F01;border-radius:13px;padding:15px 26px;font-weight:700;font-size:16px;box-shadow:4px 4px 0 rgba(254,234,39,0.25);" style-hover="transform:translate(1px,1px);box-shadow:3px 3px 0 rgba(254,234,39,0.25);">Get early access
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#372F01" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </div>
+
+      <!-- phone -->
+      <div style="position:relative;display:flex;justify-content:center;">
+        <div class="v-glow" style="position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle, rgba(254,234,39,0.30) 0%, rgba(254,234,39,0) 66%);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+        <!-- floating chip -->
+        <div class="v-float-s" style="position:absolute;z-index:5;bottom:118px;left:-16px;background:#fff;border-radius:14px;padding:11px 15px;display:flex;align-items:center;gap:10px;box-shadow:0 16px 30px -10px rgba(0,0,0,0.5);">
+          <span style="width:30px;height:30px;border-radius:9px;background:#0EA868;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <div><div style="font-weight:800;font-size:13px;color:#372F01;line-height:1.1;">Milestone approved</div><div style="font-size:11px;color:#889096;font-weight:600;">+$600 released</div></div>
+        </div>
+
+        <!-- phone frame -->
+        <div class="v-float" style="position:relative;z-index:2;width:340px;flex:none;border-radius:48px;background:#0E0D08;padding:11px;box-shadow:0 50px 90px -30px rgba(0,0,0,0.7), 0 0 0 1px rgba(254,234,39,0.08) inset;">
+          <div style="position:relative;width:100%;height:716px;border-radius:38px;overflow:hidden;background:#FCFFC1;">
+
+            <!-- status bar -->
+            <div style="position:absolute;top:0;left:0;right:0;height:46px;z-index:40;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 7px;">
+              <span style="font-size:14px;font-weight:700;color:#372F01;">9:41</span>
+              <div style="position:absolute;top:11px;left:50%;transform:translateX(-50%);width:104px;height:28px;background:#0E0D08;border-radius:18px;"></div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <svg width="18" height="12" viewBox="0 0 19 13" fill="#372F01"><rect x="0" y="8" width="3" height="5" rx="1"></rect><rect x="5" y="5" width="3" height="8" rx="1"></rect><rect x="10" y="2.5" width="3" height="10.5" rx="1"></rect><rect x="15" y="0" width="3" height="13" rx="1"></rect></svg>
+                <div style="display:flex;align-items:center;gap:2px;"><div style="width:22px;height:11px;border:1.6px solid #372F01;border-radius:3px;padding:1.4px;"><div style="width:72%;height:100%;background:#372F01;border-radius:1px;"></div></div><div style="width:1.6px;height:4px;background:#372F01;border-radius:1px;opacity:.6;"></div></div>
+              </div>
+            </div>
+
+            <!-- content -->
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;padding:50px 0 88px;">
+              <div style="padding:6px 18px 0;">
+                <!-- app bar -->
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                  <div style="display:flex;align-items:center;gap:9px;">
+                    <div style="position:relative;width:30px;height:18px;">
+                      <div style="position:absolute;left:0;top:0;width:18px;height:18px;border:2.4px solid #372F01;border-radius:50%;"></div>
+                      <div style="position:absolute;left:11px;top:0;width:18px;height:18px;border:2.4px solid #372F01;border-radius:50%;"></div>
+                      <div style="position:absolute;left:11.5px;top:6px;width:6px;height:6px;background:#372F01;border-radius:50%;"></div>
+                    </div>
+                    <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:21px;color:#372F01;letter-spacing:-.3px;">Veritas</span>
+                  </div>
+                  <div style="position:relative;width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid #ECEAD2;display:flex;align-items:center;justify-content:center;">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+                    <div style="position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:#E54D2E;border:1.5px solid #fff;"></div>
+                  </div>
+                </div>
+
+                <!-- role switch -->
+                <div style="position:relative;display:flex;background:#fff;border:1px solid #ECEAD2;border-radius:13px;padding:4px;margin-bottom:16px;">
+                  <div style="position:absolute;top:4px;bottom:4px;width:calc(50% - 4px);border-radius:9px;background:#26230F;left:4px;"></div>
+                  <div style="position:relative;z-index:1;flex:1;text-align:center;padding:9px;font-size:13.5px;font-weight:700;color:#fff;">Freelancer</div>
+                  <div style="position:relative;z-index:1;flex:1;text-align:center;padding:9px;font-size:13.5px;font-weight:700;color:#79775F;">Client</div>
+                </div>
+
+                <p style="margin:0 0 13px;font-size:14px;color:#79775F;">Good afternoon, <span style="color:#372F01;font-weight:700;">Adunni</span></p>
+
+                <!-- balance card -->
+                <div style="position:relative;background:#26230F;border-radius:22px;padding:20px 20px 18px;overflow:hidden;box-shadow:0 18px 40px -18px rgba(38,35,15,.6);">
+                  <div style="position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;border:18px solid rgba(254,234,39,.10);"></div>
+                  <div style="position:relative;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                      <span style="font-size:12.5px;font-weight:500;color:#C9C6A6;">Available balance</span>
+                      <div style="display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border-radius:20px;padding:4px 10px;">
+                        <span style="width:7px;height:7px;border-radius:50%;background:#3FCF6E;"></span>
+                        <span style="font-size:10.5px;font-weight:600;color:#E9E7CF;">Active</span>
+                      </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-end;gap:8px;margin:10px 0 4px;">
+                      <span style="font-size:36px;font-weight:800;color:#fff;letter-spacing:-1.2px;line-height:.95;">$3,240.00</span>
+                      <span style="font-size:14px;font-weight:600;color:#9C9A7C;margin-bottom:4px;">USD</span>
+                    </div>
+                    <div style="display:inline-flex;align-items:center;gap:8px;margin-top:2px;">
+                      <span style="font-size:14px;font-weight:600;color:#FEEA27;">≈ ₦4,790,000</span>
+                      <span style="display:inline-flex;align-items:center;gap:3px;background:rgba(254,234,39,.14);border-radius:20px;padding:3px 9px;font-size:11px;font-weight:600;color:#FEEA27;white-space:nowrap;">$1 = ₦1,478</span>
+                    </div>
+                    <div style="display:flex;gap:11px;margin-top:18px;">
+                      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEEA27;border-radius:13px;padding:13px;font-size:14px;font-weight:700;color:#372F01;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7 7 7-7"></path></svg>Withdraw
+                      </div>
+                      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:13px;padding:13px;font-size:14px;font-weight:700;color:#fff;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"></path></svg>Send
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- escrow strip -->
+                <div style="display:flex;gap:11px;margin-top:13px;">
+                  <div style="flex:1;background:#fff;border:1px solid #ECEAD2;border-radius:17px;padding:14px;">
+                    <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A800" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                      <span style="font-size:11.5px;font-weight:600;color:#79775F;">In escrow</span>
+                    </div>
+                    <div style="font-size:19px;font-weight:800;color:#372F01;letter-spacing:-.4px;">$2,400</div>
+                    <div style="font-size:11px;color:#9C9A7C;margin-top:2px;">2 active contracts</div>
+                  </div>
+                  <div style="flex:1;background:#fff;border:1px solid #ECEAD2;border-radius:17px;padding:14px;">
+                    <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#008751" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                      <span style="font-size:11.5px;font-weight:600;color:#79775F;">Earned · 30d</span>
+                    </div>
+                    <div style="font-size:19px;font-weight:800;color:#372F01;letter-spacing:-.4px;">$6,120</div>
+                    <div style="font-size:11px;color:#9C9A7C;margin-top:2px;">+18% vs last</div>
+                  </div>
+                </div>
+
+                <!-- multi-currency teaser -->
+                <div style="display:flex;align-items:center;gap:14px;background:linear-gradient(100deg,#FEEA27,#FFF49B);border-radius:18px;padding:15px 17px;margin-top:13px;overflow:hidden;">
+                  <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:800;color:#372F01;">Hold money in 6 currencies</div>
+                    <div style="font-size:12px;color:#5C5320;margin-top:3px;">NGN · KES · GHS · XOF · USD · EUR</div>
+                  </div>
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#26230F;color:#FEEA27;font-weight:800;font-size:15px;border:2px solid #FEEA27;">₦</span>
+                </div>
+
+                <!-- active contracts -->
+                <div style="display:flex;align-items:center;justify-content:space-between;margin:22px 0 11px;">
+                  <span style="font-size:16px;font-weight:800;color:#372F01;letter-spacing:-.3px;">Active contracts</span>
+                  <span style="font-size:12.5px;font-weight:700;color:#79775F;">See all</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:11px;">
+                  <div style="background:#fff;border:1px solid #ECEAD2;border-radius:17px;padding:15px;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                      <div style="flex:none;width:42px;height:42px;border-radius:12px;background:#E3ECFF;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#2D6BDB;">LS</div>
+                      <div style="flex:1;min-width:0;">
+                        <div style="font-size:14.5px;font-weight:700;color:#372F01;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Brand identity &amp; logo</div>
+                        <div style="font-size:12px;color:#9C9A7C;margin-top:2px;">Loom Studios</div>
+                      </div>
+                      <div style="text-align:right;flex:none;">
+                        <div style="font-size:15px;font-weight:800;color:#372F01;">$1,800</div>
+                        <span style="display:inline-block;margin-top:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:#FFF1CC;color:#9A7B00;">In progress</span>
+                      </div>
+                    </div>
+                    <div style="margin-top:12px;">
+                      <div style="display:flex;justify-content:space-between;font-size:11px;color:#9C9A7C;margin-bottom:6px;"><span>Milestone 2 of 3</span><span style="font-weight:700;color:#79775F;">60%</span></div>
+                      <div style="height:7px;border-radius:6px;background:#F1EFD6;overflow:hidden;"><div style="height:100%;border-radius:6px;background:#FEEA27;width:60%;"></div></div>
+                    </div>
+                  </div>
+                  <div style="background:#fff;border:1px solid #ECEAD2;border-radius:17px;padding:15px;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                      <div style="flex:none;width:42px;height:42px;border-radius:12px;background:#DDF3E6;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#008751;">NW</div>
+                      <div style="flex:1;min-width:0;">
+                        <div style="font-size:14.5px;font-weight:700;color:#372F01;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Landing page redesign</div>
+                        <div style="font-size:12px;color:#9C9A7C;margin-top:2px;">Northwind Co.</div>
+                      </div>
+                      <div style="text-align:right;flex:none;">
+                        <div style="font-size:15px;font-weight:800;color:#372F01;">$1,200</div>
+                        <span style="display:inline-block;margin-top:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:#DDF3E6;color:#008751;">Funded</span>
+                      </div>
+                    </div>
+                    <div style="margin-top:12px;">
+                      <div style="display:flex;justify-content:space-between;font-size:11px;color:#9C9A7C;margin-bottom:6px;"><span>Milestone 1 of 4</span><span style="font-weight:700;color:#79775F;">25%</span></div>
+                      <div style="height:7px;border-radius:6px;background:#F1EFD6;overflow:hidden;"><div style="height:100%;border-radius:6px;background:#008751;width:25%;"></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- bottom nav -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:78px;background:rgba(255,255,255,0.94);backdrop-filter:blur(8px);border-top:1px solid #ECEAD2;display:flex;align-items:flex-start;justify-content:space-around;padding:12px 14px 0;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                <span style="width:42px;height:30px;border-radius:11px;background:#FEEA27;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg></span>
+                <span style="font-size:10.5px;font-weight:700;color:#372F01;">Home</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:5px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M9 13h6M9 17h6"></path></svg>
+                <span style="font-size:10.5px;font-weight:600;color:#9C9A7C;">Contracts</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:5px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                <span style="font-size:10.5px;font-weight:600;color:#9C9A7C;">Activity</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:5px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+                <span style="font-size:10.5px;font-weight:600;color:#9C9A7C;">Profile</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="max-width:1200px;margin:0 auto;padding:80px 40px 40px;">
+    <div style="text-align:center;max-width:640px;margin:0 auto 56px;">
+      <span style="font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#B49A11;">How it works</span>
+      <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-1px;margin:14px 0 0;color:#372F01;">Three steps. Zero stress.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;">
+
+      <div style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
+        <div style="position:absolute;top:-20px;left:28px;width:46px;height:46px;border-radius:13px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;font-family:'Istok Web',sans-serif;font-weight:700;font-size:22px;color:#372F01;box-shadow:3px 3px 0 #372F01;">1</div>
+        <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:21px;margin:22px 0 8px;color:#372F01;">Agree the terms</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">The client funds the project up front. The money sits safely in Veritas escrow — visible to everyone.</p>
+      </div>
+
+      <div style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
+        <div style="position:absolute;top:-20px;left:28px;width:46px;height:46px;border-radius:13px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;font-family:'Istok Web',sans-serif;font-weight:700;font-size:22px;color:#372F01;box-shadow:3px 3px 0 #372F01;">2</div>
+        <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:21px;margin:22px 0 8px;color:#372F01;">Do the work</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">Deliver with total confidence, knowing your payment is already secured and waiting for you.</p>
+      </div>
+
+      <div style="position:relative;background:#fff;border:2px solid #372F01;border-radius:24px;padding:34px 28px;">
+        <div style="position:absolute;top:-20px;left:28px;width:46px;height:46px;border-radius:13px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;font-family:'Istok Web',sans-serif;font-weight:700;font-size:22px;color:#372F01;box-shadow:3px 3px 0 #372F01;">3</div>
+        <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:21px;margin:22px 0 8px;color:#372F01;">Get paid</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:0;">Funds release to your local wallet the moment the work is approved. Instant, borderless, done.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section style="max-width:1200px;margin:80px auto 0;padding:0 40px;">
+    <div style="position:relative;overflow:hidden;background:#FEEA27;border:2px solid #372F01;border-radius:32px;padding:64px 48px;box-shadow:8px 8px 0 #372F01;text-align:center;">
+      <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.35);top:-120px;left:-80px;"></div>
+      <div style="position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(55,47,1,0.06);bottom:-110px;right:-60px;"></div>
+      <div style="position:relative;z-index:1;max-width:560px;margin:0 auto;">
+        <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:46px;line-height:1.04;letter-spacing:-1.2px;margin:0;color:#372F01;text-wrap:balance;">Be first through the door.</h2>
+        <p style="font-size:18px;line-height:1.5;color:#6B5F1E;font-weight:600;margin:16px 0 0;">Join the waitlist and we'll let you know the moment Veritas lands on iOS &amp; Android. No spam, ever.</p>
+        <div style="margin-top:28px;max-width:460px;margin-left:auto;margin-right:auto;">
+          <sc-if value="{{ notJoined }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:10px;background:#fff;border:2px solid #372F01;border-radius:16px;padding:7px;">
+              <input value="{{ email }}" onChange="{{ onEmailChange }}" onKeyDown="{{ onKeyDown }}" type="email" placeholder="you@work.com" style="flex:1;border:none;background:transparent;font-family:'Satoshi',sans-serif;font-size:16px;font-weight:500;color:#372F01;padding:13px 14px;">
+              <button onClick="{{ onSubmit }}" style="flex:none;background:#372F01;color:#FEEA27;border:2px solid #372F01;border-radius:11px;padding:13px 24px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:16px;cursor:pointer;white-space:nowrap;" style-hover="opacity:0.88;">Join the waitlist</button>
+            </div>
+            <sc-if value="{{ errorMsg }}" hint-placeholder-val="">
+              <p style="margin:10px 2px 0;color:#9A2F18;font-size:14px;font-weight:700;">{{ errorMsg }}</p>
+            </sc-if>
+          </sc-if>
+          <sc-if value="{{ joined }}" hint-placeholder-val="{{ false }}">
+            <div class="v-card-pop" style="display:inline-flex;align-items:center;gap:12px;background:#372F01;border-radius:14px;padding:16px 22px;">
+              <span style="flex:none;width:30px;height:30px;border-radius:50%;background:#0EA868;display:flex;align-items:center;justify-content:center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </span>
+              <span style="color:#FEEA27;font-weight:700;font-size:16px;">You're on the list — see you at launch!</span>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="max-width:1200px;margin:0 auto;padding:56px 40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+    <span style="display:inline-flex;align-items:center;gap:10px;">
+      <svg width="38" height="24" viewBox="0 0 64 40" fill="none" aria-hidden="true">
+        <circle cx="22" cy="20" r="16.5" stroke="#372F01" stroke-width="5"></circle>
+        <circle cx="42" cy="20" r="16.5" stroke="#372F01" stroke-width="5"></circle>
+        <ellipse cx="32" cy="20" rx="7.5" ry="12.5" fill="#372F01"></ellipse>
+      </svg>
+      <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:22px;color:#372F01;">Veritas</span>
+    </span>
+    <span style="font-size:14px;color:#889096;font-weight:500;">Redefining how clients make payments.</span>
+    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+      <div style="display:flex;gap:10px;align-items:center;">
+        <a href="#" aria-label="X (Twitter)" style="text-decoration:none;width:36px;height:36px;border-radius:10px;border:1.5px solid rgba(55,47,1,0.2);display:flex;align-items:center;justify-content:center;color:#372F01;" style-hover="background:#FFF6D2;border-color:#372F01;"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"></path></svg></a>
+        <a href="#" aria-label="LinkedIn" style="text-decoration:none;width:36px;height:36px;border-radius:10px;border:1.5px solid rgba(55,47,1,0.2);display:flex;align-items:center;justify-content:center;color:#372F01;" style-hover="background:#FFF6D2;border-color:#372F01;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5.001A2.5 2.5 0 014.98 3.5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.42 4.78 5.56V21h-4v-5.5c0-1.3-.02-3-1.85-3-1.85 0-2.13 1.43-2.13 2.9V21H9z"></path></svg></a>
+        <a href="#" aria-label="Instagram" style="text-decoration:none;width:36px;height:36px;border-radius:10px;border:1.5px solid rgba(55,47,1,0.2);display:flex;align-items:center;justify-content:center;color:#372F01;" style-hover="background:#FFF6D2;border-color:#372F01;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="2"></rect><circle cx="12" cy="12" r="3.8" stroke="currentColor" stroke-width="2"></circle><circle cx="17.2" cy="6.8" r="1.3" fill="currentColor"></circle></svg></a>
+      </div>
+      <div style="display:flex;gap:22px;">
+        <a href="Privacy.dc.html" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:14px;">Privacy</a>
+        <a href="Terms.dc.html" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:14px;">Terms</a>
+        <a href="Contact.dc.html" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:14px;">Contact</a>
+      </div>
+    </div>
+  </footer>
+  <div style="text-align:center;padding:0 40px 36px;font-size:13px;color:#B6B299;">© 2026 Veritas. All rights reserved.</div>
+
+  <!-- SUCCESS MODAL -->
+  <sc-if value="{{ showModal }}" hint-placeholder-val="{{ false }}">
+    <div class="v-overlay" onClick="{{ onCloseModal }}" style="position:fixed;inset:0;z-index:1000;background:rgba(55,47,1,0.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:24px;">
+      <div class="v-modal" onClick="{{ stopProp }}" style="position:relative;width:100%;max-width:440px;background:#fff;border:2px solid #372F01;border-radius:28px;box-shadow:8px 8px 0 #372F01;padding:46px 38px 38px;text-align:center;overflow:hidden;">
+        <!-- confetti -->
+        <div class="v-confetti" style="position:absolute;top:0;left:0;right:0;height:0;pointer-events:none;">
+          <span style="left:8%;background:#FEEA27;animation-delay:0s;"></span>
+          <span style="left:16%;background:#0EA868;animation-delay:.15s;"></span>
+          <span style="left:24%;background:#3C61DD;animation-delay:.4s;"></span>
+          <span style="left:33%;background:#372F01;animation-delay:.05s;"></span>
+          <span style="left:42%;background:#D2492E;animation-delay:.3s;"></span>
+          <span style="left:50%;background:#FEEA27;animation-delay:.55s;"></span>
+          <span style="left:58%;background:#0EA868;animation-delay:.2s;"></span>
+          <span style="left:67%;background:#3C61DD;animation-delay:.45s;"></span>
+          <span style="left:76%;background:#FEEA27;animation-delay:.1s;"></span>
+          <span style="left:84%;background:#372F01;animation-delay:.35s;"></span>
+          <span style="left:92%;background:#D2492E;animation-delay:.6s;"></span>
+          <span style="left:30%;background:#0EA868;animation-delay:.7s;"></span>
+          <span style="left:62%;background:#FEEA27;animation-delay:.8s;"></span>
+          <span style="left:48%;background:#3C61DD;animation-delay:.9s;"></span>
+        </div>
+
+        <button onClick="{{ onCloseModal }}" aria-label="Close" style="position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(55,47,1,0.2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#5B5430;" style-hover="background:#FFF6D2;border-color:#372F01;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path></svg>
+        </button>
+
+        <div style="position:relative;width:84px;height:84px;margin:6px auto 0;">
+          <div class="v-check" style="width:84px;height:84px;border-radius:50%;background:#0EA868;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(14,168,104,0.4);">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+        </div>
+
+        <h3 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.6px;margin:22px 0 0;color:#372F01;">You're on the list! 🎉</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5B5430;font-weight:500;margin:12px 0 0;">We saved your spot. We'll email <b style="color:#372F01;">{{ joinedEmail }}</b> the moment Veritas launches on iOS &amp; Android.</p>
+
+        <div style="display:inline-flex;align-items:center;gap:10px;margin:22px 0 0;background:#FFF6D2;border:2px solid #372F01;border-radius:14px;padding:11px 18px;">
+          <span style="font-size:13px;font-weight:600;color:#5B5430;text-transform:uppercase;letter-spacing:0.06em;">Your spot</span>
+          <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:20px;color:#372F01;">#{{ position }}</span>
+        </div>
+
+        <button onClick="{{ onCloseModal }}" style="display:block;width:100%;margin-top:26px;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:13px;padding:15px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:16px;cursor:pointer;box-shadow:4px 4px 0 #372F01;" style-hover="transform:translate(1px,1px);box-shadow:3px 3px 0 #372F01;">Can't wait — back to site</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;waitlistCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2000,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:1000000,&quot;step&quot;:100},&quot;showCurrencyStrip&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { email: "", joined: false, joinedEmail: "", errorMsg: "", showModal: false, heroScreen: 0 };
+
+  componentDidMount() {
+    try {
+      const saved = localStorage.getItem("veritas_waitlist_email");
+      if (saved) this.setState({ joined: true, joinedEmail: saved });
+    } catch (e) {}
+    this._onKey = (e) => { if (e.key === "Escape" && this.state.showModal) this.setState({ showModal: false }); };
+    window.addEventListener("keydown", this._onKey);
+    if (this.props.reduceMotion) {
+      this.setState({ heroScreen: 5 });
+    } else {
+      this._heroTimer = setInterval(() => {
+        this.setState((s) => ({ heroScreen: (s.heroScreen + 1) % 6 }));
+      }, 2600);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._onKey) window.removeEventListener("keydown", this._onKey);
+    if (this._heroTimer) clearInterval(this._heroTimer);
+  }
+
+  submit = () => {
+    const email = (this.state.email || "").trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!ok) {
+      this.setState({ errorMsg: "Please enter a valid email address." });
+      return;
+    }
+    try { localStorage.setItem("veritas_waitlist_email", email); } catch (e) {}
+    this.setState({ joined: true, joinedEmail: email, errorMsg: "", showModal: true });
+  };
+
+  renderVals() {
+    const base = this.props.waitlistCount ?? 2000;
+    const count = base.toLocaleString();
+    const hs = this.state.heroScreen;
+    const heroCls = {};
+    for (let i = 0; i < 6; i++) heroCls["hs" + i] = (hs === i ? "on" : "");
+    const dots = {};
+    for (let i = 0; i < 6; i++) {
+      dots["dot" + i + "w"] = (hs === i ? "20px" : "6px");
+      dots["dot" + i + "c"] = (hs === i ? "#372F01" : "rgba(55,47,1,0.22)");
+    }
+    return {
+      ...heroCls,
+      ...dots,
+      email: this.state.email,
+      joined: this.state.joined,
+      notJoined: !this.state.joined,
+      joinedEmail: this.state.joinedEmail,
+      errorMsg: this.state.errorMsg,
+      count,
+      position: (base + 1).toLocaleString(),
+      showModal: this.state.showModal,
+      showCurrency: this.props.showCurrencyStrip ?? true,
+      motionAttr: (this.props.reduceMotion ? "off" : "on"),
+      onEmailChange: (e) => this.setState({ email: e.target.value, errorMsg: "" }),
+      onKeyDown: (e) => { if (e.key === "Enter") this.submit(); },
+      onSubmit: () => this.submit(),
+      onCloseModal: () => this.setState({ showModal: false }),
+      stopProp: (e) => e.stopPropagation(),
+    };
+  }
+}
+</script>
+</body>
+</html>
