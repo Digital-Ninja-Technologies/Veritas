@@ -40,26 +40,62 @@ html,body{margin:0;padding:0;background:#fff;}
 .v-confetti span{position:absolute;top:0;width:10px;height:10px;border-radius:2px;animation:vconfetti 1.4s ease-out both;}
 .btn-modal-close:hover{background:#FFF6D2 !important;border-color:#372F01 !important;}
 .btn-modal-back:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 #372F01 !important;}
+.page-header-inner{display:flex;align-items:center;justify-content:space-between;}
+.page-nav{display:flex;align-items:center;gap:30px;}
+.nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px;align-items:center;justify-content:center;}
+.nav-hamburger span{display:block;width:22px;height:2.5px;background:#372F01;border-radius:2px;transition:transform .25s,opacity .25s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+.mob-nav{display:none;position:fixed;inset:0;z-index:490;background:rgba(255,246,210,0.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px;}
+.mob-nav.open{display:flex;}
+@media(max-width:1024px){
+.page-header-inner{padding:20px 28px !important;}
+.legal-inner{padding:48px 28px 60px !important;}
+}
+@media(max-width:640px){
+.page-header-inner{padding:14px 20px !important;}
+.page-nav{display:none !important;}
+.nav-hamburger{display:flex !important;}
+.legal-inner{padding:36px 20px 48px !important;}
+.legal-inner h1{font-size:32px !important;letter-spacing:-0.6px !important;}
+.footer-flex-legal{padding:36px 20px 24px !important;flex-direction:column !important;align-items:flex-start !important;gap:20px !important;}
+.footer-copy-legal{padding:0 20px 22px !important;}
+.wl-modal-hdr{padding:26px 20px 20px !important;}
+.wl-modal-h2{font-size:26px !important;}
+.wl-modal-body{padding:18px 20px 24px !important;}
+.wl-form-row{flex-direction:column !important;gap:8px !important;}
+.wl-submit{border-radius:9px !important;padding:13px !important;width:100% !important;}
+}
 </style>
 </head>
 <body style="font-family:'Satoshi',-apple-system,BlinkMacSystemFont,sans-serif;color:#372F01;background:#fff;overflow-x:hidden;">
 
-<header style="max-width:1200px;margin:0 auto;padding:26px 40px;display:flex;align-items:center;justify-content:space-between;">
-  <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;gap:11px;">
-    <svg width="46" height="30" viewBox="0 0 64 40" fill="none" aria-hidden="true">
-      <circle cx="22" cy="20" r="16.5" stroke="#372F01" stroke-width="5"/>
-      <circle cx="42" cy="20" r="16.5" stroke="#372F01" stroke-width="5"/>
-      <ellipse cx="32" cy="20" rx="7.5" ry="12.5" fill="#372F01"/>
-    </svg>
-    <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:27px;color:#372F01;letter-spacing:-0.5px;">Veritas</span>
-  </a>
-  <nav style="display:flex;align-items:center;gap:30px;">
-    <a href="index.html#how" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">How it works</a>
-    <a href="index.html#features" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Why Veritas</a>
-    <a href="contact.html" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Contact</a>
-    <button onclick="openWaitlistModal()" class="nav-cta" style="display:inline-flex;align-items:center;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:999px;padding:11px 22px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 #372F01;transition:transform .15s,box-shadow .15s;cursor:pointer;font-family:'Satoshi',sans-serif;">Join waitlist</button>
-  </nav>
+<header style="background:#fff;">
+  <div class="page-header-inner" style="max-width:1200px;margin:0 auto;padding:26px 40px;">
+    <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;gap:11px;">
+      <svg width="46" height="30" viewBox="0 0 64 40" fill="none" aria-hidden="true">
+        <circle cx="22" cy="20" r="16.5" stroke="#372F01" stroke-width="5"/>
+        <circle cx="42" cy="20" r="16.5" stroke="#372F01" stroke-width="5"/>
+        <ellipse cx="32" cy="20" rx="7.5" ry="12.5" fill="#372F01"/>
+      </svg>
+      <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:27px;color:#372F01;letter-spacing:-0.5px;">Veritas</span>
+    </a>
+    <nav class="page-nav" style="display:flex;align-items:center;gap:30px;">
+      <a href="index.html#how" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">How it works</a>
+      <a href="index.html#features" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Why Veritas</a>
+      <a href="contact.html" style="text-decoration:none;color:#5B5430;font-weight:500;font-size:16px;">Contact</a>
+      <button onclick="openWaitlistModal()" class="nav-cta" style="display:inline-flex;align-items:center;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:999px;padding:11px 22px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 #372F01;transition:transform .15s,box-shadow .15s;cursor:pointer;font-family:'Satoshi',sans-serif;">Join waitlist</button>
+    </nav>
+    <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
 </header>
+<div class="mob-nav" id="mob-nav">
+  <a href="index.html#how" onclick="closeMobileNav()" style="text-decoration:none;color:#372F01;font-weight:700;font-size:22px;">How it works</a>
+  <a href="index.html#features" onclick="closeMobileNav()" style="text-decoration:none;color:#372F01;font-weight:700;font-size:22px;">Why Veritas</a>
+  <a href="contact.html" style="text-decoration:none;color:#372F01;font-weight:700;font-size:22px;">Contact</a>
+  <button onclick="closeMobileNav();openWaitlistModal();" style="background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:999px;padding:14px 32px;font-weight:700;font-size:18px;box-shadow:3px 3px 0 #372F01;cursor:pointer;font-family:'Satoshi',sans-serif;">Join waitlist</button>
+</div>
 
 <section style="background:radial-gradient(120% 90% at 78% 18%, #FFFBE0 0%, #FFF6D2 46%, #FCEFB3 100%);border-bottom:1px solid rgba(55,47,1,0.1);">
   <div style="max-width:760px;margin:0 auto;padding:64px 40px 56px;">
@@ -71,7 +107,7 @@ html,body{margin:0;padding:0;background:#fff;}
   </div>
 </section>
 
-<main style="max-width:760px;margin:0 auto;padding:56px 40px 24px;">
+<main class="legal-inner" style="max-width:760px;margin:0 auto;padding:56px 40px 24px;">
   <p style="font-size:17px;line-height:1.75;color:#5B5430;font-weight:500;margin:0 0 28px;">These terms govern your use of the Veritas website and waitlist (the "Service"). By joining the waitlist you agree to them. Veritas is a product in development; nothing here is an offer of financial services until the app officially launches.</p>
 
   <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:25px;letter-spacing:-0.4px;color:#372F01;margin:40px 0 12px;">1. The waitlist</h2>
@@ -102,7 +138,7 @@ html,body{margin:0;padding:0;background:#fff;}
 </main>
 
 <footer style="border-top:1px solid rgba(55,47,1,0.1);margin-top:48px;">
-  <div style="max-width:1200px;margin:0 auto;padding:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+  <div class="footer-flex-legal" style="max-width:1200px;margin:0 auto;padding:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
     <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;">
       <svg width="38" height="24" viewBox="0 0 64 40" fill="none" aria-hidden="true"><circle cx="22" cy="20" r="16.5" stroke="#372F01" stroke-width="5"/><circle cx="42" cy="20" r="16.5" stroke="#372F01" stroke-width="5"/><ellipse cx="32" cy="20" rx="7.5" ry="12.5" fill="#372F01"/></svg>
       <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:22px;color:#372F01;">Veritas</span>
@@ -120,7 +156,7 @@ html,body{margin:0;padding:0;background:#fff;}
       </div>
     </div>
   </div>
-  <div style="text-align:center;padding:0 40px 36px;font-size:13px;color:#B6B299;">© 2026 Veritas. All rights reserved.</div>
+  <div class="footer-copy-legal" style="text-align:center;padding:0 40px 36px;font-size:13px;color:#B6B299;">© 2026 Veritas. All rights reserved.</div>
 </footer>
 
 <!-- WAITLIST POPUP MODAL -->
@@ -129,15 +165,15 @@ html,body{margin:0;padding:0;background:#fff;}
     <button onclick="closeWaitlistModal()" class="wl-close" aria-label="Close" style="position:absolute;top:16px;right:16px;z-index:10;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(55,47,1,0.2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#5B5430;transition:background .15s,border-color .15s;">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
     </button>
-    <div style="background:#FEEA27;padding:38px 38px 32px;border-bottom:2px solid #372F01;">
+    <div class="wl-modal-hdr" style="background:#FEEA27;padding:38px 38px 32px;border-bottom:2px solid #372F01;">
       <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(55,47,1,0.08);border:1px solid rgba(55,47,1,0.18);color:#5B5430;font-weight:600;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:6px 13px;border-radius:999px;margin-bottom:18px;">
         <span style="width:6px;height:6px;border-radius:50%;background:#0EA868;display:inline-block;"></span>
         <span id="wl-count-badge">50+</span> already waiting
       </span>
-      <h2 style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:38px;line-height:1.04;letter-spacing:-1px;margin:0 0 12px;color:#372F01;">Be first through<br>the door.</h2>
+      <h2 class="wl-modal-h2" style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:38px;line-height:1.04;letter-spacing:-1px;margin:0 0 12px;color:#372F01;">Be first through<br>the door.</h2>
       <p style="font-size:16px;line-height:1.5;color:#5B5430;font-weight:500;margin:0;">Join the waitlist and get priority access when Veritas lands on iOS &amp; Android.</p>
     </div>
-    <div style="padding:26px 38px 34px;">
+    <div class="wl-modal-body" style="padding:26px 38px 34px;">
       <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:24px;">
         <div style="display:flex;align-items:center;gap:12px;">
           <span style="flex:none;width:28px;height:28px;border-radius:8px;background:#FEEA27;border:1.5px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -152,7 +188,7 @@ html,body{margin:0;padding:0;background:#fff;}
           <span style="font-size:15px;font-weight:600;color:#372F01;">Priority beta access before public launch</span>
         </div>
       </div>
-      <div style="display:flex;gap:9px;background:#fff;border:2px solid #372F01;border-radius:14px;padding:6px;">
+      <div class="wl-form-row" style="display:flex;gap:9px;background:#fff;border:2px solid #372F01;border-radius:14px;padding:6px;">
         <input id="wl-email" type="email" placeholder="you@work.com" style="flex:1;border:none;background:transparent;font-family:'Satoshi',sans-serif;font-size:16px;font-weight:500;color:#372F01;padding:12px 13px;">
         <button onclick="submitWaitlist()" class="wl-submit" style="flex:none;background:#FEEA27;color:#372F01;border:2px solid #372F01;border-radius:10px;padding:12px 22px;font-family:'Satoshi',sans-serif;font-weight:700;font-size:15px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;">Join waitlist →</button>
       </div>
@@ -205,6 +241,21 @@ html,body{margin:0;padding:0;background:#fff;}
 </div>
 
 <script>
+window.toggleMobileNav = function() {
+  var btn = document.getElementById('nav-hamburger');
+  var nav = document.getElementById('mob-nav');
+  btn.classList.toggle('open');
+  nav.classList.toggle('open');
+  document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+};
+window.closeMobileNav = function() {
+  document.getElementById('nav-hamburger').classList.remove('open');
+  document.getElementById('mob-nav').classList.remove('open');
+  document.body.style.overflow = '';
+};
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeMobileNav(); }
+});
 (function() {
   const BASE_COUNT = 50;
   let waitlistCount = BASE_COUNT;
