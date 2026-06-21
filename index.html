@@ -784,6 +784,13 @@ input:focus{outline:none;}
     errorEl.style.display = 'none';
     try { localStorage.setItem('veritas_waitlist_email', email); } catch(e) {}
 
+    // Send to Formspree (fire and proceed — don't block UX)
+    fetch('https://formspree.io/f/xaqgwbra', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({email: email})
+    }).catch(function() {});
+
     // Increment count and persist
     waitlistCount += 1;
     try { localStorage.setItem('veritas_waitlist_count', waitlistCount); } catch(e) {}
