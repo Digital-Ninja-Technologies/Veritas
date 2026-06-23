@@ -41,11 +41,17 @@ input:focus{outline:none;}
 @keyframes vcheckpop{0%{transform:scale(0);}55%{transform:scale(1.18);}100%{transform:scale(1);}}
 @keyframes vdraw{from{stroke-dashoffset:34;}to{stroke-dashoffset:0;}}
 @keyframes vconfetti{0%{transform:translateY(-20px) rotate(0);opacity:1;}100%{transform:translateY(360px) rotate(620deg);opacity:0;}}
+@keyframes vtap{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(2.5);opacity:0;}}
+@keyframes clfill{from{width:0;}to{width:100%;}}
+@keyframes clcheck{0%{transform:scale(0);}55%{transform:scale(1.18);}100%{transform:scale(1);}}
 
 .v-glow{animation:vglow 5s ease-in-out infinite;will-change:transform;}
 .v-float{animation:vfloat 6s ease-in-out infinite;will-change:transform;}
 .v-float-s{animation:vfloatSlow 7s ease-in-out infinite;will-change:transform;}
 .v-card-pop{animation:vpop .5s ease both;}
+.v-tap{position:absolute;width:30px;height:30px;border-radius:50%;animation:vtap 1.8s ease-out infinite;transform-origin:center center;}
+.cl-fill{animation:clfill 2.9s ease forwards;}
+.cl-check{animation:clcheck .5s cubic-bezier(.2,.9,.3,1.4) both;}
 
 .hero-scr{position:absolute;inset:0;opacity:0;transform:translateX(26px) scale(.985);transition:opacity .6s ease,transform .6s ease;pointer-events:none;}
 .hero-scr.on{opacity:1;transform:translateX(0) scale(1);pointer-events:auto;}
@@ -109,6 +115,8 @@ input:focus{outline:none;}
 .features-grid{grid-template-columns:1fr 1fr !important;}
 .app-preview-inner{padding:64px 28px !important;gap:36px !important;}
 .app-preview-h2{font-size:36px !important;}
+.client-section-inner{padding:64px 28px !important;gap:36px !important;}
+.client-h2{font-size:36px !important;}
 .how-grid{grid-template-columns:1fr 1fr !important;}
 .cta-inner{padding:48px 32px !important;}
 .cta-h2{font-size:38px !important;}
@@ -134,6 +142,12 @@ input:focus{outline:none;}
 .app-preview-phone-wrap .v-glow{display:none !important;}
 .app-preview-phone-wrap .v-float-s{display:none !important;}
 .app-preview-h2{font-size:28px !important;letter-spacing:-0.5px !important;}
+.client-section-inner{grid-template-columns:1fr !important;padding:44px 20px 0 !important;gap:24px !important;}
+.client-phone-wrap{justify-content:center !important;padding-top:24px;padding-bottom:44px;}
+.client-phone-wrap .v-glow{display:none !important;}
+.client-phone-wrap .v-float-top{display:none !important;}
+.client-phone-wrap .v-float-s{display:none !important;}
+.client-h2{font-size:28px !important;letter-spacing:-0.5px !important;}
 .how-grid{grid-template-columns:1fr !important;}
 .section-pad-how{padding:56px 20px 32px !important;}
 .cta-section{margin:48px auto 0 !important;padding:0 20px !important;}
@@ -238,7 +252,7 @@ input:focus{outline:none;}
 
       <!-- phone frame -->
       <div class="v-float" style="position:relative;z-index:2;width:300px;flex:none;border-radius:46px;background:#0E0D08;padding:10px;box-shadow:0 44px 80px -28px rgba(55,47,1,0.45), 0 0 0 1px rgba(0,0,0,.4) inset;">
-        <div style="position:relative;width:100%;height:600px;border-radius:37px;overflow:hidden;background:#FCFFC1;">
+        <div id="hero-phone" style="position:relative;width:100%;height:600px;border-radius:37px;overflow:hidden;background:#FCFFC1;">
 
           <!-- status bar -->
           <div style="position:absolute;top:0;left:0;right:0;height:42px;z-index:60;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;pointer-events:none;">
@@ -603,6 +617,211 @@ input:focus{outline:none;}
   </div>
 </section>
 
+<!-- CLIENT SIDE -->
+<section style="background:radial-gradient(120% 90% at 22% 16%, #FFFBE0 0%, #FAF4D6 52%, #F2E9C0 100%);overflow:hidden;border-top:1px solid rgba(55,47,1,0.08);">
+  <div class="client-section-inner" style="max-width:1200px;margin:0 auto;padding:84px 40px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;">
+
+    <!-- phone (left) -->
+    <div class="client-phone-wrap" style="position:relative;display:flex;justify-content:center;">
+      <div class="v-glow" style="position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle, rgba(254,234,39,0.34) 0%, rgba(254,234,39,0) 66%);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+      <!-- floating chips -->
+      <div class="v-float v-float-top" style="position:absolute;z-index:5;top:88px;left:-16px;background:#26230F;border-radius:13px;padding:10px 13px;display:flex;align-items:center;gap:9px;box-shadow:0 16px 30px -12px rgba(0,0,0,0.45);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FEEA27" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span style="font-weight:700;font-size:12px;color:#fff;">Funds protected</span>
+      </div>
+      <div class="v-float-s" style="position:absolute;z-index:5;bottom:126px;right:-18px;background:#fff;border-radius:14px;padding:11px 15px;display:flex;align-items:center;gap:10px;box-shadow:0 16px 30px -12px rgba(55,47,1,0.4);">
+        <span style="width:30px;height:30px;border-radius:9px;background:#0EA868;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div><div style="font-weight:800;font-size:13px;color:#372F01;line-height:1.1;">Escrow funded</div><div style="font-size:11px;color:#889096;font-weight:600;">$2,400 locked safely</div></div>
+      </div>
+
+      <!-- phone frame -->
+      <div class="v-float" style="position:relative;z-index:2;width:340px;flex:none;border-radius:48px;background:#0E0D08;padding:11px;box-shadow:0 50px 90px -30px rgba(55,47,1,0.55), 0 0 0 1px rgba(254,234,39,0.08) inset;animation-delay:-1.6s;">
+        <div id="client-phone" style="position:relative;width:100%;height:716px;border-radius:38px;overflow:hidden;background:#FCFFC1;">
+
+          <!-- status bar -->
+          <div style="position:absolute;top:0;left:0;right:0;height:46px;z-index:40;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 7px;">
+            <span style="font-size:14px;font-weight:700;color:#372F01;">9:41</span>
+            <div style="position:absolute;top:11px;left:50%;transform:translateX(-50%);width:104px;height:28px;background:#0E0D08;border-radius:18px;"></div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <svg width="18" height="12" viewBox="0 0 19 13" fill="#372F01"><rect x="0" y="8" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="8" rx="1"/><rect x="10" y="2.5" width="3" height="10.5" rx="1"/><rect x="15" y="0" width="3" height="13" rx="1"/></svg>
+              <div style="display:flex;align-items:center;gap:2px;"><div style="width:22px;height:11px;border:1.6px solid #372F01;border-radius:3px;padding:1.4px;"><div style="width:72%;height:100%;background:#372F01;border-radius:1px;"></div></div><div style="width:1.6px;height:4px;background:#372F01;border-radius:1px;opacity:.6;"></div></div>
+            </div>
+          </div>
+
+          <!-- CS0: CLIENT DASHBOARD -->
+          <div class="hero-scr on" id="cs0" style="background:#FCFFC1;">
+            <div style="position:absolute;inset:0;padding:50px 0 84px;overflow:hidden;">
+              <div style="padding:6px 16px 0;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;">
+                  <div style="display:flex;align-items:center;gap:9px;">
+                    <div style="position:relative;width:30px;height:18px;"><div style="position:absolute;left:0;top:0;width:18px;height:18px;border:2.4px solid #372F01;border-radius:50%;"></div><div style="position:absolute;left:11px;top:0;width:18px;height:18px;border:2.4px solid #372F01;border-radius:50%;"></div><div style="position:absolute;left:11.5px;top:6px;width:6px;height:6px;background:#372F01;border-radius:50%;"></div></div>
+                    <span style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:20px;color:#372F01;letter-spacing:-.3px;">Veritas</span>
+                  </div>
+                  <div style="position:relative;width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #ECEAD2;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><div style="position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:#E54D2E;border:1.5px solid #fff;"></div></div>
+                </div>
+                <div style="position:relative;display:flex;background:#fff;border:1px solid #ECEAD2;border-radius:13px;padding:4px;margin-bottom:14px;">
+                  <div style="position:absolute;top:4px;bottom:4px;width:calc(50% - 4px);border-radius:9px;background:#26230F;right:4px;"></div>
+                  <div style="position:relative;z-index:1;flex:1;text-align:center;padding:9px;font-size:13.5px;font-weight:700;color:#79775F;">Freelancer</div>
+                  <div style="position:relative;z-index:1;flex:1;text-align:center;padding:9px;font-size:13.5px;font-weight:700;color:#fff;">Client</div>
+                </div>
+                <p style="margin:0 0 12px;font-size:14px;color:#79775F;">Good afternoon, <span style="color:#372F01;font-weight:700;">Tobi</span></p>
+                <div style="position:relative;background:#26230F;border-radius:22px;padding:18px 20px 16px;overflow:hidden;box-shadow:0 18px 40px -18px rgba(38,35,15,.6);">
+                  <div style="position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;border:18px solid rgba(254,234,39,.10);"></div>
+                  <div style="position:relative;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:12.5px;font-weight:500;color:#C9C6A6;">Wallet balance</span><div style="display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border-radius:20px;padding:4px 10px;"><span style="width:7px;height:7px;border-radius:50%;background:#3FCF6E;"></span><span style="font-size:10.5px;font-weight:600;color:#E9E7CF;">USDC</span></div></div>
+                    <div style="display:flex;align-items:flex-end;gap:8px;margin:9px 0 3px;"><span style="font-size:34px;font-weight:800;color:#fff;letter-spacing:-1.2px;line-height:.95;">$8,500.00</span><span style="font-size:13px;font-weight:600;color:#9C9A7C;margin-bottom:4px;">USD</span></div>
+                    <div style="display:flex;gap:11px;margin-top:16px;"><div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEEA27;border-radius:13px;padding:12px;font-size:13.5px;font-weight:700;color:#372F01;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Add funds</div><div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:13px;padding:12px;font-size:13.5px;font-weight:700;color:#fff;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7 7 7-7"/></svg>Withdraw</div></div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:11px;margin-top:13px;">
+                  <div style="flex:1;background:#fff;border:1px solid #ECEAD2;border-radius:17px;padding:13px;"><div style="display:flex;align-items:center;gap:7px;margin-bottom:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A800" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span style="font-size:11.5px;font-weight:600;color:#79775F;">In escrow</span></div><div style="font-size:18px;font-weight:800;color:#372F01;letter-spacing:-.4px;">$3,000</div><div style="font-size:11px;color:#9C9A7C;margin-top:1px;">2 active contracts</div></div>
+                  <div style="flex:1;background:#fff;border:1px solid #ECEAD2;border-radius:17px;padding:13px;"><div style="display:flex;align-items:center;gap:7px;margin-bottom:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#008751" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span style="font-size:11.5px;font-weight:600;color:#79775F;">Released · 30d</span></div><div style="font-size:18px;font-weight:800;color:#372F01;letter-spacing:-.4px;">$5,400</div><div style="font-size:11px;color:#9C9A7C;margin-top:1px;">4 paid out</div></div>
+                </div>
+                <div style="position:relative;margin-top:14px;">
+                  <div style="display:flex;align-items:center;justify-content:center;gap:9px;background:#FEEA27;border:2px solid #372F01;border-radius:14px;padding:15px;font-size:15px;font-weight:800;color:#372F01;box-shadow:3px 3px 0 #372F01;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>New escrow contract</div>
+                  <span class="v-tap" style="border:2.5px solid #372F01;"></span>
+                  <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#372F01;"></span>
+                </div>
+                <p style="margin:13px 2px 0;font-size:11.5px;color:#9C9A7C;text-align:center;">Fund a project and protect your payment.</p>
+              </div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:78px;background:rgba(255,255,255,0.94);backdrop-filter:blur(8px);border-top:1px solid #ECEAD2;display:flex;align-items:flex-start;justify-content:space-around;padding:12px 14px 0;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;"><span style="width:42px;height:30px;border-radius:11px;background:#FEEA27;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span><span style="font-size:10.5px;font-weight:700;color:#372F01;">Home</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:5px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg><span style="font-size:10.5px;font-weight:600;color:#9C9A7C;">Contracts</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:5px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span style="font-size:10.5px;font-weight:600;color:#9C9A7C;">Activity</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:5px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C9A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span style="font-size:10.5px;font-weight:600;color:#9C9A7C;">Profile</span></div>
+            </div>
+          </div>
+
+          <!-- CS1: PROJECT DETAILS -->
+          <div class="hero-scr" id="cs1" style="background:#FCFFC1;display:flex;flex-direction:column;padding:54px 16px 18px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div style="width:34px;height:34px;border-radius:11px;background:#fff;border:1px solid #ECEAD2;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+              <span style="font-size:15px;font-weight:800;color:#372F01;">New escrow</span>
+              <span style="font-size:11px;font-weight:700;color:#9A7B00;background:#FFF1CC;border-radius:20px;padding:5px 10px;">Step 1 of 3</span>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:16px;"><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div></div>
+            <h3 class="anim-up d1" style="margin:20px 0 0;font-family:'Istok Web',sans-serif;font-weight:700;font-size:19px;color:#372F01;letter-spacing:-.4px;">Who's it for &amp; what's the work?</h3>
+            <div class="anim-up d1" style="margin-top:16px;">
+              <label style="font-size:12px;font-weight:700;color:#79775F;margin-bottom:7px;display:block;">Project title</label>
+              <div style="background:#fff;border:1.5px solid #ECEAD2;border-radius:13px;padding:13px 14px;font-size:14px;font-weight:600;color:#372F01;">Brand identity &amp; logo</div>
+            </div>
+            <div class="anim-up d2" style="margin-top:14px;">
+              <label style="font-size:12px;font-weight:700;color:#79775F;margin-bottom:7px;display:block;">Freelancer</label>
+              <div style="display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid #372F01;border-radius:14px;padding:11px 13px;">
+                <span style="flex:none;width:38px;height:38px;border-radius:11px;background:#E3ECFF;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#2D6BDB;">AA</span>
+                <div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:#372F01;">Adunni Adeyemi</div><div style="font-size:11.5px;color:#9C9A7C;">@adun.designs · ★ 4.9</div></div>
+                <span style="flex:none;width:24px;height:24px;border-radius:50%;background:#0EA868;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="anim-up d3" style="margin-top:14px;">
+              <label style="font-size:12px;font-weight:700;color:#79775F;margin-bottom:7px;display:block;">Category</label>
+              <div style="display:flex;gap:8px;"><span style="border-radius:20px;padding:8px 14px;font-size:12.5px;font-weight:700;background:#372F01;color:#fff;">Design</span><span style="border-radius:20px;padding:8px 14px;font-size:12.5px;font-weight:700;background:#fff;border:1px solid #ECEAD2;color:#79775F;">Writing</span><span style="border-radius:20px;padding:8px 14px;font-size:12.5px;font-weight:700;background:#fff;border:1px solid #ECEAD2;color:#79775F;">Development</span></div>
+            </div>
+            <div style="flex:1;"></div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;background:#FEEA27;border:2px solid #372F01;border-radius:13px;padding:15px;font-size:15px;font-weight:800;color:#372F01;box-shadow:3px 3px 0 #372F01;">Continue<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+
+          <!-- CS2: BUDGET & MILESTONES -->
+          <div class="hero-scr" id="cs2" style="background:#FCFFC1;display:flex;flex-direction:column;padding:54px 16px 18px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div style="width:34px;height:34px;border-radius:11px;background:#fff;border:1px solid #ECEAD2;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+              <span style="font-size:15px;font-weight:800;color:#372F01;">New escrow</span>
+              <span style="font-size:11px;font-weight:700;color:#9A7B00;background:#FFF1CC;border-radius:20px;padding:5px 10px;">Step 2 of 3</span>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:16px;"><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:rgba(55,47,1,0.13);"></div></div>
+            <div class="anim-up d1" style="margin-top:18px;">
+              <label style="font-size:12px;font-weight:700;color:#79775F;margin-bottom:7px;display:block;">Total budget</label>
+              <div style="background:#26230F;border-radius:16px;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;">
+                <div><div style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1;">$2,400.00</div><div style="font-size:11.5px;color:#FEEA27;margin-top:4px;">≈ ₦3,547,000</div></div>
+                <span style="background:rgba(254,234,39,.14);border-radius:20px;padding:5px 11px;font-size:11px;font-weight:700;color:#FEEA27;">USDC</span>
+              </div>
+            </div>
+            <div class="anim-up d2" style="margin-top:15px;">
+              <label style="font-size:12px;font-weight:700;color:#79775F;margin-bottom:8px;display:block;">Milestones (3)</label>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid #ECEAD2;border-radius:13px;padding:11px 13px;"><span style="flex:none;width:26px;height:26px;border-radius:8px;background:#FFF1CC;color:#9A7B00;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;">1</span><div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:700;color:#372F01;">Concept &amp; moodboard</div><div style="font-size:11px;color:#9C9A7C;">Due in 5 days</div></div><span style="font-size:14px;font-weight:800;color:#372F01;">$800</span></div>
+                <div style="display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid #ECEAD2;border-radius:13px;padding:11px 13px;"><span style="flex:none;width:26px;height:26px;border-radius:8px;background:#FFF1CC;color:#9A7B00;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;">2</span><div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:700;color:#372F01;">Design &amp; revisions</div><div style="font-size:11px;color:#9C9A7C;">Due in 12 days</div></div><span style="font-size:14px;font-weight:800;color:#372F01;">$800</span></div>
+                <div style="display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid #ECEAD2;border-radius:13px;padding:11px 13px;"><span style="flex:none;width:26px;height:26px;border-radius:8px;background:#FFF1CC;color:#9A7B00;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;">3</span><div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:700;color:#372F01;">Final files &amp; handoff</div><div style="font-size:11px;color:#9C9A7C;">Due in 18 days</div></div><span style="font-size:14px;font-weight:800;color:#372F01;">$800</span></div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:7px;border:1.5px dashed #C9C6A6;border-radius:13px;padding:11px;font-size:13px;font-weight:700;color:#79775F;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#79775F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Add milestone</div>
+              </div>
+            </div>
+            <div style="flex:1;"></div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;background:#FEEA27;border:2px solid #372F01;border-radius:13px;padding:15px;font-size:15px;font-weight:800;color:#372F01;box-shadow:3px 3px 0 #372F01;">Continue<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+
+          <!-- CS3: REVIEW & FUND -->
+          <div class="hero-scr" id="cs3" style="background:#FCFFC1;display:flex;flex-direction:column;padding:54px 16px 18px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div style="width:34px;height:34px;border-radius:11px;background:#fff;border:1px solid #ECEAD2;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#372F01" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+              <span style="font-size:15px;font-weight:800;color:#372F01;">Review &amp; fund</span>
+              <span style="font-size:11px;font-weight:700;color:#9A7B00;background:#FFF1CC;border-radius:20px;padding:5px 10px;">Step 3 of 3</span>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:16px;"><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div><div style="flex:1;height:6px;border-radius:6px;background:#FEEA27;"></div></div>
+            <div class="anim-up d1" style="margin-top:18px;background:#fff;border:1.5px solid #ECEAD2;border-radius:16px;padding:6px 15px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:11px 0;border-bottom:1px solid #F1EFD6;"><span style="color:#79775F;">Project</span><span style="font-weight:700;color:#372F01;">Brand identity &amp; logo</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:11px 0;border-bottom:1px solid #F1EFD6;"><span style="color:#79775F;">Freelancer</span><span style="display:flex;align-items:center;gap:7px;font-weight:700;color:#372F01;"><span style="width:22px;height:22px;border-radius:7px;background:#E3ECFF;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#2D6BDB;">AA</span>Adunni A.</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:11px 0;border-bottom:1px solid #F1EFD6;"><span style="color:#79775F;">Milestones</span><span style="font-weight:700;color:#372F01;">3 · $800 each</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0 12px;"><span style="font-size:13px;font-weight:700;color:#372F01;">Total to fund</span><span style="font-size:19px;font-weight:800;color:#372F01;letter-spacing:-.4px;">$2,400.00</span></div>
+            </div>
+            <div class="anim-up d2" style="margin-top:13px;background:#FFF6D2;border:1.5px solid rgba(55,47,1,0.12);border-radius:14px;padding:13px 14px;">
+              <div style="display:flex;align-items:center;gap:9px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span style="font-size:12.5px;font-weight:700;color:#5C5320;">Protected by Veritas escrow</span></div>
+              <p style="margin:7px 0 9px;font-size:11.5px;line-height:1.45;color:#79775F;">Your money is locked safely and only released when you approve each milestone.</p>
+              <div style="height:7px;border-radius:6px;background:#F1E0A8;overflow:hidden;"><div class="cl-fill" style="height:100%;border-radius:6px;background:#372F01;"></div></div>
+            </div>
+            <div style="flex:1;"></div>
+            <div style="position:relative;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:9px;background:#372F01;border:2px solid #372F01;border-radius:13px;padding:16px;font-size:15px;font-weight:800;color:#FEEA27;box-shadow:3px 3px 0 rgba(55,47,1,0.25);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FEEA27" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Fund escrow · $2,400</div>
+              <span class="v-tap" style="border:2.5px solid #FEEA27;"></span>
+              <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#FEEA27;"></span>
+            </div>
+          </div>
+
+          <!-- CS4: SUCCESS -->
+          <div class="hero-scr" id="cs4" style="background:#FCFFC1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;padding:54px 22px 22px;text-align:center;">
+            <div style="position:absolute;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle, rgba(254,234,39,.55) 0%, rgba(254,234,39,0) 68%);top:36%;left:50%;transform:translate(-50%,-50%);pointer-events:none;"></div>
+            <div class="cl-check" style="position:relative;width:80px;height:80px;border-radius:50%;background:#0EA868;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 26px rgba(14,168,104,0.4);"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="anim-up d1" style="position:relative;margin:6px 0 0;font-family:'Istok Web',sans-serif;font-weight:700;font-size:24px;color:#372F01;letter-spacing:-.5px;">Escrow funded! 🎉</h3>
+            <p class="anim-up d2" style="position:relative;margin:0;font-size:13px;line-height:1.5;color:#5C5320;font-weight:500;max-width:240px;">$2,400 is locked safely. Adunni can start work — you release each milestone as you approve it.</p>
+            <div class="anim-up d3" style="position:relative;width:100%;background:#fff;border:1.5px solid #ECEAD2;border-radius:16px;padding:13px;text-align:left;display:flex;align-items:center;gap:11px;">
+              <span style="flex:none;width:40px;height:40px;border-radius:11px;background:#E3ECFF;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#2D6BDB;">AA</span>
+              <div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:700;color:#372F01;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Brand identity &amp; logo</div><div style="font-size:11px;color:#9C9A7C;margin-top:2px;">Adunni A. · 3 milestones</div></div>
+              <div style="text-align:right;flex:none;"><div style="font-size:14px;font-weight:800;color:#372F01;">$2,400</div><span style="display:inline-block;margin-top:4px;font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:20px;background:#DDF3E6;color:#008751;">Funded</span></div>
+            </div>
+            <div style="position:relative;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#FEEA27;border:2px solid #372F01;border-radius:13px;padding:15px;font-size:15px;font-weight:800;color:#372F01;box-shadow:3px 3px 0 #372F01;margin-top:4px;">View contract</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- copy (right) -->
+    <div class="reveal">
+      <span style="font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#B49A11;">For clients</span>
+      <h2 class="client-h2" style="font-family:'Istok Web',sans-serif;font-weight:700;font-size:44px;line-height:1.05;letter-spacing:-1.1px;margin:14px 0 0;color:#372F01;text-wrap:balance;">Hire anyone. Fund once. Pay only for great work.</h2>
+      <p style="font-size:18px;line-height:1.6;color:#5B5430;font-weight:500;margin:18px 0 0;max-width:460px;">Set up a contract, lock the budget in escrow, and release each milestone the moment you're happy. Your money stays protected — and your freelancer always knows it's there.</p>
+      <div style="display:flex;flex-direction:column;gap:18px;margin:34px 0 0;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="flex:none;width:34px;height:34px;border-radius:10px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:16px;font-weight:600;color:#4A431F;">Create and fund a contract in under a minute</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="flex:none;width:34px;height:34px;border-radius:10px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:16px;font-weight:600;color:#4A431F;">Release payments milestone by milestone</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="flex:none;width:34px;height:34px;border-radius:10px;background:#FEEA27;border:2px solid #372F01;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#372F01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span style="font-size:16px;font-weight:600;color:#4A431F;">Funds stay locked until you approve the work</span>
+        </div>
+      </div>
+      <button onclick="openWaitlistModal()" class="btn-access" style="display:inline-flex;align-items:center;gap:9px;margin-top:36px;background:#372F01;color:#FEEA27;border:2px solid #372F01;border-radius:13px;padding:15px 26px;font-weight:700;font-size:16px;box-shadow:4px 4px 0 rgba(55,47,1,0.18);transition:transform .15s,box-shadow .15s;cursor:pointer;font-family:'Satoshi',sans-serif;">Join the waitlist
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#FEEA27" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section id="how" class="section-pad-how" style="max-width:1200px;margin:0 auto;padding:80px 40px 40px;">
   <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto 56px;">
@@ -810,8 +1029,9 @@ input:focus{outline:none;}
 
   // Form always starts fresh on page load — no joined-state restore
 
-  // Hero carousel
-  const screens = document.querySelectorAll('.hero-scr');
+  // Hero carousel (scoped to hero phone)
+  const heroPhone = document.getElementById('hero-phone');
+  const screens = heroPhone.querySelectorAll('.hero-scr');
   let currentScreen = 0;
   function advance() {
     screens[currentScreen].classList.remove('on');
@@ -819,6 +1039,17 @@ input:focus{outline:none;}
     screens[currentScreen].classList.add('on');
   }
   setInterval(advance, 2600);
+
+  // Client phone carousel
+  const clientPhone = document.getElementById('client-phone');
+  const clientScreens = clientPhone.querySelectorAll('.hero-scr');
+  let currentClientScreen = 0;
+  function advanceClient() {
+    clientScreens[currentClientScreen].classList.remove('on');
+    currentClientScreen = (currentClientScreen + 1) % clientScreens.length;
+    clientScreens[currentClientScreen].classList.add('on');
+  }
+  setInterval(advanceClient, 2900);
 
   // ESC closes all modals
   document.addEventListener('keydown', function(e) {
