@@ -25,7 +25,7 @@
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://api.fontshare.com">
 <style>
-*{box-sizing:border-box;}
+*{box-sizing:border-box;hyphens:none;-webkit-hyphens:none;}
 html,body{margin:0;padding:0;background:#fff;}
 ::selection{background:#FEEA27;color:#372F01;}
 input::placeholder{color:#A7A8A0;}
@@ -136,30 +136,31 @@ input:focus{outline:none;}
 .hero-form-row{flex-direction:column !important;gap:8px !important;border-radius:14px !important;padding:8px !important;}
 .btn-join-hero{border-radius:9px !important;justify-content:center !important;width:100% !important;}
 .features-grid{grid-template-columns:1fr !important;}
-.section-pad-features{padding:56px 20px 32px !important;}
-.features-intro{padding:0 !important;margin-bottom:36px !important;}
+.app-preview-section{margin-top:56px !important;}
+.section-pad-features{padding:64px 20px 48px !important;}
+.features-intro{padding:0 !important;margin-bottom:40px !important;}
 .section-h2{font-size:28px !important;letter-spacing:-0.4px !important;}
-.app-preview-inner{grid-template-columns:1fr !important;padding:44px 20px 0 !important;gap:24px !important;}
-.app-preview-phone-wrap{justify-content:center !important;padding-top:24px;padding-bottom:44px;}
+.app-preview-inner{grid-template-columns:1fr !important;padding:56px 20px 0 !important;gap:28px !important;}
+.app-preview-phone-wrap{justify-content:center !important;padding-top:32px;padding-bottom:60px;}
 .app-preview-phone-wrap .v-glow{display:none !important;}
 .app-preview-phone-wrap .v-float-s{display:none !important;}
 .app-preview-h2{font-size:28px !important;letter-spacing:-0.5px !important;}
-.client-section-inner{grid-template-columns:1fr !important;padding:44px 20px 0 !important;gap:24px !important;}
-.client-phone-wrap{justify-content:center !important;padding-top:24px;padding-bottom:44px;}
+.client-section-inner{grid-template-columns:1fr !important;padding:56px 20px 0 !important;gap:28px !important;}
+.client-phone-wrap{justify-content:center !important;padding-top:32px;padding-bottom:60px;}
 .client-phone-wrap .v-glow{display:none !important;}
 .client-phone-wrap .v-float-top{display:none !important;}
 .client-phone-wrap .v-float-s{display:none !important;}
 .client-h2{font-size:28px !important;letter-spacing:-0.5px !important;}
-.invite-section-inner{grid-template-columns:1fr !important;padding:44px 20px 0 !important;gap:24px !important;}
-.invite-phone-wrap{justify-content:center !important;padding-top:24px;padding-bottom:44px;}
+.invite-section-inner{grid-template-columns:1fr !important;padding:56px 20px 0 !important;gap:28px !important;}
+.invite-phone-wrap{justify-content:center !important;padding-top:32px;padding-bottom:60px;}
 .invite-phone-wrap .v-glow{display:none !important;}
 .invite-phone-wrap .v-float-top{display:none !important;}
 .invite-phone-wrap .v-float-s{display:none !important;}
 .invite-h2{font-size:28px !important;letter-spacing:-0.5px !important;}
 .how-grid{grid-template-columns:1fr !important;}
-.section-pad-how{padding:56px 20px 32px !important;}
-.cta-section{margin:48px auto 0 !important;padding:0 20px !important;}
-.cta-inner{padding:38px 22px !important;}
+.section-pad-how{padding:64px 20px 48px !important;}
+.cta-section{margin:64px auto 0 !important;padding:0 20px !important;}
+.cta-inner{padding:44px 24px !important;}
 .cta-h2{font-size:28px !important;letter-spacing:-0.6px !important;}
 .cta-form-row{flex-direction:column !important;gap:8px !important;}
 .btn-join-cta{border-radius:11px !important;padding:14px !important;width:100% !important;justify-content:center !important;}
@@ -505,7 +506,7 @@ input:focus{outline:none;}
 </section>
 
 <!-- APP PREVIEW -->
-<section style="margin-top:96px;background:#26230F;overflow:hidden;">
+<section class="app-preview-section" style="margin-top:96px;background:#26230F;overflow:hidden;">
   <div class="app-preview-inner" style="max-width:1200px;margin:0 auto;padding:84px 40px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;">
     <div>
       <span class="reveal" style="display:block;font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#FEEA27;">Inside the app</span>
@@ -869,7 +870,7 @@ input:focus{outline:none;}
       </div>
       <div class="v-float-s" style="position:absolute;z-index:5;bottom:126px;left:-18px;background:#26230F;border-radius:14px;padding:11px 15px;display:flex;align-items:center;gap:10px;box-shadow:0 16px 30px -12px rgba(0,0,0,0.45);">
         <span style="width:30px;height:30px;border-radius:9px;background:#0EA868;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <div><div style="font-weight:800;font-size:13px;color:#fff;line-height:1.1;">Auto-matched</div><div style="font-size:11px;color:#C9C6A6;font-weight:600;">Contract linked by email</div></div>
+        <div><div style="font-weight:800;font-size:13px;color:#fff;line-height:1.1;">Auto matched</div><div style="font-size:11px;color:#C9C6A6;font-weight:600;">Contract linked by email</div></div>
       </div>
 
       <!-- phone frame -->
