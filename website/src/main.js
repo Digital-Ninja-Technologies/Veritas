@@ -545,6 +545,143 @@ if (dl) {
   });
 }
 
+/* ------------------------------------------------------------------ veripals: draggable stickers */
+(async function stickers() {
+  const board = $('#board');
+  if (!board) return;
+  const [{ Draggable }, { InertiaPlugin }] = await Promise.all([import('gsap/Draggable'), import('gsap/InertiaPlugin')]);
+  gsap.registerPlugin(Draggable, InertiaPlugin);
+  const hint = $('.board__hint');
+  let z = 10;
+  Draggable.create($$('.sticker', board), {
+    type: 'x,y', bounds: board, inertia: !reduce, edgeResistance: 0.85,
+    onPress() { this.target.style.zIndex = ++z; if (!reduce) gsap.to(this.target, { scale: 1.08, duration: 0.2 }); if (hint) hint.style.opacity = 0; },
+    onRelease() { if (!reduce) gsap.to(this.target, { scale: 1, duration: 0.5, ease: 'back.out(3)' }); },
+  });
+  if (!reduce) gsap.from($$('.sticker', board), { scale: 0, opacity: 0, duration: 0.9, ease: 'back.out(2.2)', stagger: 0.09, delay: 0.5 });
+})();
+
+/* ------------------------------------------------------------------ veripals: hook machine */
+(function hookMachine() {
+  const btn = $('#hmShuffle');
+  if (!btn) return;
+  const HOOKS = {
+    dev: [
+      'POV: you shipped the whole app and the client says “payment’s coming Friday.” Again.',
+      'Explain escrow to me like I debug in production.',
+      'Milestone approved → money unlocked. This is the commit history I want.',
+      'Things I’d rather merge than chase: literally anything except an invoice.',
+      'Fun fact: you can lock the budget before you write a single line of code.',
+    ],
+    designer: [
+      'Rating my clients’ red flags: “it’ll be quick”, “exposure”, “budget TBD”.',
+      'I locked the budget before I opened Figma. Here’s why.',
+      'Moodboard approved. First chunk of the payment unlocked. Peak freelancer joy.',
+      'Client abroad, me at home. Paid in my own currency. No drama.',
+      'Show me your face when a client says “let me check with finance.”',
+    ],
+    writer: [
+      'The three words every freelance writer fears: “payment is processing.”',
+      'Me, a writer, finding out milestone payments exist.',
+      'What if the money was already waiting before the deadline stress began?',
+      'Hot take: if the budget isn’t locked, the brief isn’t ready.',
+    ],
+    creator: [
+      'Paying a freelancer you’ve never met? Here’s the safer way to do it.',
+      'Your freelancer doesn’t even need the app yet. You just invite them by email.',
+      'Freelancing for a global client? Get paid in your own currency. Here’s how.',
+      'Been ghosted after delivering the work? Drop your story below. Let’s fix this.',
+      'Escrow explained in 30 seconds, no jargon.',
+    ],
+  };
+  const PLAT = {
+    tiktok: ['TikTok · POV skit, 15–30s', 'Film it in one take and put the hook on screen in the first second.'],
+    x: ['X · thread opener', 'Hook in line one. Save the explainer for posts two to five.'],
+    yt: ['YouTube Shorts · talking head, 30s', 'Say the hook out loud in the first two seconds, then deliver.'],
+    li: ['LinkedIn · story post', 'One short line, a gap, then the story. End with a question.'],
+    news: ['Newsletter · intro paragraph', 'Open with the hook, then tell the story in three short paragraphs.'],
+  };
+  const st = { persona: 'dev', platform: 'tiktok', last: -1, n: 0, token: 0 };
+  const textEl = $('#hmText'), tagEl = $('#hmTag'), tipEl = $('#hmTip'), countEl = $('#hmCount'), copyBtn = $('#hmCopy');
+
+  function type(text) {
+    const token = ++st.token;
+    if (reduce) { textEl.textContent = text; return; }
+    textEl.textContent = '';
+    let i = 0;
+    (function step() {
+      if (token !== st.token) return;
+      i += 2; textEl.textContent = text.slice(0, i);
+      if (i < text.length) setTimeout(step, 22);
+    })();
+  }
+  function shuffle() {
+    const list = HOOKS[st.persona];
+    let i; do { i = Math.floor(Math.random() * list.length); } while (list.length > 1 && i === st.last);
+    st.last = i; st.n += 1;
+    countEl.textContent = '#' + String(st.n).padStart(2, '0');
+    tagEl.textContent = PLAT[st.platform][0]; tipEl.textContent = PLAT[st.platform][1];
+    btn.classList.add('is-rolling'); setTimeout(() => btn.classList.remove('is-rolling'), 450);
+    type(list[i]);
+  }
+  function radio(group, key) {
+    const el = $(group), btns = $$('button', el);
+    btns.forEach((b) => b.addEventListener('click', () => {
+      st[key] = b.dataset.v; st.last = -1;
+      btns.forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+      shuffle();
+    }));
+  }
+  radio('#hmPersona', 'persona'); radio('#hmPlatform', 'platform');
+  btn.addEventListener('click', shuffle);
+  copyBtn.addEventListener('click', async () => {
+    const text = HOOKS[st.persona][st.last] || '';
+    try { await navigator.clipboard.writeText(text); } catch (e) {
+      const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (_) {} t.remove();
+    }
+    copyBtn.textContent = 'Copied ✓'; setTimeout(() => (copyBtn.textContent = 'Copy hook'), 1600);
+  });
+  shuffle();
+})();
+
+/* ------------------------------------------------------------------ veripals: levels */
+(function levels() {
+  const list = $('#levels');
+  if (!list) return;
+  const items = $$('.level', list);
+  if (reduce) { items.forEach((l) => l.classList.add('is-on')); return; }
+  items.forEach((l) => ScrollTrigger.create({ trigger: l, start: 'top 82%', onEnter: () => l.classList.add('is-on'), onLeaveBack: () => l.classList.remove('is-on') }));
+  gsap.to('#levelsBar', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: list, start: 'top 80%', end: 'bottom 55%', scrub: true } });
+})();
+
+/* ------------------------------------------------------------------ veripals: application form */
+(function applyForm() {
+  const form = $('[data-veripals]');
+  if (!form) return;
+  const err = $('.wl-error', form), btn = $('button[type="submit"]', form), sent = form.nextElementSibling;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form));
+    const bad = (m) => { err.textContent = m; err.hidden = false; };
+    err.hidden = true;
+    if (!d.name.trim()) return bad('Please enter your name.');
+    if (!EMAIL_RE.test(d.email.trim())) return bad('Please enter a valid email address.');
+    if (!d.platform || !d.audience || !d.niche) return bad('Please choose your platform, audience size and what you make.');
+    if (!d.profile.trim()) return bad('Please add a link to your main profile.');
+    if (!d.country.trim() || !d.audience_country.trim()) return bad('Please tell us your country and where your audience is.');
+    const done = () => { $('[data-sent-name]', sent).textContent = d.name; form.style.display = 'none'; sent.classList.add('is-on'); sent.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); };
+    if (d._gotcha) return done(); // honeypot: pretend success for bots
+    btn.disabled = true; $('span', btn).textContent = 'Sending…';
+    try {
+      const { _gotcha, ...payload } = d;
+      const res = await fetch(CONTACT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ ...payload, _subject: 'Veripals application — ' + d.name }) });
+      if (!res.ok) throw new Error('bad status');
+      done();
+    } catch (_) { bad('Could not send your application. Please try again or email hello@useveritasapp.com.'); }
+    finally { btn.disabled = false; $('span', btn).textContent = 'Submit application'; }
+  });
+})();
+
 /* ------------------------------------------------------------------ count-up numbers */
 $$('[data-count]').forEach((el) => {
   const n = +el.dataset.count;
