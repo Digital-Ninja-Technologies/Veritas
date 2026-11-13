@@ -360,7 +360,7 @@ function runLoader() {
 /* ------------------------------------------------------------------ scroll reveals */
 (function reveals() {
   if (reduce) return;
-  const sel = '.manifesto .eyebrow, .calc .h2, .calc .lead, .calc__card, .product__head > *, .feat li, .invite, .trust .h2, .trust__cards article, .faq__head > *, .qa, .cta__inner > *:not(.cta__art), .footer__top > *';
+  const sel = '.manifesto .eyebrow, .calc .h2, .calc .lead, .calc__card, .product__head > *, .feat li, .invite, .trust .h2, .trust__cards article, .faq__head > *, .qa, .cta__inner > *:not(.cta__art), .footer__top > *, [data-rise]';
   gsap.utils.toArray(sel).forEach((el) => {
     gsap.from(el, { y: 46, opacity: 0, duration: 1.1, ease: 'expo.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
   });
@@ -544,6 +544,14 @@ if (dl) {
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 }
+
+/* ------------------------------------------------------------------ count-up numbers */
+$$('[data-count]').forEach((el) => {
+  const n = +el.dataset.count;
+  if (reduce) { el.textContent = n; return; }
+  const o = { v: 0 };
+  ScrollTrigger.create({ trigger: el, start: 'top 90%', once: true, onEnter: () => gsap.to(o, { v: n, duration: 1.6, ease: 'power3.out', onUpdate: () => (el.textContent = Math.round(o.v)) }) });
+});
 
 /* ------------------------------------------------------------------ boot */
 runLoader();
