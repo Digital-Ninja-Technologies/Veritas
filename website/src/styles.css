@@ -854,3 +854,12 @@ html.is-loading .nav { transform: translate(-50%, -160%); }
 
 /* smaller, hollow cursor over the nav so the hover effects stay visible */
 .cursor.is-hover.is-nav span { transform: scale(1.9); background: transparent; }
+
+/* Veripals hero label: slanted, stamped inscription sitting on the "Be" */
+.page-hero .pill--stamp { position: relative; z-index: 2; display: flex; align-items: center; gap: 10px; width: fit-content; margin: 0 0 -44px 2px; padding: 6px 16px 6px 14px;
+  background: transparent; backdrop-filter: none; border: 1.5px solid var(--olive); border-radius: 4px; box-shadow: 0 0 0 3px #F7E41F, 0 0 0 4.5px var(--olive);
+  font: 700 10.5px var(--mono); letter-spacing: .34em; text-transform: uppercase; color: var(--olive); rotate: -7deg; transform-origin: left bottom;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .55), 0 -1px 0 rgba(55, 47, 1, .25); mix-blend-mode: multiply; opacity: .92; }
+.pill--stamp i { display: none; }
+.pill--stamp::before, .pill--stamp::after { content: '✦'; font-size: 9px; letter-spacing: 0; opacity: .75; }
+@media (max-width: 520px) { .page-hero .pill--stamp { font-size: 9px; letter-spacing: .26em; margin-bottom: -36px; } }
