@@ -86,7 +86,7 @@ if (finePointer && !reduce) {
     const qx = gsap.quickTo(cur, 'x', { duration: 0.35, ease: 'power3' });
     const qy = gsap.quickTo(cur, 'y', { duration: 0.35, ease: 'power3' });
     addEventListener('pointermove', (e) => { qx(e.clientX); qy(e.clientY); }, { passive: true });
-    document.addEventListener('pointerover', (e) => cur.classList.toggle('is-hover', !!e.target.closest('a, button, [data-hover], .qa, input, .range, .ccard')));
+    document.addEventListener('pointerover', (e) => { cur.classList.toggle('is-hover', !!e.target.closest('a, button, [data-hover], .qa, input, .range, .ccard')); cur.classList.toggle('is-nav', !!e.target.closest('#nav')); });
   }
   $$('.magnetic').forEach((el) => {
     const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'elastic.out(1, .5)' });
@@ -679,6 +679,67 @@ if (dl) {
       done();
     } catch (_) { bad('Could not send your application. Please try again or email hello@useveritasapp.com.'); }
     finally { btn.disabled = false; $('span', btn).textContent = 'Submit application'; }
+  });
+})();
+
+/* ------------------------------------------------------------------ nav: playful hover */
+(function navFun() {
+  if (!nav || !finePointer || reduce) return;
+  const links = $('.nav__links', nav);
+  const logo = $('.nav__logo', nav);
+  const cta = $('.nav__cta .btn', nav);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+  // rolling link text + gliding blob
+  if (links) {
+    $$('a', links).forEach((a) => { const t = a.textContent.trim(); a.innerHTML = `<span class="roll"><span class="roll__in" data-t="${t}">${t}</span></span>`; });
+    const blob = document.createElement('i'); blob.className = 'nav__blob'; links.prepend(blob);
+    gsap.set(blob, { opacity: 0, scale: 0.6 });
+    let visible = false, lastX = 0;
+    $$('a', links).forEach((a) => a.addEventListener('pointerenter', () => {
+      const x = a.offsetLeft, y = a.offsetTop, w = a.offsetWidth, h = a.offsetHeight, dir = x > lastX ? 1 : -1;
+      if (!visible) {
+        gsap.set(blob, { x, y, width: w, height: h });
+        gsap.to(blob, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.6)', overwrite: 'auto' });
+        visible = true;
+      } else {
+        gsap.to(blob, { x, y, width: w, height: h, duration: 0.65, ease: 'elastic.out(1, .55)', overwrite: 'auto' });
+        gsap.fromTo(blob, { scaleX: 1.14, scaleY: 0.86, rotate: dir * 4 }, { scaleX: 1, scaleY: 1, rotate: 0, duration: 0.6, ease: 'elastic.out(1, .45)' });
+      }
+      lastX = x;
+    }));
+    links.addEventListener('pointerleave', () => { visible = false; gsap.to(blob, { opacity: 0, scale: 0.6, duration: 0.3, ease: 'power2.in', overwrite: 'auto' }); });
+  }
+
+  // the logo's dot is a pupil that follows the cursor
+  const dot = $('.mark circle:last-child', nav);
+  if (dot && logo) {
+    gsap.set(dot, { svgOrigin: '27 16' });
+    const qx = gsap.quickTo(dot, 'x', { duration: 0.35, ease: 'power3' }), qy = gsap.quickTo(dot, 'y', { duration: 0.35, ease: 'power3' });
+    nav.addEventListener('pointermove', (e) => {
+      const r = logo.getBoundingClientRect(), cx = r.left + 20, cy = r.top + r.height / 2;
+      qx(clamp((e.clientX - cx) / 55, -1, 1) * 4.6); qy(clamp((e.clientY - cy) / 28, -1, 1) * 3.4);
+    });
+    nav.addEventListener('pointerleave', () => { qx(0); qy(0); });
+  }
+
+  // spotlight follows the mouse inside the bar
+  nav.addEventListener('pointermove', (e) => { const r = nav.getBoundingClientRect(); nav.style.setProperty('--mx', e.clientX - r.left + 'px'); nav.style.setProperty('--my', e.clientY - r.top + 'px'); });
+
+  // sparkles burst from the download button
+  if (cta) cta.addEventListener('pointerenter', () => {
+    const nr = nav.getBoundingClientRect(), br = cta.getBoundingClientRect();
+    const ox = br.left - nr.left + br.width / 2, oy = br.top - nr.top + br.height / 2;
+    for (let i = 0; i < 9; i++) {
+      const s = document.createElement('span'); s.className = 'nav__spark'; s.textContent = '✦';
+      s.style.color = i % 2 ? '#FEEA27' : '#372F01'; s.style.fontSize = 12 + Math.random() * 12 + 'px';
+      nav.appendChild(s);
+      const a = (i / 9) * Math.PI * 2 + Math.random() * 0.6, d = 38 + Math.random() * 34;
+      gsap.set(s, { x: ox - 6, y: oy - 8, scale: 0, opacity: 1 });
+      gsap.timeline({ onComplete: () => s.remove() })
+        .to(s, { x: ox - 6 + Math.cos(a) * d, y: oy - 8 + Math.sin(a) * d, scale: 1, rotate: (Math.random() - 0.5) * 240, duration: 0.45, ease: 'power3.out' })
+        .to(s, { opacity: 0, scale: 0, y: '+=14', duration: 0.4, ease: 'power2.in' }, 0.3);
+    }
   });
 })();
 
