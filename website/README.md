@@ -14,6 +14,6 @@ npm run build    # outputs dist/
 - Swap the plain store buttons for the official App Store / Google Play badges.
 - Remove `noindex` (meta tag in each HTML file and the `X-Robots-Tag` header in `vercel.json`).
 - The contact form posts to the existing Formspree endpoint (`CONTACT_ENDPOINT` in `src/main.js`).
-- `privacy.html` / `terms.html` are drafts written for the app (accounts, escrow, stablecoin funding, local payouts). Have counsel review them and confirm: the data/partners listed, the dispute process, fees/liability cap, the governing-law clause (Terms §13), and the contact emails.
+- `privacy.html` / `terms.html` are drafts written for the app (accounts, escrow, stablecoin funding, local payouts). Have counsel review them and confirm: the data/partners listed, the dispute process, fees/liability cap, the governing-law clause (Terms §13, which points to where Useveritas Limited is incorporated), and the contact emails.
 - Calculator rates in `src/main.js` are illustrative only.
 - `about.html` is a draft built only from product facts. Add real company details when ready (founding story, founder note, team, milestones) and confirm the five values.
