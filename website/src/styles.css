@@ -664,7 +664,7 @@ html.is-loading .nav { transform: translate(-50%, -160%); }
 .define__pos { font: 600 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; opacity: .6; margin: 6px 0 18px; }
 .define__mean { font-size: 18px; margin-bottom: 8px; line-height: 1.3; } .define__mean b { font-family: var(--mono); margin-right: 6px; }
 .define__tag { position: absolute; left: 22px; bottom: -16px; padding: 6px 14px; background: var(--yellow); border: 2px solid var(--olive); border-radius: 99px; font: 700 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-@media (max-width: 900px) { .about-hero { padding-top: 120px; } .about-hero__grid { grid-template-columns: 1fr; } .about-hero__visual { min-height: 320px; margin-top: 24px; } .define__vault { width: 40%; right: -4%; top: -34%; } }
+@media (max-width: 900px) { .about-hero { padding-top: 160px; } .about-hero__grid { grid-template-columns: 1fr; } .about-hero__visual { min-height: 320px; margin-top: 24px; } .define__vault { width: 40%; right: -4%; top: -34%; } }
 
 /* mission */
 .about-mission { padding: clamp(80px, 11vw, 170px) 0; }
@@ -747,7 +747,7 @@ html.is-loading .nav { transform: translate(-50%, -160%); }
 .sticker { position: absolute; z-index: 2; display: inline-block; padding: 12px 20px; background: var(--bg, #fff); color: var(--fg, var(--olive)); border: 2.5px solid var(--olive); border-radius: 18px; box-shadow: 5px 5px 0 var(--olive); rotate: var(--r, 0deg); font-weight: 800; font-size: clamp(15px, 1.5vw, 21px); letter-spacing: -.02em; line-height: 1.1; white-space: nowrap; cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; will-change: transform; }
 .sticker:active { cursor: grabbing; }
 .sticker--round { width: clamp(84px, 9vw, 118px); aspect-ratio: 1; padding: 0; border-radius: 50%; display: grid; place-items: center; text-align: center; white-space: normal; font-size: clamp(15px, 1.6vw, 22px); }
-@media (max-width: 900px) { .vp-hero { padding-top: 120px; } .vp-hero__grid { grid-template-columns: 1fr; } .board { height: 440px; margin-top: 10px; } }
+@media (max-width: 900px) { .vp-hero { padding-top: 160px; } .vp-hero__grid { grid-template-columns: 1fr; } .board { height: 440px; margin-top: 10px; } }
 
 /* who */
 .vp-who { background: var(--cream); padding: clamp(80px, 11vw, 170px) 0; }
