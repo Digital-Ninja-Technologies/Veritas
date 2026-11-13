@@ -56,10 +56,6 @@ const bar = $('.progress i');
 let lastY = 0;
 function onScroll(y) {
   if (bar) gsap.set(bar, { scaleX: Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight)) });
-  if (nav) {
-    const down = y > lastY && y > 240;
-    nav.classList.toggle('is-hidden', down && !menuOpen);
-  }
   lastY = y;
 }
 if (lenis) lenis.on('scroll', ({ scroll }) => onScroll(scroll));
