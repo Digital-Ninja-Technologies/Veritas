@@ -13,7 +13,8 @@
     "@fontsource-variable/jetbrains-mono": "^5.2.0",
     "@fontsource/istok-web": "^5.2.0",
     "gsap": "^3.12.5",
-    "lenis": "^1.1.0"
+    "lenis": "^1.1.0",
+    "qrcode": "^1.5.4"
   },
   "devDependencies": {
     "vite": "^6.0.0"

@@ -80,7 +80,7 @@ function setMenu(open) {
 }
 function closeMenu() { if (menuOpen) setMenu(false); }
 burger && burger.addEventListener('click', () => setMenu(!menuOpen));
-addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMenu(); closeDownload(); } });
 
 /* ------------------------------------------------------------------ cursor + magnetic */
 if (finePointer && !reduce) {
@@ -406,6 +406,135 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     finally { btn.disabled = false; $('span', btn).textContent = 'Send message'; }
   });
 })();
+
+/* ------------------------------------------------------------------ download modal */
+const dl = $('#dl-modal');
+let dlLastFocus = null;
+const dlState = { os: 'ios', i: 0, timer: null, open: false };
+const DL_DUR = 3800;
+const DL_STEPS = [
+  ['Fund & lock', 'The client funds the project. Veritas locks it in escrow.'],
+  ['Approve a milestone', 'One tap from the client releases that milestone’s payment.'],
+  ['Get paid locally', 'Naira, cedis, shillings or rand. Settled in minutes.'],
+];
+
+function detectOS() {
+  const ua = navigator.userAgent || '';
+  if (/android/i.test(ua)) return 'android';
+  if (/iphone|ipad|ipod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) return 'ios';
+  return null;
+}
+
+async function renderQR() {
+  const box = $('#dlQr'), hint = $('#dlQrHint');
+  if (!box) return;
+  const url = STORE_URLS[dlState.os];
+  const name = dlState.os === 'ios' ? 'App Store' : 'Google Play';
+  if (!url) {
+    box.classList.add('is-empty'); box.innerHTML = '';
+    hint.textContent = 'The QR code appears here once the store link is set.';
+    return;
+  }
+  try {
+    const { default: QR } = await import('qrcode');
+    const svg = await QR.toString(url, { type: 'svg', margin: 0, color: { dark: '#372F01', light: '#0000' } });
+    box.classList.remove('is-empty'); box.innerHTML = svg;
+    hint.textContent = `Point your phone camera here to open ${name}.`;
+  } catch (e) { box.classList.add('is-empty'); }
+}
+
+function setOS(os, { animate = true } = {}) {
+  dlState.os = os;
+  const tabs = $('.dl__tabs', dl);
+  tabs.dataset.os = os;
+  $$('.dl__tabs button', dl).forEach((b) => b.setAttribute('aria-selected', String(b.dataset.os === os)));
+  $$('.dl__stores .store', dl).forEach((s) => s.classList.toggle('is-primary', s.dataset.os === os));
+  if (animate && !reduce) { const p = $('.store.is-primary', dl); gsap.fromTo(p, { scale: 0.94 }, { scale: 1, duration: 0.7, ease: 'elastic.out(1, .5)', clearProps: 'transform' }); }
+  renderQR();
+}
+
+function setDlStep(i, { fromUser = false } = {}) {
+  const scr = $$('.dl__scr', dl), dots = $$('.dl__dots button', dl);
+  const prev = dlState.i;
+  dlState.i = i;
+  scr.forEach((s, k) => { s.classList.toggle('is-on', k === i); s.classList.toggle('is-out', k === prev && k !== i); });
+  dots.forEach((d, k) => { d.classList.remove('is-on'); if (k === i) { void d.offsetWidth; d.classList.add('is-on'); } });
+  const t = $('#dlCapT'), d = $('#dlCapD');
+  if (!reduce) gsap.fromTo([t, d], { y: 10, opacity: 0 }, { y: 0, opacity: (idx) => (idx ? 0.78 : 1), duration: 0.6, ease: 'power3.out', stagger: 0.06 });
+  t.textContent = DL_STEPS[i][0]; d.textContent = DL_STEPS[i][1];
+  const pay = $('#dlPay');
+  const c = { v: 0 };
+  gsap.killTweensOf(c);
+  if (i === 2) gsap.to(c, { v: 1182400, duration: 1.4, ease: 'power3.out', delay: 0.3, onUpdate: () => (pay.textContent = '₦' + Math.round(c.v).toLocaleString('en-US')) });
+  else pay.textContent = '₦0';
+  scheduleNext(fromUser);
+}
+function scheduleNext() {
+  clearTimeout(dlState.timer);
+  if (!dlState.open || reduce) return;
+  dlState.timer = setTimeout(() => setDlStep((dlState.i + 1) % 3), DL_DUR);
+}
+
+function openDownload(origin) {
+  if (!dl || dlState.open) return;
+  dlState.open = true;
+  dlLastFocus = document.activeElement;
+  let ox = innerWidth - 80, oy = 40;
+  if (origin) { const r = origin.getBoundingClientRect(); ox = r.left + r.width / 2; oy = r.top + r.height / 2; }
+  const card = $('.dl__card', dl), cr = card.getBoundingClientRect();
+  dl.style.setProperty('--ox', ((ox - cr.left) / cr.width) * 100 + '%');
+  dl.style.setProperty('--oy', ((oy - cr.top) / cr.height) * 100 + '%');
+  dl.classList.add('is-open'); dl.setAttribute('aria-hidden', 'false');
+  stopScroll(); if (!lenis) document.body.style.overflow = 'hidden';
+  setOS(dlState.os, { animate: false });
+  const guess = detectOS();
+  const rec = $('#dlRec');
+  if (guess) { setOS(guess, { animate: false }); rec.textContent = guess === 'ios' ? 'Recommended for your iPhone' : 'Recommended for your Android phone'; } else rec.textContent = '';
+  setDlStep(0);
+  if (!reduce) {
+    gsap.from('.dl__left > *:not(.dl__x)', { y: 36, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.07, delay: 0.25, clearProps: 'transform,opacity' });
+    gsap.from('.dl__phone', { y: 120, rotate: 8, opacity: 0, duration: 1.3, ease: 'expo.out', delay: 0.35, clearProps: 'transform,opacity' });
+    gsap.from('.dl__chip', { scale: 0, opacity: 0, duration: 0.8, ease: 'back.out(2.4)', stagger: 0.1, delay: 0.8, clearProps: 'transform,opacity' });
+    gsap.from('.dl__ring', { scale: 0.6, opacity: 0, duration: 1.4, ease: 'expo.out', stagger: 0.1, delay: 0.3 });
+  }
+  setTimeout(() => $('.store.is-primary', dl)?.focus({ preventScroll: true }), 700);
+}
+
+function closeDownload() {
+  if (!dl || !dlState.open) return;
+  dlState.open = false; clearTimeout(dlState.timer);
+  dl.classList.remove('is-open'); dl.setAttribute('aria-hidden', 'true');
+  startScroll(); document.body.style.overflow = '';
+  dlLastFocus && dlLastFocus.focus && dlLastFocus.focus({ preventScroll: true });
+}
+
+if (dl) {
+  $$('[data-open-download]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); closeMenu(); openDownload(b); }));
+  $$('[data-close-dl]').forEach((b) => b.addEventListener('click', closeDownload));
+  $$('.dl__tabs button', dl).forEach((b) => b.addEventListener('click', () => { $('#dlRec').textContent = ''; setOS(b.dataset.os); }));
+  $$('.dl__dots button', dl).forEach((b) => b.addEventListener('click', () => setDlStep(+b.dataset.i, { fromUser: true })));
+  // pause auto-advance while hovering the stage
+  const stage = $('#dlStage');
+  stage.addEventListener('pointerenter', () => { clearTimeout(dlState.timer); dl.classList.add('is-paused'); });
+  stage.addEventListener('pointerleave', () => { dl.classList.remove('is-paused'); scheduleNext(); });
+  // 3D tilt
+  if (finePointer && !reduce) {
+    const phone = $('#dlPhone');
+    const rx = gsap.quickTo(phone, 'rotationX', { duration: 0.6, ease: 'power3' });
+    const ry = gsap.quickTo(phone, 'rotationY', { duration: 0.6, ease: 'power3' });
+    const right = $('.dl__right', dl);
+    right.addEventListener('pointermove', (e) => { const r = right.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - 0.5) * 26); rx(-((e.clientY - r.top) / r.height - 0.5) * 18); });
+    right.addEventListener('pointerleave', () => { rx(0); ry(0); });
+  }
+  dl.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const f = $$('button, a[href]', dl).filter((el) => el.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+}
 
 /* ------------------------------------------------------------------ boot */
 runLoader();

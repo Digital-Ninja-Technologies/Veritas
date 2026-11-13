@@ -1,2 +1,78 @@
+<div class="dl" id="dl-modal" role="dialog" aria-modal="true" aria-labelledby="dl-title" aria-hidden="true">
+  <div class="dl__scrim" data-close-dl></div>
+  <div class="dl__card">
+    <button class="dl__x" type="button" aria-label="Close" data-close-dl>✕</button>
+
+    <div class="dl__left">
+      <p class="eyebrow">Get the app</p>
+      <h2 id="dl-title" class="dl__title">Download <em>Veritas.</em></h2>
+      <p class="dl__sub">Fund a project or get paid for one, with your money protected from the first contract.</p>
+
+      <div class="dl__tabs" role="tablist" aria-label="Choose your phone" data-os="ios">
+        <i class="dl__thumb"></i>
+        <button role="tab" aria-selected="true" data-os="ios" type="button">iPhone</button>
+        <button role="tab" aria-selected="false" data-os="android" type="button">Android</button>
+      </div>
+
+      <div class="dl__stores">
+        <a class="store store--xl is-primary" data-store="ios" data-os="ios" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Download on the</small><b>App Store</b></span></a>
+        <a class="store store--xl" data-store="android" data-os="android" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Get it on</small><b>Google Play</b></span></a>
+      </div>
+      <p class="dl__rec" id="dlRec" aria-live="polite"></p>
+
+      <div class="dl__qr">
+        <div class="dl__qrbox" id="dlQr" aria-hidden="true"></div>
+        <p><b>Scan to download</b><small id="dlQrHint">Point your phone camera at the code.</small></p>
+      </div>
+
+      <ul class="dl__perks">
+        <li>Escrow-protected payments</li>
+        <li>Paid in NGN, GHS, KES, ZAR &amp; more</li>
+        <li>Invite anyone by email</li>
+      </ul>
+    </div>
+
+    <div class="dl__right" aria-hidden="true">
+      <i class="dl__glow"></i>
+      <div class="dl__ring dl__ring--a"></div><div class="dl__ring dl__ring--b"></div>
+      <div class="dl__stage" id="dlStage">
+        <div class="dl__phone" id="dlPhone">
+          <div class="dl__notch"></div>
+          <div class="dl__scr is-on" data-i="0">
+            <small class="k">Escrow funded</small>
+            <img src="/img/lock.webp" alt="" width="390" height="357">
+            <b class="big">$2,400<span> USDC</span></b>
+            <span class="tag tag--lock">🔒 Locked safely</span>
+            <ul><li><i>1</i>Concept &amp; moodboard<em>$800</em></li><li><i>2</i>Design &amp; revisions<em>$800</em></li><li><i>3</i>Final files<em>$800</em></li></ul>
+          </div>
+          <div class="dl__scr" data-i="1">
+            <small class="k">Milestone 1 of 3</small>
+            <div class="card"><b>Concept &amp; moodboard</b><small>Delivered by Adunni A.</small><div class="bar"><u></u></div><strong>$800</strong></div>
+            <div class="approve"><span class="approve__fill"></span><b>Approve &amp; release</b></div>
+            <p class="hint">Funds release the moment you approve.</p>
+          </div>
+          <div class="dl__scr" data-i="2">
+            <small class="k">Paid out</small>
+            <div class="dl__pay"><small>Landed in your NGN balance</small><b id="dlPay">₦0</b><em>$800 · $1 = ₦1,478</em></div>
+            <span class="tag tag--ok">✓ Settled in minutes</span>
+            <img src="/img/vault.webp" alt="" width="390" height="358">
+          </div>
+        </div>
+        <span class="dl__chip dl__chip--1">₦ NGN</span>
+        <span class="dl__chip dl__chip--2">GH₵ GHS</span>
+        <span class="dl__chip dl__chip--3">KSh KES</span>
+        <span class="dl__chip dl__chip--4">R ZAR</span>
+      </div>
+      <div class="dl__cap">
+        <div class="dl__capt"><b id="dlCapT">Fund &amp; lock</b><span id="dlCapD">The client funds the project. Veritas locks it in escrow.</span></div>
+        <div class="dl__dots" role="tablist" aria-label="App tour">
+          <button type="button" class="is-on" data-i="0" aria-label="Fund and lock"><i></i></button>
+          <button type="button" data-i="1" aria-label="Approve a milestone"><i></i></button>
+          <button type="button" data-i="2" aria-label="Get paid"><i></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="cursor" aria-hidden="true"><span></span></div>
 <div class="grain" aria-hidden="true"></div>
