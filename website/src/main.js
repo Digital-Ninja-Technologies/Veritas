@@ -243,16 +243,22 @@ function runLoader() {
   if (!card) return;
   const RATES = { NGN: [1478, '₦'], GHS: [15.4, 'GH₵'], KES: [129, 'KSh '], ZAR: [18.2, 'R'], XOF: [605, 'CFA '], EUR: [0.92, '€'], GBP: [0.79, '£'] };
   const amt = $('#calcAmount'), range = $('#calcRange'), out = $('#calcOut'), rateEl = $('#calcRate');
-  const tabs = $$('.calc__tabs button', card);
-  let cur = 'NGN', usd = 2400;
+  const tabs = $$('.calc__tabs--pay button', card);
+  const fundTabs = $$('.calc__tabs--fund button', card);
+  const sym = $('#calcSym'), fundEl = $('#calcFund');
+  // value of 1 unit of the funding currency in USD (illustrative)
+  const FUND = { USDT: [1, '$'], USDC: [1, '$'], USD: [1, '$'], GBP: [1 / 0.79, '£'], EUR: [1 / 0.92, '€'] };
+  let cur = 'NGN', fund = 'USDC', usd = 2400;
   const shown = { v: usd * RATES[cur][0] };
   const fmt = (n) => Math.round(n).toLocaleString('en-US');
   const fit = () => { amt.style.width = Math.max(2, amt.value.length) + 0.4 + 'ch'; };
   const paint = () => { out.textContent = RATES[cur][1] + fmt(shown.v); };
   function update(animate = true) {
-    const [r, sym] = RATES[cur];
+    const [r0, psym] = RATES[cur];
+    const r = r0 * FUND[fund][0];
     const target = usd * r;
-    rateEl.textContent = `1 USDC ≈ ${sym}${r >= 100 ? fmt(r) : r}`;
+    sym.textContent = FUND[fund][1]; fundEl.textContent = fund;
+    rateEl.textContent = `1 ${fund} ≈ ${psym}${r >= 100 ? fmt(r) : +r.toFixed(2)}`;
     fit();
     range.style.setProperty('--p', ((usd - range.min) / (range.max - range.min)) * 100 + '%');
     if (!animate || reduce) { shown.v = target; paint(); return; }
@@ -266,6 +272,11 @@ function runLoader() {
     range.value = Math.min(Math.max(usd, +range.min), +range.max);
     update();
   });
+  fundTabs.forEach((b) => b.addEventListener('click', () => {
+    fund = b.dataset.fund;
+    fundTabs.forEach((t) => t.setAttribute('aria-selected', String(t === b)));
+    update();
+  }));
   tabs.forEach((b) => b.addEventListener('click', () => {
     cur = b.dataset.cur;
     tabs.forEach((t) => t.setAttribute('aria-selected', String(t === b)));

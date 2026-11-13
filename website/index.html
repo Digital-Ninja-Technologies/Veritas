@@ -86,7 +86,7 @@
           <p class="eyebrow eyebrow--light">How it works</p>
           <h2 class="h2">One payment. Four moments of <em>certainty.</em></h2>
           <ol class="steps" id="steps">
-            <li class="is-active"><span class="num">01</span><div><h3>The client funds the project</h3><p>Budget goes in up front, in USDT or USDC. Visible to everyone.</p></div></li>
+            <li class="is-active"><span class="num">01</span><div><h3>The client funds the project</h3><p>Budget goes in up front, in almost any currency, most often USDT, USDC, GBP, EUR or USD.</p></div></li>
             <li><span class="num">02</span><div><h3>Veritas locks it in escrow</h3><p>Nobody can touch it. Not the client, not us. The freelancer starts with confidence.</p></div></li>
             <li><span class="num">03</span><div><h3>Work is approved, milestone by milestone</h3><p>One tap from the client releases that milestone’s share. No chasing, no ghosting.</p></div></li>
             <li><span class="num">04</span><div><h3>You get paid in your own currency</h3><p>Naira, cedis, shillings, rand and more. Settled in minutes, not weeks.</p></div></li>
@@ -132,16 +132,25 @@
       <div class="calc__copy">
         <p class="eyebrow">Know before you start</p>
         <h2 class="h2">See what lands in <em>your</em> account.</h2>
-        <p class="lead">Clients pay in stablecoins. You choose the currency you actually live in. Drag the slider and watch it convert.</p>
+        <p class="lead">Clients fund in the currency that suits them. You choose the one you actually live in. Pick both, drag the slider and watch it convert.</p>
         <img class="calc__wallet" src="/img/wallet.webp" alt="" width="301" height="397" loading="lazy">
       </div>
       <div class="calc__card" id="calc">
         <div class="calc__row">
           <label for="calcAmount">Client pays</label>
-          <div class="calc__amt"><span>$</span><input id="calcAmount" type="text" inputmode="numeric" value="2,400" aria-label="Amount in USD"><em>USDC</em></div>
+          <div class="calc__amt"><span id="calcSym">$</span><input id="calcAmount" type="text" inputmode="numeric" value="2,400" aria-label="Amount the client pays"><em id="calcFund">USDC</em></div>
         </div>
         <input class="range" id="calcRange" type="range" min="100" max="20000" step="50" value="2400" aria-label="Amount slider">
-        <div class="calc__tabs" role="tablist" aria-label="Payout currency">
+        <p class="calc__sub">Client pays in <small>(any currency works)</small></p>
+        <div class="calc__tabs calc__tabs--fund" role="tablist" aria-label="Funding currency">
+          <button role="tab" aria-selected="false" data-fund="USDT">USDT</button>
+          <button role="tab" aria-selected="true" data-fund="USDC">USDC</button>
+          <button role="tab" aria-selected="false" data-fund="USD">USD</button>
+          <button role="tab" aria-selected="false" data-fund="GBP">GBP</button>
+          <button role="tab" aria-selected="false" data-fund="EUR">EUR</button>
+        </div>
+        <p class="calc__sub">You receive in</p>
+        <div class="calc__tabs calc__tabs--pay" role="tablist" aria-label="Payout currency">
           <button role="tab" aria-selected="true" data-cur="NGN">NGN</button>
           <button role="tab" aria-selected="false" data-cur="GHS">GHS</button>
           <button role="tab" aria-selected="false" data-cur="KES">KES</button>
@@ -179,7 +188,7 @@
             <h3>Do the work. <br>The payment is already there.</h3>
             <ul class="feat">
               <li><b>Escrow that protects you</b><span>Funds are locked the moment a project starts and released when work is delivered.</span></li>
-              <li><b>Receive locally, instantly</b><span>Clients pay in USDT or USDC. You cash out in NGN, GHS, KES, ZAR, USD and more.</span></li>
+              <li><b>Receive locally, instantly</b><span>Clients fund in almost any currency, most often USDT, USDC, GBP, EUR or USD. You cash out in NGN, GHS, KES, ZAR, USD and more.</span></li>
               <li><b>Hold money in 6 currencies</b><span>Keep what you want in NGN, KES, GHS, XOF, USD or EUR, and withdraw when it suits you.</span></li>
             </ul>
           </div>
@@ -260,7 +269,7 @@
     <div class="cur__pin">
       <div class="cur__intro wrap">
         <p class="eyebrow">Settle in yours</p>
-        <h2 class="h2">Clients pay in stablecoins. You get paid in <em>yours.</em></h2>
+        <h2 class="h2">Clients fund in any currency. You get paid in <em>yours.</em></h2>
       </div>
       <div class="cur__track" id="curTrack">
         <article class="ccard ccard--y"><small>Nigeria</small><b>₦</b><h3>NGN</h3><p>Naira, in your account in minutes.</p></article>
@@ -271,7 +280,7 @@
         <article class="ccard ccard--y"><small>United States</small><b>$</b><h3>USD</h3><p>Hold dollars when you want to.</p></article>
         <article class="ccard ccard--b"><small>Europe</small><b>€</b><h3>EUR</h3><p>Euros for European clients.</p></article>
         <article class="ccard ccard--g"><small>United Kingdom</small><b>£</b><h3>GBP</h3><p>Pounds, ready to withdraw.</p></article>
-        <article class="ccard ccard--d"><small>Stablecoin</small><b>₮</b><h3>USDT · USDC</h3><p>How clients fund every contract.</p></article>
+        <article class="ccard ccard--d"><small>Funding</small><b>¤</b><h3>Any currency</h3><p>Most clients fund in USDT, USDC, GBP, EUR or USD.</p></article>
       </div>
     </div>
   </section>
@@ -309,7 +318,7 @@
       <div class="faq__list" id="faqList">
         <div class="qa"><button type="button" aria-expanded="false"><span>What is escrow, in plain words?</span><i></i></button><div class="qa__a"><div><p>A neutral hold. The client puts the project budget into Veritas up front, we lock it, and it’s only released to the freelancer when the client approves the work. Both sides can see the money is there.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false"><span>Does my freelancer need a Veritas account?</span><i></i></button><div class="qa__a"><div><p>Not to receive an invite. Enter their email when you create the contract. They download the app, sign up with that same email, and the contract is waiting for them automatically.</p></div></div></div>
-        <div class="qa"><button type="button" aria-expanded="false"><span>Which currencies can I get paid in?</span><i></i></button><div class="qa__a"><div><p>Clients pay in USDT or USDC. Freelancers can settle in NGN, GHS, KES, ZAR, USD, EUR, GBP and more, and hold balances in several currencies at once.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false"><span>Which currencies can I get paid in?</span><i></i></button><div class="qa__a"><div><p>Clients can fund a contract in almost any currency, most often USDT, USDC, GBP, EUR or USD. Freelancers can settle in NGN, GHS, KES, ZAR, USD, EUR, GBP and more, and hold balances in several currencies at once.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false"><span>Where can I get Veritas?</span><i></i></button><div class="qa__a"><div><p>Veritas is built for iOS and Android. Use the App Store or Google Play buttons on this page to download it.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false"><span>What will it cost?</span><i></i></button><div class="qa__a"><div><p>You’ll always see the exact amount and rate before you confirm a payment. Nothing moves until you approve it.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false"><span>Who is Veritas for?</span><i></i></button><div class="qa__a"><div><p>Freelancers, agencies and clients who work across borders and want a safer way to agree terms and pay for work: designers, developers, writers and everyone in between.</p></div></div></div>
