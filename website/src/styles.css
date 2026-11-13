@@ -142,13 +142,11 @@ html.is-loading .nav { transform: translate(-50%, -160%); }
 .hero__bg .b1 { width: 46vw; height: 46vw; right: -8vw; top: -12vw; background: #FFF59A; }
 .hero__bg .b2 { width: 30vw; height: 30vw; left: -10vw; bottom: -14vw; background: #F7D914; }
 .hero__grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); align-items: center; gap: 24px; }
-.hero__copy { position: relative; z-index: 2; }
-.hero__title { margin: 26px 0 28px; font-size: clamp(56px, 8.6vw, 150px); line-height: .88; letter-spacing: -.055em; font-weight: 800; font-stretch: 78%; }
-.hero__title .line { display: block; white-space: nowrap; overflow: hidden; padding: .04em .06em .1em 0; margin-bottom: -.06em; }
+.hero__copy { position: relative; z-index: 2; container-type: inline-size; }
+.hero__title { margin: 26px 0 28px; font-size: clamp(48px, 17.2cqw, 150px); line-height: .88; letter-spacing: -.055em; font-weight: 800; font-stretch: 78%; }
+.hero__title .line { display: block; white-space: nowrap; overflow: hidden; padding: .04em .16em .1em 0; margin-bottom: -.06em; }
 .hero__title .inner { display: inline-block; will-change: transform; }
 .inline-pill { display: inline-block; width: 1.32em; height: .74em; border-radius: 999px; background: var(--olive); vertical-align: -.02em; margin: 0 .06em; position: relative; overflow: hidden; box-shadow: .04em .05em 0 rgba(55, 47, 1, .25); }
-.inline-pill img { position: absolute; height: 128%; width: auto; max-width: none; left: 50%; top: 50%; transform: translate(-50%, -52%) rotate(-5deg); transition: transform .8s var(--ease); }
-.hero__title:hover .inline-pill img { transform: translate(-50%, -52%) rotate(7deg) scale(1.08); }
 .hero__lede { font-size: clamp(18px, 1.5vw, 22px); max-width: 44ch; font-weight: 500; margin-bottom: 30px; }
 .hero__proof { display: flex; align-items: center; gap: 14px; margin-top: 22px; font-size: 15px; font-weight: 500; }
 .avatars { display: flex; }
@@ -617,3 +615,16 @@ html.is-loading .nav { transform: translate(-50%, -160%); }
 .store--xl:not(.is-primary) svg { background: var(--olive); color: var(--yellow); }
 .store--xl:not(.is-primary):hover { background: var(--olive); color: var(--yellow); box-shadow: 6px 6px 0 var(--ink); }
 .store--xl:not(.is-primary):hover svg { background: var(--yellow); color: var(--olive); }
+
+/* hero pill: 3D icons sliding down in a loop */
+.inline-pill .slide { position: absolute; left: 0; right: 0; top: 0; height: 500%; display: block; animation: pillslide 7.2s infinite; will-change: transform; }
+.inline-pill .slide > span { display: flex; align-items: center; justify-content: center; height: 20%; }
+.inline-pill .slide img { height: 84%; width: auto; max-width: 78%; object-fit: contain; filter: drop-shadow(0 .03em .03em rgba(0, 0, 0, .35)); }
+@keyframes pillslide {
+  0%, 17%   { transform: translateY(-80%); }
+  25%, 42%  { transform: translateY(-60%); }
+  50%, 67%  { transform: translateY(-40%); }
+  75%, 92%  { transform: translateY(-20%); }
+  100%      { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { .inline-pill .slide { animation: none; transform: translateY(-80%); } }
