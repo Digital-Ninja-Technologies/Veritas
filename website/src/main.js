@@ -512,6 +512,8 @@ if (dl) {
   $$('[data-open-download]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); closeMenu(); openDownload(b); }));
   $$('[data-close-dl]').forEach((b) => b.addEventListener('click', closeDownload));
   $$('.dl__tabs button', dl).forEach((b) => b.addEventListener('click', () => { $('#dlRec').textContent = ''; setOS(b.dataset.os); }));
+  $$('.dl__arrow', dl).forEach((b) => b.addEventListener('click', () => setDlStep((dlState.i + +b.dataset.dir + 3) % 3, { fromUser: true })));
+  addEventListener('keydown', (e) => { if (!dlState.open || e.target.closest('.dl__tabs')) return; if (e.key === 'ArrowRight') setDlStep((dlState.i + 1) % 3, { fromUser: true }); if (e.key === 'ArrowLeft') setDlStep((dlState.i + 2) % 3, { fromUser: true }); });
   $$('.dl__dots button', dl).forEach((b) => b.addEventListener('click', () => setDlStep(+b.dataset.i, { fromUser: true })));
   // pause auto-advance while hovering the stage
   const stage = $('#dlStage');

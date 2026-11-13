@@ -32,10 +32,10 @@
       </ul>
     </div>
 
-    <div class="dl__right" aria-hidden="true">
-      <i class="dl__glow"></i>
-      <div class="dl__ring dl__ring--a"></div><div class="dl__ring dl__ring--b"></div>
-      <div class="dl__stage" id="dlStage">
+    <div class="dl__right">
+      <i class="dl__glow" aria-hidden="true"></i>
+      <div class="dl__ring dl__ring--a" aria-hidden="true"></div><div class="dl__ring dl__ring--b" aria-hidden="true"></div>
+      <div class="dl__stage" id="dlStage" aria-hidden="true">
         <div class="dl__phone" id="dlPhone">
           <div class="dl__notch"></div>
           <div class="dl__scr is-on" data-i="0">
@@ -63,6 +63,8 @@
         <span class="dl__chip dl__chip--3">KSh KES</span>
         <span class="dl__chip dl__chip--4">R ZAR</span>
       </div>
+      <button type="button" class="dl__arrow dl__arrow--prev" data-dir="-1" aria-label="Previous step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button type="button" class="dl__arrow dl__arrow--next" data-dir="1" aria-label="Next step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="dl__cap">
         <div class="dl__capt"><b id="dlCapT">Fund &amp; lock</b><span id="dlCapD">The client funds the project. Veritas locks it in escrow.</span></div>
         <div class="dl__dots" role="tablist" aria-label="App tour">

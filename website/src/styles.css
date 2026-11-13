@@ -628,3 +628,11 @@ html.is-loading .nav { transform: translate(-50%, -160%); }
   100%      { transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) { .inline-pill .slide { animation: none; transform: translateY(-80%); } }
+
+/* tour arrows */
+.dl__arrow { position: absolute; z-index: 3; top: 43%; width: 48px; height: 48px; margin-top: -24px; display: grid; place-items: center; border-radius: 50%; background: var(--yellow); color: var(--olive); border: 2px solid var(--olive); box-shadow: 3px 3px 0 rgba(0, 0, 0, .45); transition: transform .35s var(--ease), background .25s, box-shadow .25s; }
+.dl__arrow svg { width: 22px; height: 22px; }
+.dl__arrow--prev { left: 18px; } .dl__arrow--next { right: 18px; }
+.dl__arrow:hover { background: #fff; box-shadow: 5px 5px 0 rgba(0, 0, 0, .45); }
+.dl__arrow--prev:hover { transform: translate(-3px, -2px); } .dl__arrow--next:hover { transform: translate(3px, -2px); }
+.dl__arrow:active { transform: scale(.92); }
