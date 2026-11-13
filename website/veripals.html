@@ -26,7 +26,7 @@
         <h1>Be a <em>Veripal.</em></h1>
         <p class="vp-hero__lede">Got an audience, a group chat or a very opinionated timeline? Tell people about Veritas, the escrow that stops clients ghosting, and get rewarded for it.</p>
         <div class="vp-hero__cta">
-          <a class="btn btn--dark magnetic" href="#apply"><span>Apply to be a Veripal</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <button type="button" class="btn btn--dark magnetic" data-open-veripal><span>Apply to be a Veripal</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <a class="btn btn--ghost" href="#how"><span>How it works</span></a>
         </div>
         <p class="vp-hero__term" aria-hidden="true"><span>$</span> veripal --apply <i></i></p>
@@ -130,64 +130,12 @@
       <p class="eyebrow">How it works</p>
       <h2 class="h2">Four levels. <em>No tutorial needed.</em></h2>
       <ol class="levels" id="levels">
-        <li class="level"><span class="level__n">LVL 1</span><h3>Apply</h3><p>Fill in the form below. Tell us who you are and who’s watching.</p></li>
+        <li class="level"><span class="level__n">LVL 1</span><h3>Apply</h3><p>Fill in a short form. Tell us who you are and who’s watching.</p></li>
         <li class="level"><span class="level__n">LVL 2</span><h3>Get approved</h3><p>We read every application and email you with the verdict.</p></li>
         <li class="level"><span class="level__n">LVL 3</span><h3>Make &amp; share</h3><p>Post in your own voice, using our briefs as your cheat sheet.</p></li>
         <li class="level"><span class="level__n">LVL 4</span><h3>Get rewarded</h3><p>Collect your rewards and keep levelling up with us.</p></li>
       </ol>
       <div class="levels__bar" aria-hidden="true"><i id="levelsBar"></i></div>
-    </div>
-  </section>
-
-  <!-- ============ APPLY ============ -->
-  <section class="vp-apply" id="apply">
-    <div class="wrap vp-apply__grid">
-      <div class="vp-apply__side">
-        <p class="eyebrow">Apply</p>
-        <h2 class="h2">Join the <em>Veripals.</em></h2>
-        <p class="lead">Takes about two minutes. We read every application.</p>
-        <ul class="looks">
-          <li>You make content people actually watch, read or reply to</li>
-          <li>Your audience includes freelancers, techies or Gen Z earners</li>
-          <li>You keep it honest and in your own voice</li>
-        </ul>
-        <img class="vp-apply__img" src="/img/trio.webp" alt="" width="349" height="226" loading="lazy">
-      </div>
-      <div>
-        <form class="cform" data-veripals novalidate>
-          <div class="cform__row">
-            <label>Full name<input name="name" type="text" autocomplete="name" placeholder="Ada Lovelace" required></label>
-            <label>Email<input name="email" type="email" autocomplete="email" placeholder="you@email.com" required></label>
-          </div>
-          <div class="cform__row">
-            <label>Primary platform
-              <select name="platform" required>
-                <option value="">Select…</option><option>TikTok</option><option>Instagram</option><option>X / Twitter</option><option>YouTube</option><option>LinkedIn</option><option>Newsletter</option><option>Community (Discord, Slack, WhatsApp)</option><option>Other</option>
-              </select></label>
-            <label>Audience size
-              <select name="audience" required>
-                <option value="">Select…</option><option>Under 1k</option><option>1k – 10k</option><option>10k – 50k</option><option>50k – 250k</option><option>250k+</option>
-              </select></label>
-          </div>
-          <label>Link to your main profile<input name="profile" type="text" inputmode="url" placeholder="https://…" required></label>
-          <div class="cform__row">
-            <label>Your country<input name="country" type="text" autocomplete="country-name" placeholder="Nigeria" required></label>
-            <label>Where your audience is<input name="audience_country" type="text" placeholder="Nigeria, Ghana, UK…" required></label>
-          </div>
-          <label>What do you make?
-            <select name="niche" required>
-              <option value="">Select…</option><option>Freelancing &amp; career</option><option>Tech &amp; dev</option><option>Design</option><option>Writing</option><option>Money &amp; finance</option><option>Comedy &amp; skits</option><option>Lifestyle</option><option>Something else</option>
-            </select></label>
-          <label>Why do you want to be a Veripal?<textarea name="why" placeholder="Tell us about your audience, your best-performing post, or your worst client story."></textarea></label>
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-          <p class="wl-error" role="alert" hidden></p>
-          <button class="btn btn--dark magnetic" type="submit"><span>Submit application</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        </form>
-        <div class="cform cform__sent" role="status">
-          <h3>You’re in the queue ✦</h3>
-          <p>Thanks, <b data-sent-name></b>. We’ll read your application and email you soon. In the meantime, go warm up on the <a href="#hooks">hook machine</a>.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -220,12 +168,134 @@
       <h2 class="cta__title">Your audience<br>needs this.</h2>
       <p class="cta__lede">Somewhere in your followers is someone who’s been ghosted by a client. Be the one who tells them there’s a fix.</p>
       <div class="vp-hero__cta vp-hero__cta--center">
-        <a class="btn btn--dark magnetic" href="#apply"><span>Apply to be a Veripal</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <button type="button" class="btn btn--dark magnetic" data-open-veripal><span>Apply to be a Veripal</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button class="btn btn--ghost" type="button" data-open-download><span>Download the app</span></button>
       </div>
     </div>
   </section>
 </main>
+<!-- ============ APPLY MODAL ============ -->
+<div class="dl vm" id="vp-modal" role="dialog" aria-modal="true" aria-labelledby="vm-title" aria-hidden="true">
+  <div class="dl__scrim" data-close-vm></div>
+  <div class="dl__card">
+    <button class="dl__x" type="button" aria-label="Close" data-close-vm>✕</button>
+    <div class="dl__scroll" data-lenis-prevent>
+
+      <div class="vm__left">
+        <p class="eyebrow">Veripals</p>
+        <h2 id="vm-title" class="vm__title">Join the <em>Veripals.</em></h2>
+        <p class="vm__sub">Three quick steps, about two minutes. We read every application.</p>
+
+        <div class="vcard" id="vCard" aria-hidden="true">
+          <div class="vcard__in">
+            <div class="vcard__top"><span>VERIPAL</span><span>✦ creator</span></div>
+            <div class="vcard__who">
+              <i class="vcard__av" id="vcAv">?</i>
+              <div><b id="vcName" class="is-empty">Your name</b><small id="vcPlat" class="is-empty">your platform</small></div>
+            </div>
+            <dl class="vcard__rows">
+              <div><dt>Makes</dt><dd id="vcNiche" class="is-empty">your niche</dd></div>
+              <div><dt>Audience</dt><dd id="vcAud" class="is-empty">your size</dd></div>
+              <div><dt>From</dt><dd id="vcCountry" class="is-empty">your country</dd></div>
+            </dl>
+            <div class="vcard__bars" aria-hidden="true"></div>
+            <span class="vcard__stamp">Received ✦</span>
+          </div>
+          <img class="vcard__vault" src="/img/vault.webp" alt="" width="390" height="358">
+        </div>
+
+        <ul class="vm__perks">
+          <li>Briefs, so you never start from a blank page</li>
+          <li>Rewards confirmed once you’re approved</li>
+        </ul>
+      </div>
+
+      <div class="vm__right">
+        <div class="vm__head">
+          <div class="vm__prog" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
+          <p class="vm__label" id="vStepLabel" aria-live="polite">Step 1 of 3 · About you</p>
+        </div>
+
+        <form id="vForm" data-veripals novalidate>
+          <section class="vstep is-on" data-step="1" aria-label="About you">
+            <h3>First, who are you?</h3>
+            <label>Full name<input name="name" type="text" autocomplete="name" placeholder="Ada Lovelace"></label>
+            <label>Email<input name="email" type="email" autocomplete="email" placeholder="you@email.com"></label>
+            <label>Your country<input name="country" type="text" autocomplete="country-name" placeholder="Nigeria"></label>
+          </section>
+
+          <section class="vstep" data-step="2" aria-label="Your audience">
+            <h3>Now, where do you hang out?</h3>
+            <div class="vgroup"><p class="vlabel" id="gl-platform">Main platform</p>
+              <div class="vchips" role="radiogroup" aria-labelledby="gl-platform" data-group="platform">
+                <button type="button" role="radio" aria-checked="false" data-v="TikTok">TikTok</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Instagram">Instagram</button>
+                <button type="button" role="radio" aria-checked="false" data-v="X / Twitter">X</button>
+                <button type="button" role="radio" aria-checked="false" data-v="YouTube">YouTube</button>
+                <button type="button" role="radio" aria-checked="false" data-v="LinkedIn">LinkedIn</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Newsletter">Newsletter</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Community">Community</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Other">Other</button>
+              </div>
+            </div>
+            <div class="vgroup"><p class="vlabel" id="gl-audience">Audience size</p>
+              <div class="vchips" role="radiogroup" aria-labelledby="gl-audience" data-group="audience">
+                <button type="button" role="radio" aria-checked="false" data-v="Under 1k">Under 1k</button>
+                <button type="button" role="radio" aria-checked="false" data-v="1k – 10k">1k – 10k</button>
+                <button type="button" role="radio" aria-checked="false" data-v="10k – 50k">10k – 50k</button>
+                <button type="button" role="radio" aria-checked="false" data-v="50k – 250k">50k – 250k</button>
+                <button type="button" role="radio" aria-checked="false" data-v="250k+">250k+</button>
+              </div>
+            </div>
+            <label>Link to your main profile<input name="profile" type="text" inputmode="url" autocomplete="url" placeholder="https://…"></label>
+            <label>Where your audience is<input name="audience_country" type="text" placeholder="Nigeria, Ghana, UK…"></label>
+            <div class="vgroup"><p class="vlabel" id="gl-niche">What do you make?</p>
+              <div class="vchips" role="radiogroup" aria-labelledby="gl-niche" data-group="niche">
+                <button type="button" role="radio" aria-checked="false" data-v="Freelancing &amp; career">Freelancing</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Tech &amp; dev">Tech &amp; dev</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Design">Design</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Writing">Writing</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Money &amp; finance">Money</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Comedy &amp; skits">Comedy</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Lifestyle">Lifestyle</button>
+                <button type="button" role="radio" aria-checked="false" data-v="Something else">Something else</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="vstep" data-step="3" aria-label="Your pitch">
+            <h3>Last one. Tell us your story.</h3>
+            <label>Why do you want to be a Veripal? <em>(optional)</em><textarea name="why" placeholder="Your audience, your best post, or your worst client story. Anything goes."></textarea></label>
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+            <p class="vm__fine">By applying you agree we can email you about the program. See our <a href="/privacy">privacy policy</a>.</p>
+          </section>
+
+          <p class="vm__err" role="alert" hidden></p>
+          <div class="vm__nav">
+            <button class="btn btn--ghost btn--sm" type="button" id="vBack" hidden><span>← Back</span></button>
+            <button class="btn btn--dark magnetic" type="submit" id="vNext"><span>Next</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </form>
+
+        <div class="vm__done" id="vDone" hidden role="status">
+          <div class="check"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 27l7 7 15-16" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>You’re in the queue ✦</h3>
+          <p>Thanks, <b data-sent-name></b>. Your application is on its way to us.</p>
+          <ol class="vm__next">
+            <li><span>1</span>We read your application</li>
+            <li><span>2</span>You get an email with the verdict</li>
+            <li><span>3</span>If you’re in, your brief lands in your inbox</li>
+          </ol>
+          <div class="vm__donebtns">
+            <button class="btn btn--dark" type="button" data-close-vm><span>Back to the site</span></button>
+            <a class="btn btn--ghost" href="#hooks" data-close-vm><span>Warm up on the hook machine</span></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 <!--@footer-->
 <!--@modal-->
 </body>

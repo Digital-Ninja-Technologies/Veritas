@@ -654,32 +654,176 @@ if (dl) {
   gsap.to('#levelsBar', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: list, start: 'top 80%', end: 'bottom 55%', scrub: true } });
 })();
 
-/* ------------------------------------------------------------------ veripals: application form */
-(function applyForm() {
-  const form = $('[data-veripals]');
-  if (!form) return;
-  const err = $('.wl-error', form), btn = $('button[type="submit"]', form), sent = form.nextElementSibling;
+/* ------------------------------------------------------------------ veripals: application modal */
+(function applyModal() {
+  const vm = $('#vp-modal');
+  if (!vm) return;
+  const form = $('#vForm'), steps = $$('.vstep', vm), bars = $$('.vm__prog i', vm);
+  const label = $('#vStepLabel'), backBtn = $('#vBack'), nextBtn = $('#vNext'), errEl = $('.vm__err', vm), done = $('#vDone');
+  const NAMES = ['About you', 'Your audience', 'Your pitch'];
+  const st = { step: 1, open: false, sent: false, busy: false, pick: { platform: '', audience: '', niche: '' } };
+  let lastFocus = null;
+
+  /* ---- live ID card ---- */
+  const q = (id) => document.getElementById(id);
+  const card = { av: q('vcAv'), name: q('vcName'), plat: q('vcPlat'), niche: q('vcNiche'), aud: q('vcAud'), country: q('vcCountry') };
+  const setCard = (el, text, empty) => { el.textContent = text || empty; el.classList.toggle('is-empty', !text); };
+  function paintCard(pop) {
+    const f = form.elements;
+    const name = f.name.value.trim();
+    setCard(card.name, name, 'Your name');
+    const initials = name ? name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('') : '?';
+    if (card.av.textContent !== initials) { card.av.textContent = initials; if (!reduce) { card.av.classList.add('pop'); setTimeout(() => card.av.classList.remove('pop'), 260); } }
+    setCard(card.plat, st.pick.platform, 'your platform');
+    setCard(card.niche, st.pick.niche.replace(/&amp;/g, '&'), 'your niche');
+    setCard(card.aud, st.pick.audience, 'your size');
+    setCard(card.country, f.country.value.trim(), 'your country');
+    if (pop && !reduce) gsap.fromTo('.vcard__in', { scale: 0.97 }, { scale: 1, duration: 0.5, ease: 'back.out(3)', clearProps: 'transform' });
+  }
+  form.addEventListener('input', (e) => { paintCard(false); if (e.target.matches('[aria-invalid]')) e.target.removeAttribute('aria-invalid'); errEl.hidden = true; });
+
+  /* ---- chips ---- */
+  $$('.vchips', vm).forEach((group) => {
+    const btns = $$('button', group), key = group.dataset.group;
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => {
+        st.pick[key] = b.dataset.v.replace(/&amp;/g, '&');
+        btns.forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+        errEl.hidden = true; paintCard(true);
+      });
+      b.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault(); const n = btns[(i + (e.key === 'ArrowRight' ? 1 : btns.length - 1)) % btns.length]; n.focus(); n.click();
+      });
+    });
+  });
+
+  /* ---- steps ---- */
+  function showStep(n, dir = 1) {
+    const prev = steps.find((s) => s.classList.contains('is-on'));
+    steps.forEach((s) => s.classList.toggle('is-on', +s.dataset.step === n));
+    const cur = steps[n - 1];
+    st.step = n;
+    bars.forEach((b, i) => { b.classList.toggle('is-done', i < n - 1); b.classList.toggle('is-on', i === n - 1); });
+    label.textContent = `Step ${n} of 3 · ${NAMES[n - 1]}`;
+    backBtn.hidden = n === 1;
+    $('span', nextBtn).textContent = n === 3 ? 'Submit application' : 'Next';
+    errEl.hidden = true;
+    if (!reduce && prev !== cur) gsap.fromTo($$('h3, label, .vgroup, .vm__fine', cur), { x: 34 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: 'expo.out', stagger: 0.05, clearProps: 'transform,opacity' });
+    const first = $('input:not([tabindex="-1"]), textarea, .vchips button', cur);
+    setTimeout(() => first && first.focus({ preventScroll: true }), 80);
+    $('.dl__scroll', vm).scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  }
+
+  function validate(n) {
+    const f = form.elements;
+    const fail = (msg, el) => { if (el) { el.setAttribute('aria-invalid', 'true'); el.focus({ preventScroll: true }); } return msg; };
+    if (n === 1) {
+      if (!f.name.value.trim()) return fail('Please enter your name.', f.name);
+      if (!EMAIL_RE.test(f.email.value.trim())) return fail('Please enter a valid email address.', f.email);
+      if (!f.country.value.trim()) return fail('Please tell us your country.', f.country);
+    }
+    if (n === 2) {
+      if (!st.pick.platform) return 'Pick your main platform.';
+      if (!st.pick.audience) return 'Pick your audience size.';
+      if (!f.profile.value.trim()) return fail('Please add a link to your main profile.', f.profile);
+      if (!f.audience_country.value.trim()) return fail('Please tell us where your audience is.', f.audience_country);
+      if (!st.pick.niche) return 'Pick what you make.';
+    }
+    return '';
+  }
+  const shake = () => { if (!reduce) gsap.fromTo($('.vm__right', vm), { x: -7 }, { x: 0, duration: 0.5, ease: 'elastic.out(1, .3)', clearProps: 'transform' }); };
+
+  backBtn.addEventListener('click', () => { if (st.step > 1) showStep(st.step - 1, -1); });
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const d = Object.fromEntries(new FormData(form));
-    const bad = (m) => { err.textContent = m; err.hidden = false; };
-    err.hidden = true;
-    if (!d.name.trim()) return bad('Please enter your name.');
-    if (!EMAIL_RE.test(d.email.trim())) return bad('Please enter a valid email address.');
-    if (!d.platform || !d.audience || !d.niche) return bad('Please choose your platform, audience size and what you make.');
-    if (!d.profile.trim()) return bad('Please add a link to your main profile.');
-    if (!d.country.trim() || !d.audience_country.trim()) return bad('Please tell us your country and where your audience is.');
-    const done = () => { $('[data-sent-name]', sent).textContent = d.name; form.style.display = 'none'; sent.classList.add('is-on'); sent.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); };
-    if (d._gotcha) return done(); // honeypot: pretend success for bots
-    btn.disabled = true; $('span', btn).textContent = 'Sending…';
+    if (st.busy) return;
+    const msg = validate(st.step);
+    if (msg) { errEl.textContent = msg; errEl.hidden = false; shake(); return; }
+    if (st.step < 3) return showStep(st.step + 1, 1);
+    const f = form.elements;
+    const finish = () => success(f.name.value.trim());
+    if (f._gotcha.value) return finish(); // honeypot: pretend success for bots
+    st.busy = true; nextBtn.disabled = true; $('span', nextBtn).textContent = 'Sending…';
     try {
-      const { _gotcha, ...payload } = d;
-      const res = await fetch(CONTACT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ ...payload, _subject: 'Veripals application — ' + d.name }) });
+      const res = await fetch(CONTACT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ name: f.name.value.trim(), email: f.email.value.trim(), country: f.country.value.trim(), platform: st.pick.platform, audience: st.pick.audience, profile: f.profile.value.trim(), audience_country: f.audience_country.value.trim(), niche: st.pick.niche, why: f.why.value.trim(), _subject: 'Veripals application — ' + f.name.value.trim() }) });
       if (!res.ok) throw new Error('bad status');
-      done();
-    } catch (_) { bad('Could not send your application. Please try again or email hello@useveritasapp.com.'); }
-    finally { btn.disabled = false; $('span', btn).textContent = 'Submit application'; }
+      finish();
+    } catch (_) { errEl.textContent = 'Could not send your application. Please try again or email hello@useveritasapp.com.'; errEl.hidden = false; shake(); }
+    finally { st.busy = false; nextBtn.disabled = false; $('span', nextBtn).textContent = st.sent ? 'Next' : 'Submit application'; }
   });
+
+  function success(name) {
+    st.sent = true;
+    form.hidden = true; $('.vm__head', vm).style.visibility = 'hidden';
+    $('[data-sent-name]', done).textContent = name;
+    done.hidden = false; done.classList.remove('is-in'); requestAnimationFrame(() => done.classList.add('is-in'));
+    if (!reduce) {
+      gsap.from($$('h3, p, .vm__next li, .vm__donebtns > *', done), { y: 26, opacity: 0, duration: 0.8, ease: 'expo.out', stagger: 0.07, delay: 0.25, clearProps: 'transform,opacity' });
+      gsap.fromTo('.vcard__stamp', { opacity: 0, scale: 3.2, rotate: -40 }, { opacity: 1, scale: 1, rotate: -14, duration: 0.55, ease: 'back.out(1.6)', delay: 0.45 });
+      gsap.fromTo('.vcard__in', { y: 0 }, { y: -8, duration: 0.15, yoyo: true, repeat: 1, delay: 0.95, clearProps: 'transform' });
+    } else $('.vcard__stamp').style.opacity = 1;
+    $('.btn', done).focus({ preventScroll: true });
+  }
+
+  function resetAll() {
+    form.reset(); st.pick = { platform: '', audience: '', niche: '' }; st.sent = false;
+    $$('.vchips button', vm).forEach((b) => b.setAttribute('aria-checked', 'false'));
+    $$('[aria-invalid]', vm).forEach((el) => el.removeAttribute('aria-invalid'));
+    done.hidden = true; form.hidden = false; $('.vm__head', vm).style.visibility = '';
+    $('.vcard__stamp').style.opacity = 0; paintCard(false); showStep(1);
+  }
+
+  /* ---- open / close ---- */
+  function open(origin) {
+    if (st.open) return;
+    st.open = true; lastFocus = document.activeElement;
+    let ox = innerWidth / 2, oy = innerHeight / 2;
+    if (origin) { const r = origin.getBoundingClientRect(); ox = r.left + r.width / 2; oy = r.top + r.height / 2; }
+    const c = $('.dl__card', vm), cr = c.getBoundingClientRect();
+    vm.style.setProperty('--ox', ((ox - cr.left) / cr.width) * 100 + '%'); vm.style.setProperty('--oy', ((oy - cr.top) / cr.height) * 100 + '%');
+    vm.classList.add('is-open'); vm.setAttribute('aria-hidden', 'false');
+    stopScroll(); if (!lenis) document.body.style.overflow = 'hidden';
+    if (!reduce) {
+      gsap.from('.vm__left > *:not(.vcard)', { y: 34, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.07, delay: 0.25, clearProps: 'transform,opacity' });
+      gsap.from('.vcard__in', { y: 90, rotate: 10, opacity: 0, duration: 1.2, ease: 'expo.out', delay: 0.4, clearProps: 'transform,opacity' });
+      gsap.from('.vm__head, .vstep.is-on > *', { y: 30, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06, delay: 0.35, clearProps: 'transform,opacity' });
+    }
+    setTimeout(() => { const t = st.sent ? $('.btn', done) : $('.vstep.is-on input, .vstep.is-on textarea, .vstep.is-on .vchips button', vm); t && t.focus({ preventScroll: true }); }, 700);
+  }
+  function close() {
+    if (!st.open) return;
+    st.open = false; vm.classList.remove('is-open'); vm.setAttribute('aria-hidden', 'true');
+    startScroll(); document.body.style.overflow = '';
+    lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true });
+    if (st.sent) setTimeout(resetAll, 1000);
+  }
+
+  $$('[data-open-veripal]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); open(b); }));
+  $$('[data-close-vm]', vm).forEach((b) => b.addEventListener('click', (e) => {
+    const href = b.getAttribute('href'); close();
+    if (href && href.startsWith('#')) { e.preventDefault(); setTimeout(() => { const t = $(href); t && scrollToTarget(t); }, 500); }
+  }));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && st.open) close(); });
+  vm.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const f = $$('button, input:not([tabindex="-1"]), textarea, a[href]', vm).filter((el) => el.offsetParent !== null && !el.disabled);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  // tilt the ID card with the mouse
+  if (finePointer && !reduce) {
+    const left = $('.vm__left', vm), cin = $('.vcard__in', vm);
+    const rx = gsap.quickTo(cin, 'rotationX', { duration: 0.6, ease: 'power3' }), ry = gsap.quickTo(cin, 'rotationY', { duration: 0.6, ease: 'power3' });
+    left.addEventListener('pointermove', (e) => { const r = left.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - 0.5) * 22); rx(-((e.clientY - r.top) / r.height - 0.5) * 16); });
+    left.addEventListener('pointerleave', () => { rx(0); ry(0); });
+  }
+  // deep link: /veripals#apply opens the form
+  if (location.hash === '#apply') setTimeout(() => open(null), $('#loader') ? 2900 : 450);
+  paintCard(false);
 })();
 
 /* ------------------------------------------------------------------ nav: playful hover */
