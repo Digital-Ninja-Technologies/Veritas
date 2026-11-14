@@ -826,6 +826,44 @@ if (dl) {
   paintCard(false);
 })();
 
+/* ------------------------------------------------------------------ nav: active link */
+const navActive = { link: null, subs: [] };
+(function navActiveState() {
+  if (!nav) return;
+  const norm = (p) => (p.replace(/\/index(\.html)?$/, '/').replace(/\.html$/, '').replace(/(.)\/$/, '$1')) || '/';
+  const here = norm(location.pathname);
+  const all = $$('.nav__links a, .menu__links a');
+  const keyOf = (a) => { const u = new URL(a.getAttribute('href'), location.origin); return { path: norm(u.pathname), hash: u.hash }; };
+  const set = (href) => {
+    all.forEach((a) => {
+      const on = !!href && a.getAttribute('href') === href;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', href.includes('#') ? 'location' : 'page'); else a.removeAttribute('aria-current');
+    });
+    navActive.link = href ? $('.nav__links a[href="' + href + '"]') : null;
+    navActive.subs.forEach((fn) => fn());
+  };
+
+  // 1) a link that points at this very page (About, Veripals, Contact)
+  const page = all.find((a) => { const k = keyOf(a); return !k.hash && k.path === here; });
+  if (page) return set(page.getAttribute('href'));
+
+  // 2) on the home page, follow the section that is in view
+  if (here !== '/') return;
+  let cur = null;
+  $$('.nav__links a').forEach((a) => {
+    const k = keyOf(a);
+    if (k.path !== '/' || !k.hash) return;
+    const sec = $(k.hash);
+    if (!sec) return;
+    const href = a.getAttribute('href');
+    ScrollTrigger.create({
+      trigger: sec, start: 'top 50%', end: 'bottom 50%',
+      onToggle: (self) => { if (self.isActive) { cur = href; set(href); } else if (cur === href) { cur = null; set(null); } },
+    });
+  });
+})();
+
 /* ------------------------------------------------------------------ nav: playful hover */
 (function navFun() {
   if (!nav || !finePointer || reduce) return;
@@ -834,25 +872,41 @@ if (dl) {
   const cta = $('.nav__cta .btn', nav);
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-  // rolling link text + gliding blob
+  // rolling link text + gliding blob (the blob rests on the active link)
   if (links) {
     $$('a', links).forEach((a) => { const t = a.textContent.trim(); a.innerHTML = `<span class="roll"><span class="roll__in" data-t="${t}">${t}</span></span>`; });
     const blob = document.createElement('i'); blob.className = 'nav__blob'; links.prepend(blob);
+    document.documentElement.classList.add('nav-blob');
     gsap.set(blob, { opacity: 0, scale: 0.6 });
-    let visible = false, lastX = 0;
+    let visible = false, hovering = false, lastX = 0;
+    const box = (a) => ({ x: a.offsetLeft, y: a.offsetTop, width: a.offsetWidth, height: a.offsetHeight });
+    const rest = (instant) => {
+      const a = navActive.link;
+      if (!a) { visible = false; gsap.to(blob, { opacity: 0, scale: 0.6, duration: 0.3, ease: 'power2.in', overwrite: 'auto' }); return; }
+      if (!visible || instant) {
+        gsap.set(blob, box(a));
+        gsap.to(blob, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.6)', overwrite: 'auto' });
+        visible = true;
+      } else gsap.to(blob, { ...box(a), duration: 0.65, ease: 'elastic.out(1, .55)', overwrite: 'auto' });
+      lastX = a.offsetLeft;
+    };
     $$('a', links).forEach((a) => a.addEventListener('pointerenter', () => {
-      const x = a.offsetLeft, y = a.offsetTop, w = a.offsetWidth, h = a.offsetHeight, dir = x > lastX ? 1 : -1;
+      hovering = true;
+      const bx = box(a), dir = bx.x > lastX ? 1 : -1;
       if (!visible) {
-        gsap.set(blob, { x, y, width: w, height: h });
+        gsap.set(blob, bx);
         gsap.to(blob, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.6)', overwrite: 'auto' });
         visible = true;
       } else {
-        gsap.to(blob, { x, y, width: w, height: h, duration: 0.65, ease: 'elastic.out(1, .55)', overwrite: 'auto' });
+        gsap.to(blob, { ...bx, duration: 0.65, ease: 'elastic.out(1, .55)', overwrite: 'auto' });
         gsap.fromTo(blob, { scaleX: 1.14, scaleY: 0.86, rotate: dir * 4 }, { scaleX: 1, scaleY: 1, rotate: 0, duration: 0.6, ease: 'elastic.out(1, .45)' });
       }
-      lastX = x;
+      lastX = bx.x;
     }));
-    links.addEventListener('pointerleave', () => { visible = false; gsap.to(blob, { opacity: 0, scale: 0.6, duration: 0.3, ease: 'power2.in', overwrite: 'auto' }); });
+    links.addEventListener('pointerleave', () => { hovering = false; rest(); });
+    navActive.subs.push(() => { if (!hovering) rest(); });
+    addEventListener('resize', () => { if (!hovering && navActive.link) rest(true); });
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => rest(true));
   }
 
   // the logo's dot is a pupil that follows the cursor

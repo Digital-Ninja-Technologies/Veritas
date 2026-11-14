@@ -941,3 +941,11 @@ html.is-loading .nav { transform: translate(-50%, -160%); }
   .vm__nav { position: sticky; bottom: 0; margin: 0 -22px -22px; padding: 14px 22px calc(14px + env(safe-area-inset-bottom)); background: var(--cream); border-top: 2px solid rgba(55, 47, 1, .12); }
 }
 @media (prefers-reduced-motion: reduce) { .vcard__vault { animation: none; } }
+
+/* ==========================================================================
+   Nav: active link
+   ========================================================================== */
+/* touch / reduced-motion / no-JS: a static pill on the current link (the gliding blob does this job otherwise) */
+html:not(.nav-blob) .nav__links a.is-active, html:not(.nav-blob) .nav__links a[aria-current] { background: var(--yellow); box-shadow: inset 0 0 0 2px var(--olive), 2px 3px 0 var(--olive); }
+/* full-screen mobile menu */
+.menu__links a.is-active { align-self: flex-start; background: var(--olive); color: var(--yellow); padding: 0 .22em; border-radius: .2em; rotate: -2deg; }
