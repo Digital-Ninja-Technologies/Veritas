@@ -949,3 +949,14 @@ html.is-loading .nav { transform: translate(-50%, -160%); }
 html:not(.nav-blob) .nav__links a.is-active, html:not(.nav-blob) .nav__links a[aria-current] { background: var(--yellow); box-shadow: inset 0 0 0 2px var(--olive), 2px 3px 0 var(--olive); }
 /* full-screen mobile menu */
 .menu__links a.is-active { align-self: flex-start; background: var(--olive); color: var(--yellow); padding: 0 .22em; border-radius: .2em; rotate: -2deg; }
+
+/* ---------- footer: Ask AI about Veritas ---------- */
+.footer__ask { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 36px; margin-top: clamp(34px, 5vw, 60px); padding: clamp(20px, 2.6vw, 30px) clamp(20px, 3vw, 34px); border: 1px solid rgba(255, 249, 216, .2); border-radius: 26px; background: rgba(255, 249, 216, .04); }
+.footer__ask-copy h4 { font: 600 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--yellow); margin-bottom: 6px; }
+.footer__ask-copy p { font-size: 17px; opacity: .75; }
+.footer__ask-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.footer__ask-links a { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border: 2px solid var(--yellow); border-radius: 99px; font-weight: 600; font-size: 16px; color: var(--yellow); transition: background .3s, color .3s, transform .35s var(--ease), box-shadow .35s var(--ease); }
+.footer__ask-links svg { width: 16px; height: 16px; transition: transform .35s var(--ease); }
+.footer__ask-links a:hover { background: var(--yellow); color: var(--olive); transform: translateY(-3px); box-shadow: 0 5px 0 rgba(254, 234, 39, .35); }
+.footer__ask-links a:hover svg { transform: translate(2px, -2px); }
+@media (max-width: 560px) { .footer__ask-links { width: 100%; } .footer__ask-links li { flex: 1 1 auto; } .footer__ask-links a { width: 100%; justify-content: center; } }
