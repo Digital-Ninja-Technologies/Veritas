@@ -941,6 +941,24 @@ const navActive = { link: null, subs: [] };
   });
 })();
 
+/* ------------------------------------------------------------------ ask AI: copy the question for assistants that cannot be prefilled */
+$$('[data-copy-prompt]').forEach((a) => {
+  const note = $('.footer__ask-note', a.closest('.footer__ask'));
+  let t;
+  a.addEventListener('click', async () => {
+    const text = a.dataset.copyPrompt;
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+      const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand('copy'); } catch (_) {} ta.remove();
+    }
+    if (!note) return;
+    note.textContent = ok ? `✓ Question copied. Paste it into ${a.dataset.ai} when it opens.` : `Open ${a.dataset.ai} and ask: "${text}"`;
+    note.hidden = false;
+    clearTimeout(t); t = setTimeout(() => (note.hidden = true), 9000);
+  });
+});
+
 /* ------------------------------------------------------------------ count-up numbers */
 $$('[data-count]').forEach((el) => {
   const n = +el.dataset.count;

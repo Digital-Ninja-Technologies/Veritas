@@ -960,3 +960,5 @@ html:not(.nav-blob) .nav__links a.is-active, html:not(.nav-blob) .nav__links a[a
 .footer__ask-links a:hover { background: var(--yellow); color: var(--olive); transform: translateY(-3px); box-shadow: 0 5px 0 rgba(254, 234, 39, .35); }
 .footer__ask-links a:hover svg { transform: translate(2px, -2px); }
 @media (max-width: 560px) { .footer__ask-links { width: 100%; } .footer__ask-links li { flex: 1 1 auto; } .footer__ask-links a { width: 100%; justify-content: center; } }
+
+.footer__ask-note { flex-basis: 100%; margin: 0; font: 600 13px var(--mono); letter-spacing: .04em; color: var(--yellow); } .footer__ask-note[hidden] { display: none; }
