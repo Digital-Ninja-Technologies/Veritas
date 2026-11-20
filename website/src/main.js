@@ -16,6 +16,17 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const root = document.documentElement;
 const CONTACT_ENDPOINT = 'https://formspree.io/f/xaqgwbra';
+const ADMIN_API_BASE = 'https://admin.useveritasapp.com';
+
+// Best-effort copy into the admin dashboard — never blocks the user-facing
+// submit flow, which still lives or dies by the Formspree request above.
+function notifyDashboard(path, payload) {
+  fetch(ADMIN_API_BASE + path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  }).catch(() => {});
+}
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
@@ -408,6 +419,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     try {
       const res = await fetch(CONTACT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ name: d.name, email: d.email, message: d.message, _subject: 'Contact Form — Veritas' }) });
       if (!res.ok) throw new Error('bad status');
+      notifyDashboard('/api/leads/contact', { name: d.name, email: d.email, message: d.message });
       $('[data-sent-name]').textContent = d.name; form.style.display = 'none'; sent.classList.add('is-on');
     } catch (_) { bad('Could not send your message. Please try again or email hello@useveritasapp.com.'); }
     finally { btn.disabled = false; $('span', btn).textContent = 'Send message'; }
@@ -745,10 +757,12 @@ if (dl) {
     const finish = () => success(f.name.value.trim());
     if (f._gotcha.value) return finish(); // honeypot: pretend success for bots
     st.busy = true; nextBtn.disabled = true; $('span', nextBtn).textContent = 'Sending…';
+    const app = { name: f.name.value.trim(), email: f.email.value.trim(), country: f.country.value.trim(), platform: st.pick.platform, audience: st.pick.audience, profile: f.profile.value.trim(), audience_country: f.audience_country.value.trim(), niche: st.pick.niche, why: f.why.value.trim() };
     try {
       const res = await fetch(CONTACT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name: f.name.value.trim(), email: f.email.value.trim(), country: f.country.value.trim(), platform: st.pick.platform, audience: st.pick.audience, profile: f.profile.value.trim(), audience_country: f.audience_country.value.trim(), niche: st.pick.niche, why: f.why.value.trim(), _subject: 'Veripals application — ' + f.name.value.trim() }) });
+        body: JSON.stringify({ ...app, _subject: 'Veripals application — ' + app.name }) });
       if (!res.ok) throw new Error('bad status');
+      notifyDashboard('/api/leads/veripal', app);
       finish();
     } catch (_) { errEl.textContent = 'Could not send your application. Please try again or email hello@useveritasapp.com.'; errEl.hidden = false; shake(); }
     finally { st.busy = false; nextBtn.disabled = false; $('span', nextBtn).textContent = st.sent ? 'Next' : 'Submit application'; }
