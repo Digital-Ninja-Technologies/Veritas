@@ -154,19 +154,6 @@ function runLoader() {
     .add(() => loader.remove(), 2.7);
 }
 
-/* ------------------------------------------------------------------ hero pin: hero stays put, next section scrolls up over it */
-(function heroPin() {
-  const hero = $('.hero');
-  if (!hero || reduce) return;
-  ScrollTrigger.create({
-    trigger: hero,
-    start: 'top top',
-    end: 'bottom top',
-    pin: true,
-    pinSpacing: false,
-  });
-})();
-
 /* ------------------------------------------------------------------ marquee */
 (function marquee() {
   const track = $('.marquee__track');
