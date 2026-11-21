@@ -61,16 +61,8 @@ document.addEventListener('click', (e) => {
   history.replaceState(null, '', url.hash);
 });
 
-/* ------------------------------------------------------------------ nav + progress */
+/* ------------------------------------------------------------------ nav */
 const nav = $('#nav');
-const bar = $('.progress i');
-let lastY = 0;
-function onScroll(y) {
-  if (bar) gsap.set(bar, { scaleX: Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight)) });
-  lastY = y;
-}
-if (lenis) lenis.on('scroll', ({ scroll }) => onScroll(scroll));
-else addEventListener('scroll', () => onScroll(scrollY), { passive: true });
 
 const burger = $('#burger');
 const menu = $('#menu');
